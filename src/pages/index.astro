@@ -26,9 +26,9 @@ const fmt = (d: Date) => d.toLocaleDateString('de-DE', { day: '2-digit', month: 
 <Base title="Dein Fußballclub in Berlin-Treptow">
   <!-- Hero -->
   <section class="relative flex min-h-[82dvh] items-end overflow-hidden bg-ink">
-    <img src="/images/hero-match.jpg" alt="Vereinsheim des FC Treptow mit Wandbild und Vereinswappen" class="absolute inset-0 h-full w-full object-cover opacity-70" fetchpriority="high" />
+    <img src="/images/hero-match.jpg" alt="Vereinsheim des FC Treptow mit Wandbild und Vereinswappen" class="hero-media absolute inset-0 h-full w-full object-cover opacity-70" fetchpriority="high" />
     <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-transparent"></div>
-    <div class="relative mx-auto w-full max-w-6xl px-4 pb-16 pt-24 lg:px-6">
+    <div class="hero-in relative mx-auto w-full max-w-6xl px-4 pb-16 pt-24 lg:px-6">
       <p class="mb-4 inline-block rounded-full border border-white/25 bg-white/10 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em] text-white backdrop-blur-sm">Seit 1925 in Treptow-Köpenick</p>
       <h1 class="display max-w-3xl text-4xl leading-[1.02] text-white md:text-6xl">
         Dein Fußballclub<br />mitten in Berlin.
@@ -37,11 +37,11 @@ const fmt = (d: Date) => d.toLocaleDateString('de-DE', { day: '2-digit', month: 
         Drei Herrenteams, Freizeitfußball und ein Kiez, der dahintersteht.
       </p>
       <div class="mt-8 flex flex-wrap gap-3">
-        <a href="/mitgliedschaft" class="group inline-flex items-center gap-2 rounded-full bg-club px-6 py-3 text-sm font-semibold text-white transition-all duration-300 ease-(--ease-club) hover:bg-club-deep active:scale-[0.98]">
+        <a href="/mitgliedschaft" data-magnetic class="magnetic group inline-flex items-center gap-2 rounded-full bg-club px-6 py-3 text-sm font-semibold text-white transition-colors duration-300 ease-(--ease-club) hover:bg-club-deep">
           Mitglied werden
           <span class="flex h-6 w-6 items-center justify-center rounded-full bg-white/15 transition-transform duration-300 ease-(--ease-club) group-hover:translate-x-0.5">→</span>
         </a>
-        <a href="/mannschaften" class="inline-flex items-center rounded-full border border-white/30 bg-white/10 px-6 py-3 text-sm font-semibold text-white backdrop-blur-sm transition-colors duration-300 hover:bg-white/20">
+        <a href="/mannschaften" class="inline-flex items-center rounded-full border border-white/30 bg-white/10 px-6 py-3 text-sm font-semibold text-white backdrop-blur-sm transition-colors duration-300 ease-(--ease-club) hover:bg-white/20">
           Unsere Teams
         </a>
       </div>
@@ -54,8 +54,8 @@ const fmt = (d: Date) => d.toLocaleDateString('de-DE', { day: '2-digit', month: 
       <h2 class="display text-3xl md:text-4xl">Unsere Mannschaften</h2>
       <a href="/mannschaften" class="text-sm font-semibold text-club hover:text-club-deep">Alle Teams ansehen</a>
     </div>
-    <div class="mt-10 grid grid-cols-1 gap-6 md:grid-cols-12">
-      <a href={`/mannschaften/${teams[0].id}`} class="reveal group relative overflow-hidden rounded-2xl bg-ink md:col-span-7 md:row-span-3 md:min-h-[420px]">
+    <div class="stagger mt-10 grid grid-cols-1 gap-6 md:grid-cols-12">
+      <a href={`/mannschaften/${teams[0].id}`} class="group relative overflow-hidden rounded-2xl bg-ink md:col-span-7 md:row-span-3 md:min-h-[420px]">
         <img src={teams[0].data.image} alt={teams[0].data.name} class="absolute inset-0 h-full w-full object-cover opacity-80 transition-transform duration-700 ease-(--ease-club) group-hover:scale-[1.03]" />
         <div class="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/20 to-transparent"></div>
         <div class="relative flex h-full min-h-[280px] flex-col justify-end p-7">
@@ -64,7 +64,7 @@ const fmt = (d: Date) => d.toLocaleDateString('de-DE', { day: '2-digit', month: 
         </div>
       </a>
       {teams.slice(1).map((t) => (
-        <a href={`/mannschaften/${t.id}`} class="reveal group flex items-center justify-between gap-4 rounded-2xl border border-line bg-card p-6 transition-all duration-300 ease-(--ease-club) hover:border-club/40 hover:shadow-[0_12px_40px_-16px_rgba(191,46,39,0.25)] md:col-span-5">
+        <a href={`/mannschaften/${t.id}`} class="group flex items-center justify-between gap-4 rounded-2xl border border-line bg-card p-6 transition-all duration-300 ease-(--ease-club) hover:border-club/40 hover:shadow-[0_12px_40px_-16px_rgba(191,46,39,0.25)] md:col-span-5">
           <div>
             <p class="text-sm text-ink-soft">{t.data.league}</p>
             <p class="display mt-1 text-xl">{t.data.name}</p>
@@ -82,9 +82,9 @@ const fmt = (d: Date) => d.toLocaleDateString('de-DE', { day: '2-digit', month: 
         <h2 class="display text-3xl md:text-4xl">Letzte Ergebnisse</h2>
         <p class="text-sm text-ink-soft">Beispieldaten, live später über fussball.de</p>
       </div>
-      <div class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="stagger mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {results.map((r) => (
-          <a href={`/mannschaften/${r.teamId}`} class="reveal group rounded-2xl border border-line bg-paper p-5 transition-colors duration-300 hover:border-club/40">
+          <a href={`/mannschaften/${r.teamId}`} class="group rounded-2xl border border-line bg-paper p-5 transition-colors duration-300 hover:border-club/40">
             <div class="flex items-center justify-between text-xs text-ink-soft">
               <span>{r.date}</span>
               <span class="rounded-full bg-club/10 px-2.5 py-0.5 font-semibold text-club">{r.team}</span>
@@ -103,8 +103,8 @@ const fmt = (d: Date) => d.toLocaleDateString('de-DE', { day: '2-digit', month: 
       <h2 class="display text-3xl md:text-4xl">Neues aus dem Verein</h2>
       <a href="/news" class="text-sm font-semibold text-club hover:text-club-deep">Alle News</a>
     </div>
-    <div class="mt-10 grid gap-6 lg:grid-cols-2">
-      <a href={`/news/${featured.id}`} class="reveal group overflow-hidden rounded-2xl border border-line bg-card">
+    <div class="stagger mt-10 grid gap-6 lg:grid-cols-2">
+      <a href={`/news/${featured.id}`} class="group overflow-hidden rounded-2xl border border-line bg-card">
         <div class="overflow-hidden">
           <img src={featured.data.image} alt="" class="aspect-[16/9] w-full object-cover transition-transform duration-700 ease-(--ease-club) group-hover:scale-[1.03]" />
         </div>
@@ -117,7 +117,7 @@ const fmt = (d: Date) => d.toLocaleDateString('de-DE', { day: '2-digit', month: 
       </a>
       <div class="flex flex-col gap-6">
         {restNews.slice(0, 2).map((n) => (
-          <a href={`/news/${n.id}`} class="reveal group flex flex-1 gap-5 rounded-2xl border border-line bg-card p-6 transition-colors duration-300 hover:border-club/40">
+          <a href={`/news/${n.id}`} class="group flex flex-1 gap-5 rounded-2xl border border-line bg-card p-6 transition-colors duration-300 ease-(--ease-club) hover:border-club/40">
             <img src={n.data.image} alt="" class="hidden h-28 w-40 shrink-0 rounded-xl object-cover sm:block" />
             <div>
               <p class="text-xs font-semibold uppercase tracking-widest text-club">{n.data.tag}</p>
@@ -139,7 +139,7 @@ const fmt = (d: Date) => d.toLocaleDateString('de-DE', { day: '2-digit', month: 
           Vom Werksverein der Bewag 1925 über Turbine Berlin bis zum FC Treptow: sieben Namen, ein Verein.
         </p>
       </div>
-      <div class="reveal mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4">
+      <div class="stagger mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4">
         {chronik.map((c) => (
           <a href="/vereinschronik" class="group w-40 shrink-0 snap-start rounded-2xl border border-line bg-paper p-5 text-center transition-colors duration-300 hover:border-club/40">
             <img src={c.img} alt={c.label} class="mx-auto h-16 w-16 rounded-full bg-white object-contain p-1 ring-1 ring-line" />
@@ -160,9 +160,9 @@ const fmt = (d: Date) => d.toLocaleDateString('de-DE', { day: '2-digit', month: 
       </div>
       <a href="/sponsoren" class="text-sm font-semibold text-club hover:text-club-deep">Partner werden</a>
     </div>
-    <div class="mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
+    <div class="stagger mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
       {sponsors.map((s) => (
-        <a href={s.data.url ?? '/sponsoren'} rel="noopener" class="reveal group flex flex-col items-center gap-4 rounded-2xl border border-line bg-card px-6 py-10 text-center transition-all duration-300 ease-(--ease-club) hover:-translate-y-1 hover:border-club/40 hover:shadow-[0_16px_40px_-20px_rgba(20,23,31,0.35)]">
+        <a href={s.data.url ?? '/sponsoren'} rel="noopener" class="group flex flex-col items-center gap-4 rounded-2xl border border-line bg-card px-6 py-10 text-center transition-all duration-300 ease-(--ease-club) hover:-translate-y-1 hover:border-club/40 hover:shadow-[0_16px_40px_-20px_rgba(20,23,31,0.35)]">
           <SponsorMark name={s.data.name} logo={s.data.logo} />
           <div>
             <p class="text-sm font-bold leading-snug">{s.data.name}</p>
@@ -209,7 +209,7 @@ const fmt = (d: Date) => d.toLocaleDateString('de-DE', { day: '2-digit', month: 
         </div>
         <a href="https://www.instagram.com" rel="noopener" class="inline-flex items-center rounded-full border border-ink/15 px-5 py-2.5 text-sm font-semibold transition-colors duration-300 hover:border-club hover:text-club">Auf Instagram folgen</a>
       </div>
-      <div class="reveal mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-6">
+      <div class="stagger mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-6">
         {['fct-insta-jubel','fct-insta-fans','fct-insta-training','fct-insta-kabine','fct-insta-flutlicht','fct-insta-kiez'].map((seed, i) => (
           <a href="https://www.instagram.com" rel="noopener" class:list={['group overflow-hidden rounded-xl', i > 3 && 'hidden md:block']}>
             <img src={`https://picsum.photos/seed/${seed}/500/500`} alt="Foto aus dem Vereinsleben" loading="lazy" class="aspect-square w-full object-cover transition-transform duration-500 ease-(--ease-club) group-hover:scale-[1.05]" />
