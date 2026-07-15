@@ -5,7 +5,8 @@ league: "Freizeitliga Berlin"
 order: 4
 training:
   - "Donnerstag, 19:00 Uhr"
-image: "/images/willi-saenger.png"
+image: "/images/hero-match.jpg"
+imageFocus: 50
 gallery:
   - { src: "https://picsum.photos/seed/fct-fk-kick/1200/800", alt: "Freizeitkick unter Flutlicht" }
   - { src: "https://picsum.photos/seed/fct-fk-gruppe/1200/800", alt: "Die Freizeit Kickers nach dem Training" }

@@ -1,12 +1,13 @@
 ---
 name: "FC Treptow II River Plate"
 shortName: "الرجال الثاني"
-league: "الدوري المحلي ب، المجموعة 3"
+league: "Kreisliga B، المجموعة 3"
 order: 2
 training:
   - "الثلاثاء، 6:00 مساءً"
   - "الخميس، 6:00 مساءً"
 image: "/images/team-h2.jpg"
+imageFocus: 50
 gallery:
   - { src: "/images/team-h2.jpg", alt: "ريفر بليت يحتفل بالترقية" }
   - { src: "https://picsum.photos/seed/fct-h2-spiel/1200/800", alt: "لقطة من مباراة الفريق الثاني" }

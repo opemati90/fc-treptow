@@ -6,7 +6,7 @@ image: "/images/hero-match.jpg"
 tag: "Kulüp"
 ---
 
-Yaz molası neredeyse bitti: Ağustos'ta top Willi-Sänger spor tesisinde yeniden yuvarlanacak. Üç erkek takımımız da yeni sezona başlıyor, Hobi Kickers ise her zamanki gibi perşembe günleri sahada olacak.
+Yaz molası neredeyse bitti: Ağustos'ta top Willi-Sänger spor tesisinde yeniden yuvarlanacak. Üç erkek takımımız da yeni sezona başlıyor, Freizeit Kickers ise her zamanki gibi perşembe günleri sahada olacak.
 
 Antrenmanlar zaten sürüyor, salı ve perşembe günleri saat 18:00'den itibaren suni çim sahada. Tüm takımlarda yeni oyuncular memnuniyetle karşılanır, gelmeniz ya da kontakt@fc-treptow.de adresine yazmanız yeterli.
 

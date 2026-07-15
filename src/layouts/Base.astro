@@ -48,7 +48,7 @@ function langHref(locale: Locale) {
           <img src="/images/crest.jpg" alt="Wappen FC Treptow" class="h-9 w-9 rounded-full object-cover ring-1 ring-line" />
           <span class="display text-sm leading-none">FC Treptow <span class="text-club">e.V.</span></span>
         </a>
-        <nav class="hidden items-center gap-6 md:flex">
+        <nav class="hidden items-center gap-4 lg:flex xl:gap-6">
           {nav.map((item) => (
             <a
               href={item.href}
@@ -80,12 +80,12 @@ function langHref(locale: Locale) {
             <span class="flex h-5 w-5 items-center justify-center rounded-full bg-white/15 transition-transform duration-300 ease-(--ease-club) group-hover:translate-x-0.5 rtl:rotate-180">→</span>
           </a>
         </nav>
-        <button id="menu-btn" class="flex h-10 w-10 flex-col items-center justify-center gap-1.5 md:hidden" aria-label="Menü öffnen" aria-expanded="false">
+        <button id="menu-btn" class="flex h-10 w-10 flex-col items-center justify-center gap-1.5 lg:hidden" aria-label="Menü öffnen" aria-expanded="false">
           <span class="menu-line block h-0.5 w-6 bg-ink transition-transform duration-300 ease-(--ease-club)"></span>
           <span class="menu-line block h-0.5 w-6 bg-ink transition-transform duration-300 ease-(--ease-club)"></span>
         </button>
       </div>
-      <div id="mobile-menu" class="hidden border-t border-line bg-paper px-4 py-4 md:hidden">
+      <div id="mobile-menu" class="hidden border-t border-line bg-paper px-4 py-4 lg:hidden">
         <nav class="flex flex-col gap-3">
           {nav.map((item) => (
             <a href={item.href} class="py-1 text-base font-medium text-ink">{item.label}</a>

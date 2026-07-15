@@ -7,6 +7,7 @@ training:
   - "Dienstag, 19:30 Uhr"
   - "Donnerstag, 19:30 Uhr"
 image: "/images/team-h1.jpg"
+imageFocus: 50
 gallery:
   - { src: "/images/team-h1.jpg", alt: "Mannschaftsfoto der Ersten, Saison 2026" }
   - { src: "/images/hero-match.jpg", alt: "Unser Vereinsheim mit dem River-Plate-Wandbild" }

@@ -7,6 +7,7 @@ training:
   - "Dienstag, 18:00 Uhr"
   - "Donnerstag, 18:00 Uhr"
 image: "/images/team-h3.jpg"
+imageFocus: 65
 gallery:
   - { src: "/images/team-h3.jpg", alt: "Die Dritte nach dem Spiel" }
   - { src: "https://picsum.photos/seed/fct-h3-anstoss/1200/800", alt: "Anstoß am Sonntagvormittag" }

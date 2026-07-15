@@ -1,12 +1,13 @@
 ---
 name: "FC Treptow III"
 shortName: "الرجال الثالث"
-league: "الدوري المحلي ج، المجموعة 4"
+league: "Kreisliga C، المجموعة 4"
 order: 3
 training:
   - "الثلاثاء، 6:00 مساءً"
   - "الخميس، 6:00 مساءً"
 image: "/images/team-h3.jpg"
+imageFocus: 65
 gallery:
   - { src: "/images/team-h3.jpg", alt: "الفريق الثالث بعد المباراة" }
   - { src: "https://picsum.photos/seed/fct-h3-anstoss/1200/800", alt: "ضربة البداية صباح الأحد" }

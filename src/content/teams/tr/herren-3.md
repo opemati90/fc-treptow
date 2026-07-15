@@ -7,6 +7,7 @@ training:
   - "Salı, 18:00"
   - "Perşembe, 18:00"
 image: "/images/team-h3.jpg"
+imageFocus: 65
 gallery:
   - { src: "/images/team-h3.jpg", alt: "Üçüncü takım maç sonrası" }
   - { src: "https://picsum.photos/seed/fct-h3-anstoss/1200/800", alt: "Pazar sabahı başlama vuruşu" }

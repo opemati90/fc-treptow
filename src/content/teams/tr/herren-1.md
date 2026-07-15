@@ -7,6 +7,7 @@ training:
   - "Salı, 19:30"
   - "Perşembe, 19:30"
 image: "/images/team-h1.jpg"
+imageFocus: 50
 gallery:
   - { src: "/images/team-h1.jpg", alt: "İlk takımın 2026 sezonu takım fotoğrafı" }
   - { src: "/images/hero-match.jpg", alt: "River Plate duvar resmiyle kulüp binamız" }

@@ -7,6 +7,7 @@ training:
   - "Martes, 18:00"
   - "Jueves, 18:00"
 image: "/images/team-h3.jpg"
+imageFocus: 65
 gallery:
   - { src: "/images/team-h3.jpg", alt: "El tercer equipo tras el partido" }
   - { src: "https://picsum.photos/seed/fct-h3-anstoss/1200/800", alt: "Saque inicial el domingo por la mañana" }

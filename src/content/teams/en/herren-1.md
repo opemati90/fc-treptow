@@ -7,6 +7,7 @@ training:
   - "Tuesday, 7:30 PM"
   - "Thursday, 7:30 PM"
 image: "/images/team-h1.jpg"
+imageFocus: 50
 gallery:
   - { src: "/images/team-h1.jpg", alt: "Team photo of the first team, 2026 season" }
   - { src: "/images/hero-match.jpg", alt: "Our clubhouse with the River Plate mural" }

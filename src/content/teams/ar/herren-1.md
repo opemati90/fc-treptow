@@ -1,12 +1,13 @@
 ---
 name: "FC Treptow I"
 shortName: "الرجال الأول"
-league: "الدوري المحلي ب، المجموعة 1"
+league: "Kreisliga B، المجموعة 1"
 order: 1
 training:
   - "الثلاثاء، 7:30 مساءً"
   - "الخميس، 7:30 مساءً"
 image: "/images/team-h1.jpg"
+imageFocus: 50
 gallery:
   - { src: "/images/team-h1.jpg", alt: "صورة الفريق الأول لموسم 2026" }
   - { src: "/images/hero-match.jpg", alt: "مقر النادي مع جدارية ريفر بليت" }

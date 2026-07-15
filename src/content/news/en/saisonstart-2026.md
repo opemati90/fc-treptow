@@ -6,7 +6,7 @@ image: "/images/hero-match.jpg"
 tag: "Club"
 ---
 
-The summer break is almost over: in August the ball rolls again at the Willi-Sänger sports ground. All three men's teams start the new season, and the Leisure Kickers continue their usual Thursday kickabouts.
+The summer break is almost over: in August the ball rolls again at the Willi-Sänger sports ground. All three men's teams start the new season, and the Freizeit Kickers continue their usual Thursday kickabouts.
 
 Training is already underway, Tuesdays and Thursdays from 6:00 PM on the artificial turf. New players are welcome on every team, just come along or drop us a line at kontakt@fc-treptow.de.
 

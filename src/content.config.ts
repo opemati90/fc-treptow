@@ -23,6 +23,10 @@ const teams = defineCollection({
     ground: z.string().default('Willi-Sänger-Sportanlage, Köpenicker Landstraße 186, 12437 Berlin'),
     contact: z.string().default('kontakt@fc-treptow.de'),
     image: z.string(),
+    // Bildausschnitt für das Kopfbild. 0% = oberer Bildrand, 100% = unterer Bildrand.
+    // Bei Mannschaftsfotos liegen die Gesichter meist im oberen Drittel, deshalb ein
+    // niedriger Wert. Pro Foto einstellbar, weil jedes anders aufgebaut ist.
+    imageFocus: z.number().min(0).max(100).default(30),
     gallery: z.array(z.object({ src: z.string(), alt: z.string() })).default([]),
     // Beispieldaten bis die fussball.de-Widget-IDs eingetragen sind
     table: z

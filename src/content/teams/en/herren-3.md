@@ -7,6 +7,7 @@ training:
   - "Tuesday, 6:00 PM"
   - "Thursday, 6:00 PM"
 image: "/images/team-h3.jpg"
+imageFocus: 65
 gallery:
   - { src: "/images/team-h3.jpg", alt: "The third team after the match" }
   - { src: "https://picsum.photos/seed/fct-h3-anstoss/1200/800", alt: "Kickoff on Sunday morning" }

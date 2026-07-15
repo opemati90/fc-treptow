@@ -7,6 +7,7 @@ training:
   - "Salı, 18:00"
   - "Perşembe, 18:00"
 image: "/images/team-h2.jpg"
+imageFocus: 50
 gallery:
   - { src: "/images/team-h2.jpg", alt: "River Plate ligi yükselişi kutluyor" }
   - { src: "https://picsum.photos/seed/fct-h2-spiel/1200/800", alt: "İkinci takımdan bir maç anı" }

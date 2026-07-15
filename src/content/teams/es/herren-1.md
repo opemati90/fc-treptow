@@ -7,6 +7,7 @@ training:
   - "Martes, 19:30"
   - "Jueves, 19:30"
 image: "/images/team-h1.jpg"
+imageFocus: 50
 gallery:
   - { src: "/images/team-h1.jpg", alt: "Foto del primer equipo, temporada 2026" }
   - { src: "/images/hero-match.jpg", alt: "Nuestra sede con el mural de River Plate" }

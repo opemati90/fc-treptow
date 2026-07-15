@@ -7,6 +7,7 @@ training:
   - "Mardi, 18h00"
   - "Jeudi, 18h00"
 image: "/images/team-h2.jpg"
+imageFocus: 50
 gallery:
   - { src: "/images/team-h2.jpg", alt: "River Plate célèbre la montée" }
   - { src: "https://picsum.photos/seed/fct-h2-spiel/1200/800", alt: "Action de la deuxième équipe" }

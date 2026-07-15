@@ -45,6 +45,7 @@ collections:
       - { name: ground, label: Platz, widget: string, default: "Willi-Sänger-Sportanlage, Köpenicker Landstraße 186, 12437 Berlin" }
       - { name: contact, label: Kontakt-E-Mail, widget: string, default: kontakt@fc-treptow.de }
       - { name: image, label: Teamfoto, widget: image }
+      - { name: imageFocus, label: Bildausschnitt Kopfbild, widget: number, value_type: int, default: 50, min: 0, max: 100, hint: "Nur nötig, wenn auf dem Kopfbild jemand angeschnitten wird. 50 = Bildmitte, kleinere Werte zeigen mehr vom oberen Bildrand, größere mehr vom unteren." }
       - name: gallery
         label: Spieltagsfotos
         widget: list
