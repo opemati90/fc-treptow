@@ -1,0 +1,40 @@
+---
+import { defaultLocale, type Locale } from '../../i18n/languages';
+import { pageT } from '../../i18n/pages';
+
+const lang = (Astro.currentLocale ?? defaultLocale) as Locale;
+const t = pageT('kontakt', lang);
+---
+<section class="mx-auto max-w-6xl px-4 pb-8 pt-16 lg:px-6">
+  <h1 class="display text-4xl md:text-5xl">{t.h1}</h1>
+  <p class="mt-4 max-w-xl text-base leading-relaxed text-ink-soft">{t.intro}</p>
+</section>
+
+<section class="mx-auto max-w-6xl px-4 py-12 lg:px-6">
+  <div class="grid gap-6 lg:grid-cols-2">
+    <div class="reveal rounded-2xl border border-line bg-card p-8">
+      <h2 class="display text-2xl">{t.heading}</h2>
+      <dl class="mt-6 space-y-5 text-sm">
+        <div>
+          <dt class="text-xs font-semibold uppercase tracking-widest text-ink-soft">{t.email}</dt>
+          <dd class="mt-1"><a href="mailto:kontakt@fc-treptow.de" class="text-base font-semibold text-club hover:text-club-deep">kontakt@fc-treptow.de</a></dd>
+        </div>
+        <div>
+          <dt class="text-xs font-semibold uppercase tracking-widest text-ink-soft">{t.sportanlage}</dt>
+          <dd class="mt-1 text-base font-medium">Willi-Sänger-Sportanlage<br />Köpenicker Landstraße 186<br />12437 Berlin</dd>
+        </div>
+        <div>
+          <dt class="text-xs font-semibold uppercase tracking-widest text-ink-soft">{t.training}</dt>
+          <dd class="mt-1 text-base font-medium">{t.trainingTimes}</dd>
+        </div>
+      </dl>
+      <a href="https://www.google.com/maps/search/?api=1&query=Willi-S%C3%A4nger-Sportanlage+K%C3%B6penicker+Landstra%C3%9Fe+186+12437+Berlin" rel="noopener" class="group mt-8 inline-flex items-center gap-2 rounded-full bg-club px-6 py-3 text-sm font-semibold text-white transition-all duration-300 ease-(--ease-club) hover:bg-club-deep active:scale-[0.98]">
+        {t.routeCta}
+        <span class="flex h-6 w-6 items-center justify-center rounded-full bg-white/15 transition-transform duration-300 ease-(--ease-club) group-hover:translate-x-0.5 rtl:rotate-180">→</span>
+      </a>
+    </div>
+    <div class="reveal overflow-hidden rounded-2xl">
+      <img src="/images/vereinsbuero.jpg" alt={t.imgAlt} class="h-full min-h-[320px] w-full object-cover" loading="lazy" />
+    </div>
+  </div>
+</section>

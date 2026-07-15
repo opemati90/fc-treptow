@@ -1,87 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
+import Sections from '../components/sections/ProbetrainingSections.astro';
+import { pageT } from '../i18n/pages';
+import { defaultLocale } from '../i18n/languages';
+
+const lang = Astro.currentLocale ?? defaultLocale;
+const t = pageT('probetraining', lang as any);
 ---
-<Base title="Probetraining" description="Kostenloses Probetraining beim FC Treptow e.V. vereinbaren.">
-  <section class="mx-auto max-w-6xl px-4 pb-8 pt-16 lg:px-6">
-    <h1 class="display text-4xl md:text-5xl">Probetraining</h1>
-    <p class="mt-4 max-w-xl text-base leading-relaxed text-ink-soft">
-      Kostenlos und unverbindlich. Wir melden uns innerhalb weniger Tage mit einem Termin bei dir.
-    </p>
-  </section>
-
-  <section class="mx-auto max-w-6xl px-4 py-12 lg:px-6">
-    <div class="grid gap-10 lg:grid-cols-5">
-      <form id="trial-form" class="lg:col-span-3 rounded-2xl border border-line bg-card p-8" novalidate>
-        <div class="grid gap-6 sm:grid-cols-2">
-          <div class="flex flex-col gap-2">
-            <label for="name" class="text-sm font-semibold">Name</label>
-            <input id="name" name="name" type="text" required class="rounded-xl border border-line bg-paper px-4 py-3 text-sm outline-none transition-colors focus:border-club" />
-          </div>
-          <div class="flex flex-col gap-2">
-            <label for="age" class="text-sm font-semibold">Alter</label>
-            <input id="age" name="age" type="number" min="14" max="99" required class="rounded-xl border border-line bg-paper px-4 py-3 text-sm outline-none transition-colors focus:border-club" />
-          </div>
-          <div class="flex flex-col gap-2">
-            <label for="email" class="text-sm font-semibold">E-Mail</label>
-            <input id="email" name="email" type="email" required class="rounded-xl border border-line bg-paper px-4 py-3 text-sm outline-none transition-colors focus:border-club" />
-          </div>
-          <div class="flex flex-col gap-2">
-            <label for="phone" class="text-sm font-semibold">Telefon <span class="font-normal text-ink-soft">(optional)</span></label>
-            <input id="phone" name="phone" type="tel" class="rounded-xl border border-line bg-paper px-4 py-3 text-sm outline-none transition-colors focus:border-club" />
-          </div>
-          <div class="flex flex-col gap-2 sm:col-span-2">
-            <label for="team" class="text-sm font-semibold">Wunsch-Team</label>
-            <select id="team" name="team" class="rounded-xl border border-line bg-paper px-4 py-3 text-sm outline-none transition-colors focus:border-club">
-              <option>Egal, Hauptsache kicken</option>
-              <option>FC Treptow I (Kreisliga B)</option>
-              <option>FC Treptow II River Plate (Kreisliga B)</option>
-              <option>FC Treptow III (Kreisliga C)</option>
-              <option>Freizeit Kickers</option>
-            </select>
-          </div>
-          <div class="flex flex-col gap-2 sm:col-span-2">
-            <label for="experience" class="text-sm font-semibold">Kurz zu dir <span class="font-normal text-ink-soft">(Position, letzte Station, Erfahrung)</span></label>
-            <textarea id="experience" name="experience" rows="4" class="rounded-xl border border-line bg-paper px-4 py-3 text-sm outline-none transition-colors focus:border-club"></textarea>
-          </div>
-        </div>
-        <p id="trial-error" class="mt-4 hidden text-sm font-medium text-club">Bitte fülle Name, Alter und E-Mail aus.</p>
-        <button type="submit" class="group mt-6 inline-flex items-center gap-2 rounded-full bg-club px-6 py-3 text-sm font-semibold text-white transition-all duration-300 ease-(--ease-club) hover:bg-club-deep active:scale-[0.98]">
-          Anfrage senden
-          <span class="flex h-6 w-6 items-center justify-center rounded-full bg-white/15 transition-transform duration-300 ease-(--ease-club) group-hover:translate-x-0.5">→</span>
-        </button>
-      </form>
-      <div id="trial-success" class="hidden lg:col-span-3 rounded-2xl border border-line bg-card p-10 text-center">
-        <span class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-club/10 text-2xl text-club">✓</span>
-        <h2 class="display mt-5 text-2xl">Anfrage ist raus</h2>
-        <p class="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-ink-soft">Danke! Wir melden uns per E-Mail mit einem Termin. Bring zum Probetraining einfach Sportsachen und Schienbeinschoner mit.</p>
-      </div>
-
-      <aside class="lg:col-span-2">
-        <div class="rounded-2xl bg-ink p-8 text-white">
-          <h2 class="display text-xl">So läuft es ab</h2>
-          <ul class="mt-5 space-y-4 text-sm leading-relaxed text-white/80">
-            <li>Training dienstags und donnerstags ab 18:00 Uhr auf dem Kunstrasen der Willi-Sänger-Sportanlage.</li>
-            <li>Du trainierst unverbindlich mit, so oft du willst.</li>
-            <li>Wenn es passt, bekommst du vom Trainer deinen Freischalt-Code für die <a href="/anmeldung" class="font-semibold underline decoration-club decoration-2 underline-offset-4">Online-Anmeldung</a>.</li>
-          </ul>
-        </div>
-      </aside>
-    </div>
-  </section>
-
-  <script>
-    const form = document.getElementById('trial-form') as HTMLFormElement | null;
-    form?.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const err = document.getElementById('trial-error');
-      if (!form.checkValidity()) {
-        err?.classList.remove('hidden');
-        return;
-      }
-      err?.classList.add('hidden');
-      // Produktion: hier per fetch an Formspree/Web3Forms senden (kostenloser Formular-Dienst)
-      form.classList.add('hidden');
-      document.getElementById('trial-success')?.classList.remove('hidden');
-    });
-  </script>
+<Base title={t.metaTitle} description={t.metaDesc}>
+  <Sections />
 </Base>

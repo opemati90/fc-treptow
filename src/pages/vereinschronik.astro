@@ -1,42 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
+import Sections from '../components/sections/VereinschronikSections.astro';
+import { pageT } from '../i18n/pages';
+import { defaultLocale } from '../i18n/languages';
 
-const timeline = [
-  { year: '1925', img: '/images/chronik-1925.jpg', title: 'Werksverein der Bewag', text: 'Gründung als Werksverein der Berliner Elektrizitätswerke Bewag AG.' },
-  { year: '1932', img: '/images/chronik-1932.jpg', title: 'SV Bewag Berlin', text: 'Umbenennung und Aufstieg in die Oberliga Berlin-Brandenburg, Staffel B.' },
-  { year: '1936', img: '/images/chronik-1932.jpg', title: 'Gauliga', text: 'Einzug in die Gauliga, gemeinsam mit dem SC Union Oberschöneweide.' },
-  { year: '1938', img: '/images/chronik-1938.png', title: 'SV Elektra Berlin', text: 'Neuer Name und Teilnahme an der ersten Runde des Tschammer-Pokals.' },
-  { year: '1945', img: '/images/chronik-1938.png', title: 'Neuanfang', text: 'Nach Kriegsende werden die deutschen Sportvereine aufgelöst, 1949 Neustart als BSG Bewag Berlin mit Teilnahme am FDGB-Pokal.' },
-  { year: '1950', img: '/images/chronik-1950.jpg', title: 'BSG Turbine Bewag', text: 'Die Turbine-Ära beginnt, ab 1951 als BSG Turbine Bewag Berlin. 1959 bis 1966 drittklassig in der Bezirksliga.' },
-  { year: '1978', img: '/images/chronik-1974.jpg', title: 'BSG Turbine Berlin', text: 'Umbenennung in BSG Turbine Berlin, ab 1984 BSG Turbine EKB Treptow.' },
-  { year: '1990', img: '/images/chronik-1990.jpg', title: 'SV Turbine Berlin', text: 'Nach der Wende Neugründung als SV Turbine Berlin.' },
-  { year: '1994', img: '/images/chronik-lok.png', title: 'FC Treptow e.V.', text: 'Zusammenschluss mit dem ESV Lok Schöneweide zum heutigen FC Treptow e.V.' },
-  { year: '1996', img: '/images/crest.jpg', title: 'NARVA kommt dazu', text: 'Die Fußballabteilung des ehemaligen DDR-Ligisten NARVA Berlin tritt bei. Den Landesliga-Startplatz verteidigt der Verein bis 2001.' },
-];
+const lang = Astro.currentLocale ?? defaultLocale;
+const t = pageT('vereinschronik', lang as any);
 ---
-<Base title="Vereinschronik" description="Über 100 Jahre Fußball in Treptow: die Geschichte des FC Treptow e.V. seit 1925.">
-  <section class="mx-auto max-w-6xl px-4 pb-8 pt-16 lg:px-6">
-    <h1 class="display text-4xl md:text-5xl">Vereinschronik</h1>
-    <p class="mt-4 max-w-2xl text-base leading-relaxed text-ink-soft">
-      Sieben Namen, ein Verein: von der Gründung als Werksverein 1925 bis zum FC Treptow von heute. Über 100 Jahre Fußball im Berliner Südosten.
-    </p>
-  </section>
-
-  <section class="mx-auto max-w-3xl px-4 py-12 lg:px-6">
-    <ol class="relative space-y-10 border-l-2 border-line pl-8">
-      {timeline.map((t) => (
-        <li class="reveal relative">
-          <span class="absolute -left-[41px] top-1 flex h-4 w-4 items-center justify-center rounded-full border-2 border-club bg-paper"></span>
-          <div class="flex items-start gap-5">
-            <img src={t.img} alt="" class="mt-1 hidden h-14 w-14 shrink-0 rounded-full bg-white object-contain p-1 ring-1 ring-line sm:block" />
-            <div>
-              <p class="display text-2xl text-club">{t.year}</p>
-              <h2 class="mt-1 text-lg font-bold">{t.title}</h2>
-              <p class="mt-2 text-sm leading-relaxed text-ink-soft">{t.text}</p>
-            </div>
-          </div>
-        </li>
-      ))}
-    </ol>
-  </section>
+<Base title={t.metaTitle} description={t.metaDesc}>
+  <Sections />
 </Base>

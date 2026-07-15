@@ -1,69 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
+import Sections from '../components/sections/MitgliedschaftSections.astro';
+import { pageT } from '../i18n/pages';
+import { defaultLocale } from '../i18n/languages';
 
-const steps = [
-  { title: 'Probetraining vereinbaren', text: 'Kurz das Formular ausfüllen oder einfach dienstags oder donnerstags vorbeikommen. Das Probetraining ist kostenlos.', link: { href: '/probetraining', label: 'Zum Probetraining' } },
-  { title: 'Kicken und kennenlernen', text: 'Du trainierst mit dem Team, das zu dir passt. Danach entscheidet ihr gemeinsam, ob es passt, und du bekommst deinen Freischalt-Code vom Trainer.' },
-  { title: 'Anmeldung abschließen', text: 'Mit dem Code füllst du die Online-Anmeldung aus, die Eintrittserklärung und der Antrag auf Spielberechtigung folgen als Unterschrift.', link: { href: '/anmeldung', label: 'Zur Anmeldung' } },
-];
+const lang = Astro.currentLocale ?? defaultLocale;
+const t = pageT('mitgliedschaft', lang as any);
 ---
-<Base title="Mitgliedschaft" description="Mitglied werden beim FC Treptow e.V.: Beiträge, Probetraining und Anmeldung.">
-  <section class="mx-auto max-w-6xl px-4 pb-8 pt-16 lg:px-6">
-    <h1 class="display text-4xl md:text-5xl">Mitglied werden</h1>
-    <p class="mt-4 max-w-xl text-base leading-relaxed text-ink-soft">
-      Vom ersten Probetraining bis zur Spielberechtigung in drei Schritten.
-    </p>
-  </section>
-
-  <section class="mx-auto max-w-6xl px-4 py-12 lg:px-6">
-    <div class="grid gap-6 md:grid-cols-3">
-      {steps.map((s, i) => (
-        <div class="reveal flex flex-col rounded-2xl border border-line bg-card p-7">
-          <span class="display text-4xl text-club/25">{i + 1}</span>
-          <h2 class="mt-4 text-lg font-bold">{s.title}</h2>
-          <p class="mt-2 flex-1 text-sm leading-relaxed text-ink-soft">{s.text}</p>
-          {s.link && <a href={s.link.href} class="mt-5 inline-flex w-max items-center gap-1 text-sm font-semibold text-club hover:text-club-deep">{s.link.label} →</a>}
-        </div>
-      ))}
-    </div>
-  </section>
-
-  <section class="mx-auto max-w-6xl px-4 py-12 lg:px-6">
-    <div class="grid gap-6 lg:grid-cols-2">
-      <div class="reveal rounded-2xl border border-line bg-card p-8">
-        <h2 class="display text-2xl">Beiträge</h2>
-        <div class="mt-6 space-y-5">
-          <div class="flex items-baseline justify-between gap-4 border-b border-line pb-5">
-            <div>
-              <p class="font-semibold">Aktive Mitglieder</p>
-              <p class="mt-1 text-sm text-ink-soft">180 € im Jahr, bei Jahreszahlung 165 €</p>
-            </div>
-            <p class="display whitespace-nowrap text-3xl">15 €<span class="ml-1 text-sm font-sans font-normal text-ink-soft">/ Monat</span></p>
-          </div>
-          <div class="flex items-baseline justify-between gap-4">
-            <div>
-              <p class="font-semibold">Ermäßigt</p>
-              <p class="mt-1 text-sm text-ink-soft">Azubis, Studierende, Erwerbslose, Freizeitsport und Jugend. 120 € im Jahr, bei Jahreszahlung 110 €</p>
-            </div>
-            <p class="display whitespace-nowrap text-3xl">10 €<span class="ml-1 text-sm font-sans font-normal text-ink-soft">/ Monat</span></p>
-          </div>
-        </div>
-      </div>
-      <div class="reveal rounded-2xl bg-ink p-8 text-white">
-        <h2 class="display text-2xl">Bankverbindung</h2>
-        <p class="mt-4 text-sm leading-relaxed text-white/75">Beiträge bitte an den Verein überweisen:</p>
-        <dl class="mt-6 space-y-4 text-sm">
-          <div>
-            <dt class="text-white/50">Kontoinhaber</dt>
-            <dd class="mt-0.5 font-medium">FC Treptow e. V.</dd>
-          </div>
-          <div>
-            <dt class="text-white/50">IBAN</dt>
-            <dd class="mt-0.5 font-mono font-medium tracking-wide">DE57 1009 0000 3946 9680 04</dd>
-          </div>
-        </dl>
-        <p class="mt-6 text-sm text-white/75">Formulare wie die Eintrittserklärung findest du unter <a href="/downloads" class="font-semibold text-white underline decoration-club decoration-2 underline-offset-4">Downloads</a>.</p>
-      </div>
-    </div>
-  </section>
+<Base title={t.metaTitle} description={t.metaDesc}>
+  <Sections />
 </Base>

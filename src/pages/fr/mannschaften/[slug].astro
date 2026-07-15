@@ -1,0 +1,17 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Sections from '../../../components/sections/TeamDetailSections.astro';
+import { getLocalized } from '../../../i18n/content';
+import { defaultLocale } from '../../../i18n/languages';
+
+export async function getStaticPaths() {
+  const teams = await getLocalized('teams', "fr");
+  return teams.map((team) => ({ params: { slug: team.slug }, props: { team } }));
+}
+
+const { team } = Astro.props;
+const d = team.data;
+---
+<Base title={d.name} description={`${d.name} des FC Treptow e.V., ${d.league}. Training, Tabelle, Ergebnisse und Fotos.`}>
+  <Sections team={team} />
+</Base>

@@ -1,32 +1,12 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { getCollection } from 'astro:content';
+import Sections from '../../components/sections/NewsIndexSections.astro';
+import { pageT } from '../../i18n/pages';
+import { defaultLocale } from '../../i18n/languages';
 
-const news = (await getCollection('news')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-const fmt = (d: Date) => d.toLocaleDateString('de-DE', { day: '2-digit', month: 'long', year: 'numeric' });
+const lang = Astro.currentLocale ?? defaultLocale;
+const t = pageT('newsIndex', lang as any);
 ---
-<Base title="News" description="Neuigkeiten vom FC Treptow e.V.">
-  <section class="mx-auto max-w-6xl px-4 pb-8 pt-16 lg:px-6">
-    <h1 class="display text-4xl md:text-5xl">News</h1>
-    <p class="mt-4 max-w-xl text-base text-ink-soft">Spielberichte, Vereinsleben und alles, was den Club bewegt.</p>
-  </section>
-  <section class="mx-auto max-w-6xl px-4 py-12 lg:px-6">
-    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {news.map((n) => (
-        <a href={`/news/${n.id}`} class="reveal group overflow-hidden rounded-2xl border border-line bg-card transition-colors duration-300 hover:border-club/40">
-          <div class="overflow-hidden">
-            <img src={n.data.image} alt="" loading="lazy" class="aspect-[16/10] w-full object-cover transition-transform duration-700 ease-(--ease-club) group-hover:scale-[1.03]" />
-          </div>
-          <div class="p-6">
-            <div class="flex items-center gap-3 text-xs">
-              <span class="rounded-full bg-club/10 px-2.5 py-0.5 font-semibold text-club">{n.data.tag}</span>
-              <span class="text-ink-soft">{fmt(n.data.date)}</span>
-            </div>
-            <h2 class="mt-3 text-lg font-bold leading-snug">{n.data.title}</h2>
-            <p class="mt-2 line-clamp-3 text-sm leading-relaxed text-ink-soft">{n.data.teaser}</p>
-          </div>
-        </a>
-      ))}
-    </div>
-  </section>
+<Base title={t.metaTitle} description={t.metaDesc}>
+  <Sections />
 </Base>

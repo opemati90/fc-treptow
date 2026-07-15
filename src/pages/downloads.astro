@@ -1,29 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
+import Sections from '../components/sections/DownloadsSections.astro';
+import { pageT } from '../i18n/pages';
+import { defaultLocale } from '../i18n/languages';
 
-const files = [
-  { name: 'Eintrittserklärung', desc: 'Für neue Mitglieder, ausgefüllt und unterschrieben ans Vereinsbüro.' },
-  { name: 'Antrag auf Spielberechtigung', desc: 'Nötig für den Punktspielbetrieb, zusammen mit der Eintrittserklärung.' },
-  { name: 'Vereinssatzung', desc: 'Die aktuelle Satzung des FC Treptow e.V.' },
-  { name: 'Datenschutzinformation', desc: 'Informationen zur Verarbeitung von Mitgliederdaten.' },
-];
+const lang = Astro.currentLocale ?? defaultLocale;
+const t = pageT('downloads', lang as any);
 ---
-<Base title="Downloads" description="Formulare und Dokumente des FC Treptow e.V. zum Herunterladen.">
-  <section class="mx-auto max-w-6xl px-4 pb-8 pt-16 lg:px-6">
-    <h1 class="display text-4xl md:text-5xl">Downloads</h1>
-    <p class="mt-4 max-w-xl text-base leading-relaxed text-ink-soft">Alle Formulare und Vereinsdokumente an einem Ort. Die PDF-Dateien werden beim Umzug von der alten Webseite übernommen.</p>
-  </section>
-  <section class="mx-auto max-w-3xl px-4 py-12 lg:px-6">
-    <div class="space-y-4">
-      {files.map((f) => (
-        <a href="#" class="reveal group flex items-center justify-between gap-4 rounded-2xl border border-line bg-card p-6 transition-colors duration-300 hover:border-club/40">
-          <div>
-            <p class="font-bold">{f.name}</p>
-            <p class="mt-1 text-sm text-ink-soft">{f.desc}</p>
-          </div>
-          <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-paper text-sm font-semibold transition-all duration-300 group-hover:bg-club group-hover:text-white">PDF</span>
-        </a>
-      ))}
-    </div>
-  </section>
+<Base title={t.metaTitle} description={t.metaDesc}>
+  <Sections />
 </Base>

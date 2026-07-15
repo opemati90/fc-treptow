@@ -1,0 +1,12 @@
+---
+import Base from '../../layouts/Base.astro';
+import Sections from '../../components/sections/AnmeldungSections.astro';
+import { pageT } from '../../i18n/pages';
+import { defaultLocale } from '../../i18n/languages';
+
+const lang = Astro.currentLocale ?? defaultLocale;
+const t = pageT('anmeldung', lang as any);
+---
+<Base title={t.metaTitle} description={t.metaDesc}>
+  <Sections />
+</Base>

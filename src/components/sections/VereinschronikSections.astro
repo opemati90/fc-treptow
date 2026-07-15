@@ -1,0 +1,42 @@
+---
+import { defaultLocale, type Locale } from '../../i18n/languages';
+import { pageT } from '../../i18n/pages';
+
+const lang = (Astro.currentLocale ?? defaultLocale) as Locale;
+const t = pageT('vereinschronik', lang);
+
+const images: Record<string, string> = {
+  '1925': '/images/chronik-1925.jpg',
+  '1932': '/images/chronik-1932.jpg',
+  '1936': '/images/chronik-1932.jpg',
+  '1938': '/images/chronik-1938.png',
+  '1945': '/images/chronik-1938.png',
+  '1950': '/images/chronik-1950.jpg',
+  '1978': '/images/chronik-1974.jpg',
+  '1990': '/images/chronik-1990.jpg',
+  '1994': '/images/chronik-lok.png',
+  '1996': '/images/crest.jpg',
+};
+---
+<section class="mx-auto max-w-6xl px-4 pb-8 pt-16 lg:px-6">
+  <h1 class="display text-4xl md:text-5xl">{t.h1}</h1>
+  <p class="mt-4 max-w-2xl text-base leading-relaxed text-ink-soft">{t.intro}</p>
+</section>
+
+<section class="mx-auto max-w-3xl px-4 py-12 lg:px-6">
+  <ol class="relative space-y-10 border-s-2 border-line ps-8">
+    {t.timeline.map((item: any) => (
+      <li class="reveal relative">
+        <span class="absolute -start-[41px] top-1 flex h-4 w-4 items-center justify-center rounded-full border-2 border-club bg-paper"></span>
+        <div class="flex items-start gap-5">
+          <img src={images[item.year]} alt="" class="mt-1 hidden h-14 w-14 shrink-0 rounded-full bg-white object-contain p-1 ring-1 ring-line sm:block" />
+          <div>
+            <p class="display text-2xl text-club">{item.year}</p>
+            <h2 class="mt-1 text-lg font-bold">{item.title}</h2>
+            <p class="mt-2 text-sm leading-relaxed text-ink-soft">{item.text}</p>
+          </div>
+        </div>
+      </li>
+    ))}
+  </ol>
+</section>

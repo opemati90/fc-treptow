@@ -3,17 +3,23 @@ import SponsorMark from './SponsorMark.astro';
 import { getCollection } from 'astro:content';
 import { defaultLocale, type Locale } from '../i18n/languages';
 import { useTranslations } from '../i18n/ui';
+import { getLocalized } from '../i18n/content';
+import { getInstagramPosts } from '../lib/instagram';
+
+const localeToBcp47: Record<Locale, string> = { de: 'de-DE', en: 'en-GB', tr: 'tr-TR', ar: 'ar-EG', es: 'es-ES', fr: 'fr-FR' };
 
 const lang = (Astro.currentLocale ?? defaultLocale) as Locale;
 const t = useTranslations(lang);
+const prefix = lang === defaultLocale ? '' : `/${lang}`;
 
 const sponsors = (await getCollection('sponsors')).sort((a, b) => a.data.order - b.data.order);
-const teams = (await getCollection('teams')).sort((a, b) => a.data.order - b.data.order);
-const news = (await getCollection('news')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const teams = (await getLocalized('teams', lang)).sort((a, b) => a.data.order - b.data.order);
+const news = (await getLocalized('news', lang)).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 const [featured, ...restNews] = news;
 const results = teams
-  .flatMap((t) => t.data.results.map((r) => ({ ...r, team: t.data.shortName, teamId: t.id })))
+  .flatMap((team) => team.data.results.map((r) => ({ ...r, team: team.data.shortName, teamSlug: team.slug })))
   .slice(0, 4);
+const { posts: socialPosts, isLive: socialIsLive } = await getInstagramPosts(6);
 
 const chronik = [
   { year: '1925', img: '/images/chronik-1925.jpg', label: 'Werksverein Bewag' },
@@ -25,10 +31,14 @@ const chronik = [
   { year: '1994', img: '/images/crest.jpg', label: 'FC Treptow e.V.' },
 ];
 
-const fmt = (d: Date) => d.toLocaleDateString('de-DE', { day: '2-digit', month: 'long', year: 'numeric' });
+const fmt = (d: Date) => d.toLocaleDateString(localeToBcp47[lang], { day: '2-digit', month: 'long', year: 'numeric' });
+
+const SOCIAL_LINKS = {
+  instagram: 'https://www.instagram.com/fctreptow',
+  facebook: 'https://www.facebook.com/fctreptow',
+  tiktok: 'https://www.tiktok.com/@fctreptow',
+};
 ---
-<!-- Hero: einzige vollständig lokalisierte Kopie. Die übrigen Sektionen sind CMS-Inhalte
-     bzw. statischer Text, der noch auf Deutsch geführt wird, bis die restlichen Seiten übersetzt sind. -->
 <section class="relative flex min-h-[82dvh] items-end overflow-hidden bg-ink">
   <img src="/images/hero-match.jpg" alt="Vereinsheim des FC Treptow mit Wandbild und Vereinswappen" class="hero-media absolute inset-0 h-full w-full object-cover opacity-70" fetchpriority="high" />
   <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-transparent"></div>
@@ -41,11 +51,11 @@ const fmt = (d: Date) => d.toLocaleDateString('de-DE', { day: '2-digit', month: 
       {t.heroSubtitle}
     </p>
     <div class="mt-8 flex flex-wrap gap-3">
-      <a href="/mitgliedschaft" data-magnetic class="magnetic group inline-flex items-center gap-2 rounded-full bg-club px-6 py-3 text-sm font-semibold text-white transition-colors duration-300 ease-(--ease-club) hover:bg-club-deep">
+      <a href={`${prefix}/mitgliedschaft`} data-magnetic class="magnetic group inline-flex items-center gap-2 rounded-full bg-club px-6 py-3 text-sm font-semibold text-white transition-colors duration-300 ease-(--ease-club) hover:bg-club-deep">
         {t.joinCta}
         <span class="flex h-6 w-6 items-center justify-center rounded-full bg-white/15 transition-transform duration-300 ease-(--ease-club) group-hover:translate-x-0.5 rtl:rotate-180">→</span>
       </a>
-      <a href="/mannschaften" class="inline-flex items-center rounded-full border border-white/30 bg-white/10 px-6 py-3 text-sm font-semibold text-white backdrop-blur-sm transition-colors duration-300 ease-(--ease-club) hover:bg-white/20">
+      <a href={`${prefix}/mannschaften`} class="inline-flex items-center rounded-full border border-white/30 bg-white/10 px-6 py-3 text-sm font-semibold text-white backdrop-blur-sm transition-colors duration-300 ease-(--ease-club) hover:bg-white/20">
         {t.heroTeamsCta}
       </a>
     </div>
@@ -55,11 +65,11 @@ const fmt = (d: Date) => d.toLocaleDateString('de-DE', { day: '2-digit', month: 
 <!-- Teams bento -->
 <section class="mx-auto max-w-6xl px-4 py-24 lg:px-6">
   <div class="reveal flex flex-wrap items-end justify-between gap-4">
-    <h2 class="display text-3xl md:text-4xl">Unsere Mannschaften</h2>
-    <a href="/mannschaften" class="text-sm font-semibold text-club hover:text-club-deep">Alle Teams ansehen</a>
+    <h2 class="display text-3xl md:text-4xl">{t.teamsHeading}</h2>
+    <a href={`${prefix}/mannschaften`} class="text-sm font-semibold text-club hover:text-club-deep">{t.allTeams}</a>
   </div>
   <div class="stagger mt-10 grid grid-cols-1 gap-6 md:grid-cols-12">
-    <a href={`/mannschaften/${teams[0].id}`} class="group relative overflow-hidden rounded-2xl bg-ink md:col-span-7 md:row-span-3 md:min-h-[420px]">
+    <a href={`${prefix}/mannschaften/${teams[0].slug}`} class="group relative overflow-hidden rounded-2xl bg-ink md:col-span-7 md:row-span-3 md:min-h-[420px]">
       <img src={teams[0].data.image} alt={teams[0].data.name} class="absolute inset-0 h-full w-full object-cover opacity-80 transition-transform duration-700 ease-(--ease-club) group-hover:scale-[1.03]" />
       <div class="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/20 to-transparent"></div>
       <div class="relative flex h-full min-h-[280px] flex-col justify-end p-7">
@@ -68,12 +78,12 @@ const fmt = (d: Date) => d.toLocaleDateString('de-DE', { day: '2-digit', month: 
       </div>
     </a>
     {teams.slice(1).map((team) => (
-      <a href={`/mannschaften/${team.id}`} class="group flex items-center justify-between gap-4 rounded-2xl border border-line bg-card p-6 transition-all duration-300 ease-(--ease-club) hover:border-club/40 hover:shadow-[0_12px_40px_-16px_rgba(191,46,39,0.25)] md:col-span-5">
+      <a href={`${prefix}/mannschaften/${team.slug}`} class="group flex items-center justify-between gap-4 rounded-2xl border border-line bg-card p-6 transition-all duration-300 ease-(--ease-club) hover:border-club/40 hover:shadow-[0_12px_40px_-16px_rgba(191,46,39,0.25)] md:col-span-5">
         <div>
           <p class="text-sm text-ink-soft">{team.data.league}</p>
           <p class="display mt-1 text-xl">{team.data.name}</p>
         </div>
-        <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-paper text-ink transition-all duration-300 ease-(--ease-club) group-hover:bg-club group-hover:text-white">→</span>
+        <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-paper text-ink transition-all duration-300 ease-(--ease-club) group-hover:bg-club group-hover:text-white rtl:rotate-180">→</span>
       </a>
     ))}
   </div>
@@ -83,12 +93,12 @@ const fmt = (d: Date) => d.toLocaleDateString('de-DE', { day: '2-digit', month: 
 <section class="border-y border-line bg-card">
   <div class="mx-auto max-w-6xl px-4 py-20 lg:px-6">
     <div class="reveal flex flex-wrap items-end justify-between gap-4">
-      <h2 class="display text-3xl md:text-4xl">Letzte Ergebnisse</h2>
-      <p class="text-sm text-ink-soft">Beispieldaten, live später über fussball.de</p>
+      <h2 class="display text-3xl md:text-4xl">{t.resultsHeading}</h2>
+      <p class="text-sm text-ink-soft">{t.resultsSubtitle}</p>
     </div>
     <div class="stagger mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {results.map((r) => (
-        <a href={`/mannschaften/${r.teamId}`} class="group rounded-2xl border border-line bg-paper p-5 transition-colors duration-300 hover:border-club/40">
+        <a href={`${prefix}/mannschaften/${r.teamSlug}`} class="group rounded-2xl border border-line bg-paper p-5 transition-colors duration-300 hover:border-club/40">
           <div class="flex items-center justify-between text-xs text-ink-soft">
             <span>{r.date}</span>
             <span class="rounded-full bg-club/10 px-2.5 py-0.5 font-semibold text-club">{r.team}</span>
@@ -104,11 +114,11 @@ const fmt = (d: Date) => d.toLocaleDateString('de-DE', { day: '2-digit', month: 
 <!-- News -->
 <section class="mx-auto max-w-6xl px-4 py-24 lg:px-6">
   <div class="reveal flex flex-wrap items-end justify-between gap-4">
-    <h2 class="display text-3xl md:text-4xl">Neues aus dem Verein</h2>
-    <a href="/news" class="text-sm font-semibold text-club hover:text-club-deep">Alle News</a>
+    <h2 class="display text-3xl md:text-4xl">{t.newsHeading}</h2>
+    <a href={`${prefix}/news`} class="text-sm font-semibold text-club hover:text-club-deep">{t.allNews}</a>
   </div>
   <div class="stagger mt-10 grid gap-6 lg:grid-cols-2">
-    <a href={`/news/${featured.id}`} class="group overflow-hidden rounded-2xl border border-line bg-card">
+    <a href={`${prefix}/news/${featured.slug}`} class="group overflow-hidden rounded-2xl border border-line bg-card">
       <div class="overflow-hidden">
         <img src={featured.data.image} alt="" class="aspect-[16/9] w-full object-cover transition-transform duration-700 ease-(--ease-club) group-hover:scale-[1.03]" />
       </div>
@@ -121,7 +131,7 @@ const fmt = (d: Date) => d.toLocaleDateString('de-DE', { day: '2-digit', month: 
     </a>
     <div class="flex flex-col gap-6">
       {restNews.slice(0, 2).map((n) => (
-        <a href={`/news/${n.id}`} class="group flex flex-1 gap-5 rounded-2xl border border-line bg-card p-6 transition-colors duration-300 ease-(--ease-club) hover:border-club/40">
+        <a href={`${prefix}/news/${n.slug}`} class="group flex flex-1 gap-5 rounded-2xl border border-line bg-card p-6 transition-colors duration-300 ease-(--ease-club) hover:border-club/40">
           <img src={n.data.image} alt="" class="hidden h-28 w-40 shrink-0 rounded-xl object-cover sm:block" />
           <div>
             <p class="text-xs font-semibold uppercase tracking-widest text-club">{n.data.tag}</p>
@@ -138,14 +148,12 @@ const fmt = (d: Date) => d.toLocaleDateString('de-DE', { day: '2-digit', month: 
 <section class="overflow-hidden border-y border-line bg-card">
   <div class="mx-auto max-w-6xl px-4 py-20 lg:px-6">
     <div class="reveal max-w-2xl">
-      <h2 class="display text-3xl md:text-4xl">Über 100 Jahre Geschichte</h2>
-      <p class="mt-4 text-base leading-relaxed text-ink-soft">
-        Vom Werksverein der Bewag 1925 über Turbine Berlin bis zum FC Treptow: sieben Namen, ein Verein.
-      </p>
+      <h2 class="display text-3xl md:text-4xl">{t.chronikHeading}</h2>
+      <p class="mt-4 text-base leading-relaxed text-ink-soft">{t.chronikSubtitle}</p>
     </div>
     <div class="stagger mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4">
       {chronik.map((c) => (
-        <a href="/vereinschronik" class="group w-40 shrink-0 snap-start rounded-2xl border border-line bg-paper p-5 text-center transition-colors duration-300 hover:border-club/40">
+        <a href={`${prefix}/vereinschronik`} class="group w-40 shrink-0 snap-start rounded-2xl border border-line bg-paper p-5 text-center transition-colors duration-300 hover:border-club/40">
           <img src={c.img} alt={c.label} class="mx-auto h-16 w-16 rounded-full bg-white object-contain p-1 ring-1 ring-line" />
           <p class="display mt-4 text-lg text-club">{c.year}</p>
           <p class="mt-1 text-xs leading-snug text-ink-soft">{c.label}</p>
@@ -159,18 +167,18 @@ const fmt = (d: Date) => d.toLocaleDateString('de-DE', { day: '2-digit', month: 
 <section class="mx-auto max-w-6xl px-4 py-24 lg:px-6">
   <div class="reveal flex flex-wrap items-end justify-between gap-4">
     <div>
-      <h2 class="display text-3xl md:text-4xl">Unsere Partner</h2>
-      <p class="mt-3 max-w-md text-sm leading-relaxed text-ink-soft">Sie machen Trikots, Trainingsmaterial und Vereinsleben möglich. Danke!</p>
+      <h2 class="display text-3xl md:text-4xl">{t.sponsorsHeading}</h2>
+      <p class="mt-3 max-w-md text-sm leading-relaxed text-ink-soft">{t.sponsorsSubtitle}</p>
     </div>
-    <a href="/sponsoren" class="text-sm font-semibold text-club hover:text-club-deep">Partner werden</a>
+    <a href={`${prefix}/sponsoren`} class="text-sm font-semibold text-club hover:text-club-deep">{t.becomePartner}</a>
   </div>
   <div class="stagger mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
     {sponsors.map((s) => (
-      <a href={s.data.url ?? '/sponsoren'} rel="noopener" class="group flex flex-col items-center gap-4 rounded-2xl border border-line bg-card px-6 py-10 text-center transition-all duration-300 ease-(--ease-club) hover:-translate-y-1 hover:border-club/40 hover:shadow-[0_16px_40px_-20px_rgba(20,23,31,0.35)]">
+      <a href={s.data.url ?? `${prefix}/sponsoren`} rel="noopener" class="group flex flex-col items-center gap-4 rounded-2xl border border-line bg-card px-6 py-10 text-center transition-all duration-300 ease-(--ease-club) hover:-translate-y-1 hover:border-club/40 hover:shadow-[0_16px_40px_-20px_rgba(20,23,31,0.35)]">
         <SponsorMark name={s.data.name} logo={s.data.logo} />
         <div>
           <p class="text-sm font-bold leading-snug">{s.data.name}</p>
-          {s.data.tier === 'Hauptsponsor' && <p class="mt-1 text-xs font-semibold uppercase tracking-widest text-club">Hauptsponsor</p>}
+          {s.data.tier === 'Hauptsponsor' && <p class="mt-1 text-xs font-semibold uppercase tracking-widest text-club">{t.hauptsponsor}</p>}
         </div>
       </a>
     ))}
@@ -184,21 +192,19 @@ const fmt = (d: Date) => d.toLocaleDateString('de-DE', { day: '2-digit', month: 
       <img src="/images/willi-saenger.png" alt="Die Willi-Sänger-Sportanlage" class="aspect-[4/3] w-full object-cover" loading="lazy" />
     </div>
     <div class="reveal">
-      <h2 class="display text-3xl md:text-4xl">Training auf dem Kunstrasen</h2>
-      <p class="mt-4 max-w-md text-base leading-relaxed text-ink-soft">
-        Willi-Sänger-Sportanlage, Köpenicker Landstraße 186, 12437 Berlin. Komm einfach zum Probetraining vorbei.
-      </p>
+      <h2 class="display text-3xl md:text-4xl">{t.trainingHeading}</h2>
+      <p class="mt-4 max-w-md text-base leading-relaxed text-ink-soft">{t.trainingIntro}</p>
       <dl class="mt-8 space-y-4">
         <div class="flex items-center justify-between border-b border-line pb-4">
-          <dt class="text-sm font-medium">Dienstag</dt>
-          <dd class="text-sm text-ink-soft">18:00 bis 21:00 Uhr</dd>
+          <dt class="text-sm font-medium">{t.tuesday}</dt>
+          <dd class="text-sm text-ink-soft">{t.trainingTime}</dd>
         </div>
         <div class="flex items-center justify-between border-b border-line pb-4">
-          <dt class="text-sm font-medium">Donnerstag</dt>
-          <dd class="text-sm text-ink-soft">18:00 bis 21:00 Uhr</dd>
+          <dt class="text-sm font-medium">{t.thursday}</dt>
+          <dd class="text-sm text-ink-soft">{t.trainingTime}</dd>
         </div>
       </dl>
-      <a href="/kontakt" class="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-club hover:text-club-deep">Anfahrt ansehen →</a>
+      <a href={`${prefix}/kontakt`} class="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-club hover:text-club-deep">{t.directionsCta} <span class="rtl:rotate-180">→</span></a>
     </div>
   </div>
 </section>
@@ -208,15 +214,32 @@ const fmt = (d: Date) => d.toLocaleDateString('de-DE', { day: '2-digit', month: 
   <div class="mx-auto max-w-6xl px-4 py-20 lg:px-6">
     <div class="reveal flex flex-wrap items-end justify-between gap-4">
       <div>
-        <h2 class="display text-3xl md:text-4xl">Der Club im Netz</h2>
-        <p class="mt-3 text-sm text-ink-soft">Spieltagsfotos, Storys und Highlights aus dem Vereinsleben.</p>
+        <h2 class="display text-3xl md:text-4xl">{t.socialHeading}</h2>
+        <p class="mt-3 text-sm text-ink-soft">{t.socialSubtitle}</p>
+        <span class:list={['mt-3 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-semibold', socialIsLive ? 'bg-club/10 text-club' : 'bg-ink/5 text-ink-soft']}>
+          <span class:list={['h-1.5 w-1.5 rounded-full', socialIsLive ? 'bg-club' : 'bg-ink-soft/50']}></span>
+          {socialIsLive ? t.socialLiveBadge : t.socialFallbackBadge}
+        </span>
       </div>
-      <a href="https://www.instagram.com" rel="noopener" class="inline-flex items-center rounded-full border border-ink/15 px-5 py-2.5 text-sm font-semibold transition-colors duration-300 hover:border-club hover:text-club">Auf Instagram folgen</a>
+      <div class="flex flex-wrap gap-2.5">
+        <a href={SOCIAL_LINKS.instagram} rel="noopener" class="inline-flex items-center gap-2 rounded-full border border-ink/15 px-4 py-2.5 text-sm font-semibold transition-colors duration-300 hover:border-club hover:text-club">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="5" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.6"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor"/></svg>
+          {t.followInstagram}
+        </a>
+        <a href={SOCIAL_LINKS.facebook} rel="noopener" class="inline-flex items-center gap-2 rounded-full border border-ink/15 px-4 py-2.5 text-sm font-semibold transition-colors duration-300 hover:border-club hover:text-club">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 8.5h2V5.2c-.35-.05-1.55-.15-2.95-.15-2.92 0-4.92 1.78-4.92 5.05V13H6.4v3.7h2.73V22h3.72v-5.3h2.62l.42-3.7h-3.04v-2.5c0-1.07.29-1.8 1.85-1.8Z" stroke="currentColor" stroke-width="0.4" fill="currentColor"/></svg>
+          {t.followFacebook}
+        </a>
+        <a href={SOCIAL_LINKS.tiktok} rel="noopener" class="inline-flex items-center gap-2 rounded-full border border-ink/15 px-4 py-2.5 text-sm font-semibold transition-colors duration-300 hover:border-club hover:text-club">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14 3v10.6a2.9 2.9 0 1 1-2.4-2.86" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M14 3c.4 2.6 2.2 4.3 4.6 4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          {t.followTiktok}
+        </a>
+      </div>
     </div>
     <div class="stagger mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-6">
-      {['fct-insta-jubel','fct-insta-fans','fct-insta-training','fct-insta-kabine','fct-insta-flutlicht','fct-insta-kiez'].map((seed, i) => (
-        <a href="https://www.instagram.com" rel="noopener" class:list={['group overflow-hidden rounded-xl', i > 3 && 'hidden md:block']}>
-          <img src={`https://picsum.photos/seed/${seed}/500/500`} alt="Foto aus dem Vereinsleben" loading="lazy" class="aspect-square w-full object-cover transition-transform duration-500 ease-(--ease-club) group-hover:scale-[1.05]" />
+      {socialPosts.map((post, i) => (
+        <a href={post.permalink} rel="noopener" class:list={['group overflow-hidden rounded-xl', i > 3 && 'hidden md:block']}>
+          <img src={post.imageUrl} alt={post.caption || t.socialPhotoAlt} loading="lazy" class="aspect-square w-full object-cover transition-transform duration-500 ease-(--ease-club) group-hover:scale-[1.05]" />
         </a>
       ))}
     </div>
@@ -228,12 +251,12 @@ const fmt = (d: Date) => d.toLocaleDateString('de-DE', { day: '2-digit', month: 
   <div class="reveal overflow-hidden rounded-2xl bg-club px-8 py-14 text-white md:px-14">
     <div class="flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
       <div>
-        <h2 class="display text-3xl md:text-4xl">Lust auf Fußball im Kiez?</h2>
-        <p class="mt-3 max-w-md text-white/85">Ab 10 Euro im Monat bist du dabei. Probetraining jederzeit möglich.</p>
+        <h2 class="display text-3xl md:text-4xl">{t.membershipHeading}</h2>
+        <p class="mt-3 max-w-md text-white/85">{t.membershipSubtitle}</p>
       </div>
-      <a href="/mitgliedschaft" class="group inline-flex shrink-0 items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-club transition-transform duration-300 ease-(--ease-club) active:scale-[0.98]">
-        Jetzt beitreten
-        <span class="flex h-6 w-6 items-center justify-center rounded-full bg-club/10 transition-transform duration-300 ease-(--ease-club) group-hover:translate-x-0.5">→</span>
+      <a href={`${prefix}/mitgliedschaft`} class="group inline-flex shrink-0 items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-club transition-transform duration-300 ease-(--ease-club) active:scale-[0.98]">
+        {t.joinNow}
+        <span class="flex h-6 w-6 items-center justify-center rounded-full bg-club/10 transition-transform duration-300 ease-(--ease-club) group-hover:translate-x-0.5 rtl:rotate-180">→</span>
       </a>
     </div>
   </div>

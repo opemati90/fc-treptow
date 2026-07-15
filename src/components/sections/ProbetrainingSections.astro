@@ -1,0 +1,83 @@
+---
+import { defaultLocale, type Locale } from '../../i18n/languages';
+import { pageT } from '../../i18n/pages';
+
+const lang = (Astro.currentLocale ?? defaultLocale) as Locale;
+const t = pageT('probetraining', lang);
+---
+<section class="mx-auto max-w-6xl px-4 pb-8 pt-16 lg:px-6">
+  <h1 class="display text-4xl md:text-5xl">{t.h1}</h1>
+  <p class="mt-4 max-w-xl text-base leading-relaxed text-ink-soft">{t.intro}</p>
+</section>
+
+<section class="mx-auto max-w-6xl px-4 py-12 lg:px-6">
+  <div class="grid gap-10 lg:grid-cols-5">
+    <form id="trial-form" class="lg:col-span-3 rounded-2xl border border-line bg-card p-8" novalidate>
+      <div class="grid gap-6 sm:grid-cols-2">
+        <div class="flex flex-col gap-2">
+          <label for="name" class="text-sm font-semibold">{t.name}</label>
+          <input id="name" name="name" type="text" required class="rounded-xl border border-line bg-paper px-4 py-3 text-sm outline-none transition-colors focus:border-club" />
+        </div>
+        <div class="flex flex-col gap-2">
+          <label for="age" class="text-sm font-semibold">{t.age}</label>
+          <input id="age" name="age" type="number" min="14" max="99" required class="rounded-xl border border-line bg-paper px-4 py-3 text-sm outline-none transition-colors focus:border-club" />
+        </div>
+        <div class="flex flex-col gap-2">
+          <label for="email" class="text-sm font-semibold">{t.email}</label>
+          <input id="email" name="email" type="email" required class="rounded-xl border border-line bg-paper px-4 py-3 text-sm outline-none transition-colors focus:border-club" />
+        </div>
+        <div class="flex flex-col gap-2">
+          <label for="phone" class="text-sm font-semibold">{t.phone} <span class="font-normal text-ink-soft">{t.optional}</span></label>
+          <input id="phone" name="phone" type="tel" class="rounded-xl border border-line bg-paper px-4 py-3 text-sm outline-none transition-colors focus:border-club" />
+        </div>
+        <div class="flex flex-col gap-2 sm:col-span-2">
+          <label for="team" class="text-sm font-semibold">{t.team}</label>
+          <select id="team" name="team" class="rounded-xl border border-line bg-paper px-4 py-3 text-sm outline-none transition-colors focus:border-club">
+            {t.teamOptions.map((o: string) => <option>{o}</option>)}
+          </select>
+        </div>
+        <div class="flex flex-col gap-2 sm:col-span-2">
+          <label for="experience" class="text-sm font-semibold">{t.experience} <span class="font-normal text-ink-soft">{t.experienceHint}</span></label>
+          <textarea id="experience" name="experience" rows="4" class="rounded-xl border border-line bg-paper px-4 py-3 text-sm outline-none transition-colors focus:border-club"></textarea>
+        </div>
+      </div>
+      <p id="trial-error" class="mt-4 hidden text-sm font-medium text-club">{t.errorMsg}</p>
+      <button type="submit" class="group mt-6 inline-flex items-center gap-2 rounded-full bg-club px-6 py-3 text-sm font-semibold text-white transition-all duration-300 ease-(--ease-club) hover:bg-club-deep active:scale-[0.98]">
+        {t.submit}
+        <span class="flex h-6 w-6 items-center justify-center rounded-full bg-white/15 transition-transform duration-300 ease-(--ease-club) group-hover:translate-x-0.5 rtl:rotate-180">→</span>
+      </button>
+    </form>
+    <div id="trial-success" class="hidden lg:col-span-3 rounded-2xl border border-line bg-card p-10 text-center">
+      <span class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-club/10 text-2xl text-club">✓</span>
+      <h2 class="display mt-5 text-2xl">{t.successTitle}</h2>
+      <p class="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-ink-soft">{t.successText}</p>
+    </div>
+
+    <aside class="lg:col-span-2">
+      <div class="rounded-2xl bg-ink p-8 text-white">
+        <h2 class="display text-xl">{t.sideTitle}</h2>
+        <ul class="mt-5 space-y-4 text-sm leading-relaxed text-white/80">
+          <li>{t.sideItems[0]}</li>
+          <li>{t.sideItems[1]}</li>
+          <li>{t.sideItems[2]} <a href="/anmeldung" class="font-semibold underline decoration-club decoration-2 underline-offset-4">{t.regLinkLabel}</a>.</li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<script>
+  const form = document.getElementById('trial-form') as HTMLFormElement | null;
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const err = document.getElementById('trial-error');
+    if (!form.checkValidity()) {
+      err?.classList.remove('hidden');
+      return;
+    }
+    err?.classList.add('hidden');
+    // Produktion: hier per fetch an Formspree/Web3Forms senden (kostenloser Formular-Dienst)
+    form.classList.add('hidden');
+    document.getElementById('trial-success')?.classList.remove('hidden');
+  });
+</script>

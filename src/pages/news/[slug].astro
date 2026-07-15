@@ -1,27 +1,16 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { getCollection, render } from 'astro:content';
+import Sections from '../../components/sections/NewsDetailSections.astro';
+import { getLocalized } from '../../i18n/content';
+import { defaultLocale } from '../../i18n/languages';
 
 export async function getStaticPaths() {
-  const news = await getCollection('news');
-  return news.map((n) => ({ params: { slug: n.id }, props: { post: n } }));
+  const news = await getLocalized('news', defaultLocale);
+  return news.map((post) => ({ params: { slug: post.slug }, props: { post } }));
 }
 
 const { post } = Astro.props;
-const { Content } = await render(post);
-const fmt = (d: Date) => d.toLocaleDateString('de-DE', { day: '2-digit', month: 'long', year: 'numeric' });
 ---
 <Base title={post.data.title} description={post.data.teaser}>
-  <article class="mx-auto max-w-3xl px-4 py-16 lg:px-6">
-    <a href="/news" class="text-sm font-semibold text-club hover:text-club-deep">← Alle News</a>
-    <div class="mt-6 flex items-center gap-3 text-xs">
-      <span class="rounded-full bg-club/10 px-2.5 py-0.5 font-semibold text-club">{post.data.tag}</span>
-      <span class="text-ink-soft">{fmt(post.data.date)}</span>
-    </div>
-    <h1 class="display mt-4 text-3xl leading-tight md:text-4xl">{post.data.title}</h1>
-    {post.data.image && <img src={post.data.image} alt="" class="mt-8 aspect-[16/9] w-full rounded-2xl object-cover" />}
-    <div class="mt-8 space-y-5 text-base leading-relaxed text-ink [&>p]:text-ink/90">
-      <Content />
-    </div>
-  </article>
+  <Sections post={post} />
 </Base>

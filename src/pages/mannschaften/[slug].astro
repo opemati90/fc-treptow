@@ -1,134 +1,17 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { getCollection, render } from 'astro:content';
+import Sections from '../../components/sections/TeamDetailSections.astro';
+import { getLocalized } from '../../i18n/content';
+import { defaultLocale } from '../../i18n/languages';
 
 export async function getStaticPaths() {
-  const teams = await getCollection('teams');
-  return teams.map((t) => ({ params: { slug: t.id }, props: { team: t } }));
+  const teams = await getLocalized('teams', defaultLocale);
+  return teams.map((team) => ({ params: { slug: team.slug }, props: { team } }));
 }
 
 const { team } = Astro.props;
-const { Content } = await render(team);
 const d = team.data;
 ---
 <Base title={d.name} description={`${d.name} des FC Treptow e.V., ${d.league}. Training, Tabelle, Ergebnisse und Fotos.`}>
-  <!-- Team hero -->
-  <section class="relative flex min-h-[55dvh] items-end overflow-hidden bg-ink">
-    <img src={d.image} alt={d.name} class="absolute inset-0 h-full w-full object-cover opacity-70" fetchpriority="high" />
-    <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/30 to-transparent"></div>
-    <div class="relative mx-auto w-full max-w-6xl px-4 pb-12 pt-24 lg:px-6">
-      <p class="text-sm font-semibold text-white/75">{d.league}</p>
-      <h1 class="display mt-2 text-4xl text-white md:text-5xl">{d.name}</h1>
-    </div>
-  </section>
-
-  <!-- Info + table -->
-  <section class="mx-auto max-w-6xl px-4 py-16 lg:px-6">
-    <div class="grid gap-10 lg:grid-cols-5">
-      <div class="lg:col-span-2">
-        <div class="prose-p:leading-relaxed text-base leading-relaxed text-ink-soft">
-          <Content />
-        </div>
-        <dl class="mt-8 space-y-4">
-          <div class="border-b border-line pb-4">
-            <dt class="text-xs font-semibold uppercase tracking-widest text-ink-soft">Training</dt>
-            <dd class="mt-1 text-sm font-medium">{d.training.join(' und ')}</dd>
-          </div>
-          <div class="border-b border-line pb-4">
-            <dt class="text-xs font-semibold uppercase tracking-widest text-ink-soft">Platz</dt>
-            <dd class="mt-1 text-sm font-medium">{d.ground}</dd>
-          </div>
-          <div class="border-b border-line pb-4">
-            <dt class="text-xs font-semibold uppercase tracking-widest text-ink-soft">Kontakt</dt>
-            <dd class="mt-1 text-sm font-medium"><a href={`mailto:${d.contact}`} class="text-club hover:text-club-deep">{d.contact}</a></dd>
-          </div>
-        </dl>
-        <a href="/mitgliedschaft" class="group mt-8 inline-flex items-center gap-2 rounded-full bg-club px-6 py-3 text-sm font-semibold text-white transition-all duration-300 ease-(--ease-club) hover:bg-club-deep active:scale-[0.98]">
-          Zum Probetraining
-          <span class="flex h-6 w-6 items-center justify-center rounded-full bg-white/15 transition-transform duration-300 ease-(--ease-club) group-hover:translate-x-0.5">→</span>
-        </a>
-      </div>
-
-      <div class="lg:col-span-3">
-        {d.table.length > 0 && (
-          <div class="reveal rounded-2xl border border-line bg-card p-6">
-            <div class="flex items-center justify-between">
-              <h2 class="display text-xl">Tabelle</h2>
-              <span class="text-xs text-ink-soft">Ausschnitt, Beispieldaten</span>
-            </div>
-            <table class="mt-5 w-full text-sm">
-              <thead>
-                <tr class="text-left text-xs uppercase tracking-wider text-ink-soft">
-                  <th class="pb-3 pr-2 font-medium">#</th>
-                  <th class="pb-3 font-medium">Team</th>
-                  <th class="pb-3 text-center font-medium">Sp.</th>
-                  <th class="pb-3 text-center font-medium">Diff.</th>
-                  <th class="pb-3 text-right font-medium">Pkt.</th>
-                </tr>
-              </thead>
-              <tbody>
-                {d.table.map((row) => (
-                  <tr class:list={['border-t border-line', row.us && 'bg-club/5 font-semibold']}>
-                    <td class="py-3 pr-2 text-ink-soft">{row.pos}</td>
-                    <td class:list={['py-3', row.us && 'text-club']}>{row.team}</td>
-                    <td class="py-3 text-center text-ink-soft">{row.games}</td>
-                    <td class="py-3 text-center text-ink-soft">{row.diff}</td>
-                    <td class="py-3 text-right">{row.points}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            <p class="mt-4 text-xs text-ink-soft">Vollständige Tabelle und Spielplan auf <a href="https://www.fussball.de" rel="noopener" class="font-semibold text-club hover:text-club-deep">fussball.de</a></p>
-          </div>
-        )}
-
-        {d.results.length > 0 && (
-          <div class="reveal mt-6">
-            <h2 class="display text-xl">Letzte Spiele</h2>
-            <div class="mt-4 space-y-3">
-              {d.results.map((r) => (
-                <div class="flex items-center justify-between gap-4 rounded-2xl border border-line bg-card px-5 py-4">
-                  <div class="min-w-0">
-                    <p class="truncate text-sm font-medium">{r.home} <span class="text-ink-soft">gegen</span> {r.away}</p>
-                    <p class="mt-0.5 text-xs text-ink-soft">{r.date}{r.note ? ` · ${r.note}` : ''}</p>
-                  </div>
-                  <p class="display shrink-0 text-2xl">{r.score}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
-  </section>
-
-  <!-- Gallery carousel -->
-  {d.gallery.length > 0 && (
-    <section class="border-t border-line bg-card">
-      <div class="mx-auto max-w-6xl px-4 py-16 lg:px-6">
-        <div class="reveal flex items-end justify-between gap-4">
-          <h2 class="display text-2xl md:text-3xl">Spieltagsfotos</h2>
-          <div class="hidden gap-2 md:flex">
-            <button data-carousel-prev class="flex h-10 w-10 items-center justify-center rounded-full border border-line bg-paper transition-colors duration-300 hover:border-club hover:text-club" aria-label="Zurück">←</button>
-            <button data-carousel-next class="flex h-10 w-10 items-center justify-center rounded-full border border-line bg-paper transition-colors duration-300 hover:border-club hover:text-club" aria-label="Weiter">→</button>
-          </div>
-        </div>
-        <div data-carousel class="reveal mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pb-4">
-          {d.gallery.map((g) => (
-            <figure class="w-[85%] shrink-0 snap-start overflow-hidden rounded-2xl sm:w-[60%] lg:w-[45%]">
-              <img src={g.src} alt={g.alt} loading="lazy" class="aspect-[3/2] w-full object-cover" />
-              <figcaption class="mt-2 text-xs text-ink-soft">{g.alt}</figcaption>
-            </figure>
-          ))}
-        </div>
-      </div>
-    </section>
-  )}
-
-  <script>
-    const track = document.querySelector('[data-carousel]') as HTMLElement | null;
-    const step = () => (track?.querySelector('figure')?.clientWidth ?? 400) + 16;
-    document.querySelector('[data-carousel-prev]')?.addEventListener('click', () => track?.scrollBy({ left: -step(), behavior: 'smooth' }));
-    document.querySelector('[data-carousel-next]')?.addEventListener('click', () => track?.scrollBy({ left: step(), behavior: 'smooth' }));
-  </script>
+  <Sections team={team} />
 </Base>

@@ -1,0 +1,16 @@
+---
+import { defaultLocale, type Locale } from '../../i18n/languages';
+import { pageT } from '../../i18n/pages';
+
+const lang = (Astro.currentLocale ?? defaultLocale) as Locale;
+const t = pageT('impressum', lang);
+---
+<section class="mx-auto max-w-3xl px-4 py-16 lg:px-6">
+  <h1 class="display text-4xl">{t.h1}</h1>
+  <div class="mt-8 space-y-4 text-sm leading-relaxed text-ink-soft">
+    <p class="font-semibold text-ink">FC Treptow e. V.</p>
+    <p>Willi-Sänger-Sportanlage<br />Köpenicker Landstraße 186<br />12437 Berlin</p>
+    <p>{t.email}: <a href="mailto:kontakt@fc-treptow.de" class="font-semibold text-club">kontakt@fc-treptow.de</a></p>
+    <p>{t.note}</p>
+  </div>
+</section>
