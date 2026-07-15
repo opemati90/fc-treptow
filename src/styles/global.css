@@ -1,0 +1,51 @@
+@import "tailwindcss";
+@import "@fontsource-variable/archivo";
+@import "@fontsource/archivo-black";
+
+@theme {
+  --font-sans: "Archivo Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Archivo Black", "Archivo Variable", ui-sans-serif, sans-serif;
+
+  --color-paper: #f6f5f1;
+  --color-card: #fffefb;
+  --color-ink: #14171f;
+  --color-ink-soft: #555b66;
+  --color-club: #bf2e27;
+  --color-club-deep: #99211b;
+  --color-line: #e5e2da;
+
+  --ease-club: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--color-paper);
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+  background: var(--color-paper);
+  -webkit-font-smoothing: antialiased;
+}
+
+.display {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+/* Scroll reveal */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 0.8s var(--ease-club),
+      transform 0.8s var(--ease-club);
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,30 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const teams = (await getCollection('teams')).sort((a, b) => a.data.order - b.data.order);
+---
+<Base title="Mannschaften" description="Alle Teams des FC Treptow e.V.: drei Herrenmannschaften und die Freizeit Kickers.">
+  <section class="mx-auto max-w-6xl px-4 pb-8 pt-16 lg:px-6">
+    <h1 class="display text-4xl md:text-5xl">Mannschaften</h1>
+    <p class="mt-4 max-w-xl text-base leading-relaxed text-ink-soft">
+      Drei Herrenteams im Punktspielbetrieb und die Freizeit Kickers. Alle trainieren auf der Willi-Sänger-Sportanlage.
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-12 lg:px-6">
+    <div class="grid gap-6 md:grid-cols-2">
+      {teams.map((t) => (
+        <a href={`/mannschaften/${t.id}`} class="reveal group relative overflow-hidden rounded-2xl bg-ink">
+          <img src={t.data.image} alt={t.data.name} class="absolute inset-0 h-full w-full object-cover opacity-75 transition-transform duration-700 ease-(--ease-club) group-hover:scale-[1.03]" loading="lazy" />
+          <div class="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/30 to-transparent"></div>
+          <div class="relative flex min-h-[300px] flex-col justify-end p-7">
+            <p class="text-sm font-medium text-white/70">{t.data.league}</p>
+            <p class="display mt-1 text-2xl text-white">{t.data.name}</p>
+            <p class="mt-3 text-sm text-white/70">Training: {t.data.training.join(' und ')}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+</Base>

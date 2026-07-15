@@ -1,0 +1,121 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Anmeldung" description="Online-Anmeldung für neue Spieler des FC Treptow e.V. nach dem Probetraining.">
+  <section class="mx-auto max-w-6xl px-4 pb-8 pt-16 lg:px-6">
+    <h1 class="display text-4xl md:text-5xl">Anmeldung</h1>
+    <p class="mt-4 max-w-xl text-base leading-relaxed text-ink-soft">
+      Die Anmeldung ist für Spieler nach abgeschlossenem Probetraining. Deinen Freischalt-Code bekommst du vom Trainer.
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-4 py-12 lg:px-6">
+    <!-- Code gate -->
+    <div id="gate" class="rounded-2xl border border-line bg-card p-10 text-center">
+      <span class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-club/10 text-xl text-club">🔒</span>
+      <h2 class="display mt-5 text-2xl">Freischalt-Code eingeben</h2>
+      <p class="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-ink-soft">Du hast noch keinen Code? Dann starte zuerst mit einem <a href="/probetraining" class="font-semibold text-club hover:text-club-deep">Probetraining</a>.</p>
+      <form id="gate-form" class="mx-auto mt-6 flex max-w-xs gap-2">
+        <label for="code" class="sr-only">Freischalt-Code</label>
+        <input id="code" type="text" autocomplete="off" placeholder="Code" class="w-full rounded-full border border-line bg-paper px-5 py-3 text-center text-sm uppercase tracking-widest outline-none transition-colors focus:border-club" />
+        <button type="submit" class="shrink-0 rounded-full bg-club px-5 py-3 text-sm font-semibold text-white transition-colors duration-300 hover:bg-club-deep">Öffnen</button>
+      </form>
+      <p id="gate-error" class="mt-3 hidden text-sm font-medium text-club">Der Code stimmt nicht. Frag im Zweifel deinen Trainer.</p>
+    </div>
+
+    <!-- Registration form -->
+    <form id="reg-form" class="hidden rounded-2xl border border-line bg-card p-8" novalidate>
+      <h2 class="display text-2xl">Deine Daten</h2>
+      <div class="mt-6 grid gap-6 sm:grid-cols-2">
+        <div class="flex flex-col gap-2">
+          <label for="firstname" class="text-sm font-semibold">Vorname</label>
+          <input id="firstname" name="firstname" type="text" required class="rounded-xl border border-line bg-paper px-4 py-3 text-sm outline-none transition-colors focus:border-club" />
+        </div>
+        <div class="flex flex-col gap-2">
+          <label for="lastname" class="text-sm font-semibold">Nachname</label>
+          <input id="lastname" name="lastname" type="text" required class="rounded-xl border border-line bg-paper px-4 py-3 text-sm outline-none transition-colors focus:border-club" />
+        </div>
+        <div class="flex flex-col gap-2">
+          <label for="birthdate" class="text-sm font-semibold">Geburtsdatum</label>
+          <input id="birthdate" name="birthdate" type="date" required class="rounded-xl border border-line bg-paper px-4 py-3 text-sm outline-none transition-colors focus:border-club" />
+        </div>
+        <div class="flex flex-col gap-2">
+          <label for="reg-email" class="text-sm font-semibold">E-Mail</label>
+          <input id="reg-email" name="email" type="email" required class="rounded-xl border border-line bg-paper px-4 py-3 text-sm outline-none transition-colors focus:border-club" />
+        </div>
+        <div class="flex flex-col gap-2 sm:col-span-2">
+          <label for="address" class="text-sm font-semibold">Anschrift</label>
+          <input id="address" name="address" type="text" required class="rounded-xl border border-line bg-paper px-4 py-3 text-sm outline-none transition-colors focus:border-club" />
+        </div>
+        <div class="flex flex-col gap-2">
+          <label for="reg-team" class="text-sm font-semibold">Team</label>
+          <select id="reg-team" name="team" class="rounded-xl border border-line bg-paper px-4 py-3 text-sm outline-none transition-colors focus:border-club">
+            <option>FC Treptow I</option>
+            <option>FC Treptow II River Plate</option>
+            <option>FC Treptow III</option>
+            <option>Freizeit Kickers</option>
+          </select>
+        </div>
+        <div class="flex flex-col gap-2">
+          <label for="lastclub" class="text-sm font-semibold">Letzter Verein <span class="font-normal text-ink-soft">(optional)</span></label>
+          <input id="lastclub" name="lastclub" type="text" class="rounded-xl border border-line bg-paper px-4 py-3 text-sm outline-none transition-colors focus:border-club" />
+        </div>
+        <div class="flex flex-col gap-2 sm:col-span-2">
+          <label for="tariff" class="text-sm font-semibold">Beitrag</label>
+          <select id="tariff" name="tariff" class="rounded-xl border border-line bg-paper px-4 py-3 text-sm outline-none transition-colors focus:border-club">
+            <option>Aktiv, 15 € pro Monat</option>
+            <option>Ermäßigt, 10 € pro Monat (Azubi, Studium, erwerbslos, Freizeitsport)</option>
+          </select>
+        </div>
+      </div>
+      <label class="mt-6 flex items-start gap-3 text-sm text-ink-soft">
+        <input type="checkbox" required class="mt-1 h-4 w-4 accent-club" />
+        <span>Ich habe die <a href="/datenschutz" class="font-semibold text-club hover:text-club-deep">Datenschutzhinweise</a> gelesen und bin mit der Verarbeitung meiner Daten zur Mitgliederverwaltung einverstanden.</span>
+      </label>
+      <p id="reg-error" class="mt-4 hidden text-sm font-medium text-club">Bitte fülle alle Pflichtfelder aus und bestätige den Datenschutz.</p>
+      <button type="submit" class="group mt-6 inline-flex items-center gap-2 rounded-full bg-club px-6 py-3 text-sm font-semibold text-white transition-all duration-300 ease-(--ease-club) hover:bg-club-deep active:scale-[0.98]">
+        Anmeldung senden
+        <span class="flex h-6 w-6 items-center justify-center rounded-full bg-white/15 transition-transform duration-300 ease-(--ease-club) group-hover:translate-x-0.5">→</span>
+      </button>
+      <p class="mt-5 text-xs leading-relaxed text-ink-soft">Nach dem Absenden bekommst du die Eintrittserklärung und den Antrag auf Spielberechtigung zur Unterschrift. Beide gibt es auch unter <a href="/downloads" class="font-semibold text-club hover:text-club-deep">Downloads</a>.</p>
+    </form>
+
+    <div id="reg-success" class="hidden rounded-2xl border border-line bg-card p-10 text-center">
+      <span class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-club/10 text-2xl text-club">✓</span>
+      <h2 class="display mt-5 text-2xl">Willkommen beim FC Treptow</h2>
+      <p class="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-ink-soft">Deine Anmeldung ist eingegangen. Wir melden uns mit den Unterlagen zur Unterschrift und allem Weiteren zur Spielberechtigung.</p>
+    </div>
+  </section>
+
+  <script>
+    // Der Code wird vom Trainer nach dem Probetraining vergeben und ist hier bewusst simpel gehalten.
+    const UNLOCK_CODE = 'TREPTOW1925';
+    const gate = document.getElementById('gate');
+    const gateForm = document.getElementById('gate-form') as HTMLFormElement | null;
+    const regForm = document.getElementById('reg-form') as HTMLFormElement | null;
+
+    gateForm?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const value = (document.getElementById('code') as HTMLInputElement).value.trim().toUpperCase();
+      if (value === UNLOCK_CODE) {
+        gate?.classList.add('hidden');
+        regForm?.classList.remove('hidden');
+      } else {
+        document.getElementById('gate-error')?.classList.remove('hidden');
+      }
+    });
+
+    regForm?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const err = document.getElementById('reg-error');
+      if (!regForm.checkValidity()) {
+        err?.classList.remove('hidden');
+        return;
+      }
+      err?.classList.add('hidden');
+      // Produktion: hier per fetch an Formspree/Web3Forms senden (kostenloser Formular-Dienst)
+      regForm.classList.add('hidden');
+      document.getElementById('reg-success')?.classList.remove('hidden');
+    });
+  </script>
+</Base>

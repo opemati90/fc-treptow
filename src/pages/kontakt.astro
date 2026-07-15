@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Kontakt" description="Kontakt und Anfahrt: FC Treptow e.V., Willi-Sänger-Sportanlage, Köpenicker Landstraße 186, 12437 Berlin.">
+  <section class="mx-auto max-w-6xl px-4 pb-8 pt-16 lg:px-6">
+    <h1 class="display text-4xl md:text-5xl">Kontakt</h1>
+    <p class="mt-4 max-w-xl text-base leading-relaxed text-ink-soft">Schreib uns oder komm einfach an einem Trainingstag vorbei.</p>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-12 lg:px-6">
+    <div class="grid gap-6 lg:grid-cols-2">
+      <div class="reveal rounded-2xl border border-line bg-card p-8">
+        <h2 class="display text-2xl">So erreichst du uns</h2>
+        <dl class="mt-6 space-y-5 text-sm">
+          <div>
+            <dt class="text-xs font-semibold uppercase tracking-widest text-ink-soft">E-Mail</dt>
+            <dd class="mt-1"><a href="mailto:kontakt@fc-treptow.de" class="text-base font-semibold text-club hover:text-club-deep">kontakt@fc-treptow.de</a></dd>
+          </div>
+          <div>
+            <dt class="text-xs font-semibold uppercase tracking-widest text-ink-soft">Sportanlage</dt>
+            <dd class="mt-1 text-base font-medium">Willi-Sänger-Sportanlage<br />Köpenicker Landstraße 186<br />12437 Berlin</dd>
+          </div>
+          <div>
+            <dt class="text-xs font-semibold uppercase tracking-widest text-ink-soft">Training</dt>
+            <dd class="mt-1 text-base font-medium">Dienstag und Donnerstag, 18:00 bis 21:00 Uhr</dd>
+          </div>
+        </dl>
+        <a href="https://www.google.com/maps/search/?api=1&query=Willi-S%C3%A4nger-Sportanlage+K%C3%B6penicker+Landstra%C3%9Fe+186+12437+Berlin" rel="noopener" class="group mt-8 inline-flex items-center gap-2 rounded-full bg-club px-6 py-3 text-sm font-semibold text-white transition-all duration-300 ease-(--ease-club) hover:bg-club-deep active:scale-[0.98]">
+          Route planen
+          <span class="flex h-6 w-6 items-center justify-center rounded-full bg-white/15 transition-transform duration-300 ease-(--ease-club) group-hover:translate-x-0.5">→</span>
+        </a>
+      </div>
+      <div class="reveal overflow-hidden rounded-2xl">
+        <img src="/images/vereinsbuero.jpg" alt="Vereinsbüro des FC Treptow auf der Willi-Sänger-Sportanlage" class="h-full min-h-[320px] w-full object-cover" loading="lazy" />
+      </div>
+    </div>
+  </section>
+</Base>

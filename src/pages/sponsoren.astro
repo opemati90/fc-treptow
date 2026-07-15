@@ -1,0 +1,54 @@
+---
+import Base from '../layouts/Base.astro';
+import SponsorMark from '../components/SponsorMark.astro';
+import { getCollection } from 'astro:content';
+
+const sponsors = (await getCollection('sponsors')).sort((a, b) => a.data.order - b.data.order);
+const haupt = sponsors.filter((s) => s.data.tier === 'Hauptsponsor');
+const partner = sponsors.filter((s) => s.data.tier !== 'Hauptsponsor');
+---
+<Base title="Sponsoren" description="Partner und Sponsoren des FC Treptow e.V. und wie man Partner wird.">
+  <section class="mx-auto max-w-6xl px-4 pb-8 pt-16 lg:px-6">
+    <h1 class="display text-4xl md:text-5xl">Unsere Partner</h1>
+    <p class="mt-4 max-w-2xl text-base leading-relaxed text-ink-soft">
+      Ohne Partner kein Vereinsfußball: Unsere Sponsoren finanzieren Trikots, Trainingsmaterial und das Vereinsleben. Dafür bekommen sie einen festen Platz im Club und auf dieser Seite.
+    </p>
+  </section>
+
+  {haupt.length > 0 && (
+    <section class="mx-auto max-w-6xl px-4 py-8 lg:px-6">
+      {haupt.map((s) => (
+        <a href={s.data.url ?? '#'} rel="noopener" class="reveal group flex flex-col items-center gap-6 rounded-2xl border border-line bg-card px-8 py-14 text-center transition-all duration-300 ease-(--ease-club) hover:border-club/40 sm:flex-row sm:text-left">
+          <SponsorMark name={s.data.name} logo={s.data.logo} class="h-24 w-24" />
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-widest text-club">Hauptsponsor</p>
+            <p class="display mt-2 text-3xl">{s.data.name}</p>
+          </div>
+        </a>
+      ))}
+    </section>
+  )}
+
+  <section class="mx-auto max-w-6xl px-4 py-8 lg:px-6">
+    <div class="grid grid-cols-2 gap-4 md:grid-cols-3">
+      {partner.map((s) => (
+        <a href={s.data.url ?? '#'} rel="noopener" class="reveal group flex flex-col items-center gap-4 rounded-2xl border border-line bg-card px-6 py-10 text-center transition-all duration-300 ease-(--ease-club) hover:-translate-y-1 hover:border-club/40">
+          <SponsorMark name={s.data.name} logo={s.data.logo} />
+          <p class="text-sm font-bold leading-snug">{s.data.name}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-16 lg:px-6">
+    <div class="reveal rounded-2xl bg-ink px-8 py-14 text-white md:px-14">
+      <div class="flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
+        <div>
+          <h2 class="display text-3xl">Partner werden</h2>
+          <p class="mt-3 max-w-md text-white/80">Bandenwerbung, Trikotsponsoring oder Spieltagspatenschaften: Wir schnüren ein Paket, das zu deinem Unternehmen passt.</p>
+        </div>
+        <a href="mailto:kontakt@fc-treptow.de" class="inline-flex shrink-0 items-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-ink transition-transform duration-300 ease-(--ease-club) active:scale-[0.98]">kontakt@fc-treptow.de</a>
+      </div>
+    </div>
+  </section>
+</Base>

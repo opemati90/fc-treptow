@@ -1,0 +1,20 @@
+---
+// Monogramm-Fallback, bis das echte Logo im CMS hochgeladen ist
+interface Props {
+  name: string;
+  logo?: string;
+  class?: string;
+}
+const { name, logo, class: className = 'h-16 w-16' } = Astro.props;
+const initials = name
+  .split(' ')
+  .filter((w) => w[0] === w[0]?.toUpperCase())
+  .slice(0, 2)
+  .map((w) => w[0])
+  .join('');
+---
+{logo ? (
+  <img src={logo} alt={`Logo ${name}`} class={`${className} object-contain`} loading="lazy" />
+) : (
+  <span class={`${className} display flex items-center justify-center rounded-full bg-ink text-xl text-white`}>{initials}</span>
+)}
