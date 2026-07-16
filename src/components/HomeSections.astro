@@ -172,17 +172,25 @@ const SOCIAL_LINKS = {
     </div>
     <a href={`${prefix}/sponsoren`} class="text-sm font-semibold text-club hover:text-club-deep">{t.becomePartner}</a>
   </div>
-  <div class="stagger mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
-    {sponsors.map((s) => (
-      <a href={s.data.url ?? `${prefix}/sponsoren`} rel="noopener" class="group flex flex-col items-center gap-4 rounded-2xl border border-line bg-card px-6 py-10 text-center transition-all duration-300 ease-(--ease-club) hover:-translate-y-1 hover:border-club/40 hover:shadow-[0_16px_40px_-20px_rgba(20,23,31,0.35)]">
-        <SponsorMark name={s.data.name} logo={s.data.logo} />
-        <div>
-          <p class="text-sm font-bold leading-snug">{s.data.name}</p>
-          {s.data.tier === 'Hauptsponsor' && <p class="mt-1 text-xs font-semibold uppercase tracking-widest text-club">{t.hauptsponsor}</p>}
-        </div>
-      </a>
-    ))}
-  </div>
+  {sponsors.length > 0 ? (
+    <div class="stagger mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
+      {sponsors.map((s) => (
+        <a href={s.data.url ?? `${prefix}/sponsoren`} rel="noopener" class="group flex flex-col items-center gap-4 rounded-2xl border border-line bg-card px-6 py-10 text-center transition-all duration-300 ease-(--ease-club) hover:-translate-y-1 hover:border-club/40 hover:shadow-[0_16px_40px_-20px_rgba(20,23,31,0.35)]">
+          <SponsorMark name={s.data.name} logo={s.data.logo} />
+          <div>
+            <p class="text-sm font-bold leading-snug">{s.data.name}</p>
+            {s.data.tier === 'Hauptsponsor' && <p class="mt-1 text-xs font-semibold uppercase tracking-widest text-club">{t.hauptsponsor}</p>}
+          </div>
+        </a>
+      ))}
+    </div>
+  ) : (
+    <a href={`${prefix}/sponsoren`} class="reveal group mt-10 flex flex-col items-center gap-4 rounded-2xl border border-dashed border-line bg-card px-6 py-14 text-center transition-colors duration-300 hover:border-club/50">
+      <span class="flex h-14 w-14 items-center justify-center rounded-full bg-paper text-2xl text-club ring-1 ring-line">+</span>
+      <p class="max-w-sm text-sm leading-relaxed text-ink-soft">{t.sponsorsEmpty}</p>
+      <span class="text-sm font-semibold text-club">{t.becomePartner}</span>
+    </a>
+  )}
 </section>
 
 <!-- Training / ground -->

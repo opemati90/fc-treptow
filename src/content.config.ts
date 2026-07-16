@@ -27,14 +27,21 @@ const teams = defineCollection({
     // Bei Mannschaftsfotos liegen die Gesichter meist im oberen Drittel, deshalb ein
     // niedriger Wert. Pro Foto einstellbar, weil jedes anders aufgebaut ist.
     imageFocus: z.number().min(0).max(100).default(30),
-    gallery: z.array(z.object({ src: z.string(), alt: z.string() })).default([]),
+    // nullish + transform statt default: Wenn jemand im CMS eine Liste leert, steht im
+    // YAML "gallery:" (also null). Mit default([]) allein würde der Build hart brechen.
+    gallery: z
+      .array(z.object({ src: z.string(), alt: z.string() }))
+      .nullish()
+      .transform((v) => v ?? []),
     // Beispieldaten bis die fussball.de-Widget-IDs eingetragen sind
     table: z
       .array(z.object({ pos: z.number(), team: z.string(), games: z.number(), diff: z.string(), points: z.number(), us: z.boolean().default(false) }))
-      .default([]),
+      .nullish()
+      .transform((v) => v ?? []),
     results: z
       .array(z.object({ date: z.string(), home: z.string(), away: z.string(), score: z.string(), note: z.string().optional() }))
-      .default([]),
+      .nullish()
+      .transform((v) => v ?? []),
     fussballDeWidgetId: z.string().optional(),
   }),
 });

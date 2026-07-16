@@ -10,9 +10,6 @@ image: "/images/team-h3.jpg"
 imageFocus: 65
 gallery:
   - { src: "/images/team-h3.jpg", alt: "Die Dritte nach dem Spiel" }
-  - { src: "https://picsum.photos/seed/fct-h3-anstoss/1200/800", alt: "Anstoß am Sonntagvormittag" }
-  - { src: "https://picsum.photos/seed/fct-h3-flanke/1200/800", alt: "Flanke von der rechten Seite" }
-  - { src: "https://picsum.photos/seed/fct-h3-kreis/1200/800", alt: "Mannschaftskreis vor dem Spiel" }
 table:
   - { pos: 5, team: "SV Empor Berlin IV", games: 16, diff: "+2", points: 24 }
   - { pos: 6, team: "FC Treptow III", games: 16, diff: "0", points: 22, us: true }

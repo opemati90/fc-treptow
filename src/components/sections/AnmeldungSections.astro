@@ -67,8 +67,14 @@ const t = pageT('anmeldung', lang);
       <input type="checkbox" required class="mt-1 h-4 w-4 accent-club" />
       <span>{t.consent} <a href="/datenschutz" class="font-semibold text-club hover:text-club-deep">{t.consentLink}</a> {t.consentRest}</span>
     </label>
-    <p id="reg-error" class="mt-4 hidden text-sm font-medium text-club">{t.formError}</p>
-    <button type="submit" class="group mt-6 inline-flex items-center gap-2 rounded-full bg-club px-6 py-3 text-sm font-semibold text-white transition-all duration-300 ease-(--ease-club) hover:bg-club-deep active:scale-[0.98]">
+    <p
+      id="reg-error"
+      class="mt-4 hidden text-sm font-medium text-club"
+      role="alert"
+      data-validation={t.formError}
+      data-failure={t.sendFailed}
+    >{t.formError}</p>
+    <button id="reg-submit" type="submit" data-sending={t.sending} class="group mt-6 inline-flex items-center gap-2 rounded-full bg-club px-6 py-3 text-sm font-semibold text-white transition-all duration-300 ease-(--ease-club) hover:bg-club-deep active:scale-[0.98] disabled:opacity-60">
       {t.submit}
       <span class="flex h-6 w-6 items-center justify-center rounded-full bg-white/15 transition-transform duration-300 ease-(--ease-club) group-hover:translate-x-0.5 rtl:rotate-180">→</span>
     </button>
@@ -83,6 +89,8 @@ const t = pageT('anmeldung', lang);
 </section>
 
 <script>
+  import { submitForm } from '../../lib/submitForm';
+
   // Der Code wird vom Trainer nach dem Probetraining vergeben und ist hier bewusst simpel gehalten.
   const UNLOCK_CODE = 'TREPTOW1925';
   const gate = document.getElementById('gate');
@@ -100,16 +108,34 @@ const t = pageT('anmeldung', lang);
     }
   });
 
-  regForm?.addEventListener('submit', (e) => {
+  const regErr = document.getElementById('reg-error');
+  const regBtn = document.getElementById('reg-submit') as HTMLButtonElement | null;
+  const regBtnLabel = regBtn?.textContent?.trim() ?? '';
+
+  regForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const err = document.getElementById('reg-error');
     if (!regForm.checkValidity()) {
-      err?.classList.remove('hidden');
+      regErr!.textContent = regErr!.dataset.validation ?? '';
+      regErr?.classList.remove('hidden');
       return;
     }
-    err?.classList.add('hidden');
-    // Produktion: hier per fetch an Formspree/Web3Forms senden (kostenloser Formular-Dienst)
-    regForm.classList.add('hidden');
-    document.getElementById('reg-success')?.classList.remove('hidden');
+    regErr?.classList.add('hidden');
+    if (regBtn) {
+      regBtn.disabled = true;
+      regBtn.textContent = regBtn.dataset.sending ?? regBtnLabel;
+    }
+    try {
+      await submitForm(regForm, 'Neue Anmeldung');
+      regForm.classList.add('hidden');
+      document.getElementById('reg-success')?.classList.remove('hidden');
+    } catch {
+      regErr!.textContent = regErr!.dataset.failure ?? '';
+      regErr?.classList.remove('hidden');
+    } finally {
+      if (regBtn) {
+        regBtn.disabled = false;
+        regBtn.textContent = regBtnLabel;
+      }
+    }
   });
 </script>

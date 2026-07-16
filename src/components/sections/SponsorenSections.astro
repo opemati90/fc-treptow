@@ -3,9 +3,11 @@ import SponsorMark from '../SponsorMark.astro';
 import { getCollection } from 'astro:content';
 import { defaultLocale, type Locale } from '../../i18n/languages';
 import { pageT } from '../../i18n/pages';
+import { useTranslations } from '../../i18n/ui';
 
 const lang = (Astro.currentLocale ?? defaultLocale) as Locale;
 const t = pageT('sponsoren', lang);
+const ui = useTranslations(lang);
 
 const sponsors = (await getCollection('sponsors')).sort((a, b) => a.data.order - b.data.order);
 const haupt = sponsors.filter((s) => s.data.tier === 'Hauptsponsor');
@@ -30,16 +32,27 @@ const partner = sponsors.filter((s) => s.data.tier !== 'Hauptsponsor');
   </section>
 )}
 
-<section class="mx-auto max-w-6xl px-4 py-8 lg:px-6">
-  <div class="grid grid-cols-2 gap-4 md:grid-cols-3">
-    {partner.map((s) => (
-      <a href={s.data.url ?? '#'} rel="noopener" class="reveal group flex flex-col items-center gap-4 rounded-2xl border border-line bg-card px-6 py-10 text-center transition-all duration-300 ease-(--ease-club) hover:-translate-y-1 hover:border-club/40">
-        <SponsorMark name={s.data.name} logo={s.data.logo} />
-        <p class="text-sm font-bold leading-snug">{s.data.name}</p>
-      </a>
-    ))}
-  </div>
-</section>
+{partner.length > 0 && (
+  <section class="mx-auto max-w-6xl px-4 py-8 lg:px-6">
+    <div class="grid grid-cols-2 gap-4 md:grid-cols-3">
+      {partner.map((s) => (
+        <a href={s.data.url ?? '#'} rel="noopener" class="reveal group flex flex-col items-center gap-4 rounded-2xl border border-line bg-card px-6 py-10 text-center transition-all duration-300 ease-(--ease-club) hover:-translate-y-1 hover:border-club/40">
+          <SponsorMark name={s.data.name} logo={s.data.logo} />
+          <p class="text-sm font-bold leading-snug">{s.data.name}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+)}
+
+{sponsors.length === 0 && (
+  <section class="mx-auto max-w-6xl px-4 py-8 lg:px-6">
+    <div class="reveal flex flex-col items-center gap-4 rounded-2xl border border-dashed border-line bg-card px-6 py-16 text-center">
+      <span class="flex h-14 w-14 items-center justify-center rounded-full bg-paper text-2xl text-club ring-1 ring-line">+</span>
+      <p class="max-w-sm text-sm leading-relaxed text-ink-soft">{ui.sponsorsEmpty}</p>
+    </div>
+  </section>
+)}
 
 <section class="mx-auto max-w-6xl px-4 py-16 lg:px-6">
   <div class="reveal rounded-2xl bg-ink px-8 py-14 text-white md:px-14">

@@ -41,8 +41,14 @@ const t = pageT('probetraining', lang);
           <textarea id="experience" name="experience" rows="4" class="rounded-xl border border-line bg-paper px-4 py-3 text-sm outline-none transition-colors focus:border-club"></textarea>
         </div>
       </div>
-      <p id="trial-error" class="mt-4 hidden text-sm font-medium text-club">{t.errorMsg}</p>
-      <button type="submit" class="group mt-6 inline-flex items-center gap-2 rounded-full bg-club px-6 py-3 text-sm font-semibold text-white transition-all duration-300 ease-(--ease-club) hover:bg-club-deep active:scale-[0.98]">
+      <p
+        id="trial-error"
+        class="mt-4 hidden text-sm font-medium text-club"
+        role="alert"
+        data-validation={t.errorMsg}
+        data-failure={t.sendFailed}
+      >{t.errorMsg}</p>
+      <button id="trial-submit" type="submit" data-sending={t.sending} class="group mt-6 inline-flex items-center gap-2 rounded-full bg-club px-6 py-3 text-sm font-semibold text-white transition-all duration-300 ease-(--ease-club) hover:bg-club-deep active:scale-[0.98] disabled:opacity-60">
         {t.submit}
         <span class="flex h-6 w-6 items-center justify-center rounded-full bg-white/15 transition-transform duration-300 ease-(--ease-club) group-hover:translate-x-0.5 rtl:rotate-180">→</span>
       </button>
@@ -67,17 +73,38 @@ const t = pageT('probetraining', lang);
 </section>
 
 <script>
+  import { submitForm } from '../../lib/submitForm';
+
   const form = document.getElementById('trial-form') as HTMLFormElement | null;
-  form?.addEventListener('submit', (e) => {
+  const err = document.getElementById('trial-error');
+  const submitBtn = document.getElementById('trial-submit') as HTMLButtonElement | null;
+  const btnLabel = submitBtn?.textContent?.trim() ?? '';
+
+  form?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const err = document.getElementById('trial-error');
     if (!form.checkValidity()) {
+      err!.textContent = err!.dataset.validation ?? '';
       err?.classList.remove('hidden');
       return;
     }
     err?.classList.add('hidden');
-    // Produktion: hier per fetch an Formspree/Web3Forms senden (kostenloser Formular-Dienst)
-    form.classList.add('hidden');
-    document.getElementById('trial-success')?.classList.remove('hidden');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = submitBtn.dataset.sending ?? btnLabel;
+    }
+    try {
+      await submitForm(form, 'Probetraining-Anfrage');
+      form.classList.add('hidden');
+      document.getElementById('trial-success')?.classList.remove('hidden');
+    } catch {
+      // Kein stiller Fehlschlag: Wenn der Versand nicht klappt, sieht der Nutzer das.
+      err!.textContent = err!.dataset.failure ?? '';
+      err?.classList.remove('hidden');
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = btnLabel;
+      }
+    }
   });
 </script>

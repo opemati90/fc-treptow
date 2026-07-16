@@ -11,9 +11,6 @@ imageFocus: 50
 gallery:
   - { src: "/images/team-h1.jpg", alt: "Photo de la première équipe, saison 2026" }
   - { src: "/images/hero-match.jpg", alt: "Notre club-house avec la fresque River Plate" }
-  - { src: "https://picsum.photos/seed/fct-h1-zweikampf/1200/800", alt: "Duel au milieu de terrain" }
-  - { src: "https://picsum.photos/seed/fct-h1-jubel/1200/800", alt: "Célébration du but d'ouverture" }
-  - { src: "https://picsum.photos/seed/fct-h1-team/1200/800", alt: "Photo d'équipe avant le coup d'envoi" }
 table:
   - { pos: 1, team: "SV Stern Britz II", games: 18, diff: "+31", points: 41 }
   - { pos: 2, team: "FC Treptow I", games: 18, diff: "+24", points: 38, us: true }

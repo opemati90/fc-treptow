@@ -10,9 +10,6 @@ image: "/images/team-h2.jpg"
 imageFocus: 50
 gallery:
   - { src: "/images/team-h2.jpg", alt: "River Plate célèbre la montée" }
-  - { src: "https://picsum.photos/seed/fct-h2-spiel/1200/800", alt: "Action de la deuxième équipe" }
-  - { src: "https://picsum.photos/seed/fct-h2-abwehr/1200/800", alt: "Travail défensif dans la surface" }
-  - { src: "https://picsum.photos/seed/fct-h2-bank/1200/800", alt: "Le banc encourage à fond" }
 table:
   - { pos: 3, team: "Berolina Stralau II", games: 18, diff: "+12", points: 33 }
   - { pos: 4, team: "FC Treptow II River Plate", games: 18, diff: "+8", points: 30, us: true }

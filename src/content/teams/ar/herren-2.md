@@ -10,9 +10,6 @@ image: "/images/team-h2.jpg"
 imageFocus: 50
 gallery:
   - { src: "/images/team-h2.jpg", alt: "ريفر بليت يحتفل بالترقية" }
-  - { src: "https://picsum.photos/seed/fct-h2-spiel/1200/800", alt: "لقطة من مباراة الفريق الثاني" }
-  - { src: "https://picsum.photos/seed/fct-h2-abwehr/1200/800", alt: "عمل دفاعي داخل منطقة الجزاء" }
-  - { src: "https://picsum.photos/seed/fct-h2-bank/1200/800", alt: "دكة البدلاء تشجع بحماس" }
 table:
   - { pos: 3, team: "Berolina Stralau II", games: 18, diff: "+12", points: 33 }
   - { pos: 4, team: "FC Treptow II River Plate", games: 18, diff: "+8", points: 30, us: true }

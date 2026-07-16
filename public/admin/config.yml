@@ -14,6 +14,14 @@ logo_url: /images/crest.jpg
 media_folder: public/images/uploads
 public_folder: /images/uploads
 
+# Mehrsprachigkeit: Die Seite liest Inhalte aus src/content/<sammlung>/<sprache>/.
+# "multiple_folders" sorgt dafür, dass Decap genau diese Ordner anlegt. Ohne diesen
+# Block landen neue Beiträge ohne Sprachordner und tauchen auf der Seite nie auf.
+i18n:
+  structure: multiple_folders
+  locales: [de, en, tr, ar, es, fr]
+  default_locale: de
+
 collections:
   - name: news
     label: News
@@ -22,13 +30,15 @@ collections:
     create: true
     slug: "{{slug}}"
     sort_by: [date]
+    i18n: true
     fields:
-      - { name: title, label: Titel, widget: string }
-      - { name: date, label: Datum, widget: datetime }
-      - { name: tag, label: Rubrik, widget: select, options: [Verein, Herren I, Herren II, Herren III, Freizeit, Goldenes Ticket], default: Verein }
-      - { name: teaser, label: Kurztext, widget: text, hint: "1 bis 2 Sätze, erscheint in der Übersicht." }
-      - { name: image, label: Bild, widget: image, required: false }
-      - { name: body, label: Text, widget: markdown }
+      - { name: title, label: Titel, widget: string, i18n: true }
+      # Datum und Rubrik sind in allen Sprachen gleich und werden gespiegelt.
+      - { name: date, label: Datum, widget: datetime, i18n: duplicate }
+      - { name: tag, label: Rubrik, widget: select, options: [Verein, Herren I, Herren II, Herren III, Freizeit, Goldenes Ticket], default: Verein, i18n: true }
+      - { name: teaser, label: Kurztext, widget: text, hint: "1 bis 2 Sätze, erscheint in der Übersicht.", i18n: true }
+      - { name: image, label: Bild, widget: image, required: false, i18n: duplicate }
+      - { name: body, label: Text, widget: markdown, i18n: true }
 
   - name: teams
     label: Mannschaften
@@ -36,27 +46,33 @@ collections:
     folder: src/content/teams
     create: true
     slug: "{{slug}}"
+    i18n: true
     fields:
-      - { name: name, label: Name, widget: string }
-      - { name: shortName, label: Kurzname, widget: string, hint: "z. B. Herren I" }
-      - { name: league, label: Liga, widget: string }
-      - { name: order, label: Reihenfolge, widget: number, value_type: int }
-      - { name: training, label: Trainingszeiten, widget: list, field: { name: zeit, label: Zeit, widget: string } }
-      - { name: ground, label: Platz, widget: string, default: "Willi-Sänger-Sportanlage, Köpenicker Landstraße 186, 12437 Berlin" }
-      - { name: contact, label: Kontakt-E-Mail, widget: string, default: kontakt@fc-treptow.de }
-      - { name: image, label: Teamfoto, widget: image }
-      - { name: imageFocus, label: Bildausschnitt Kopfbild, widget: number, value_type: int, default: 50, min: 0, max: 100, hint: "Nur nötig, wenn auf dem Kopfbild jemand angeschnitten wird. 50 = Bildmitte, kleinere Werte zeigen mehr vom oberen Bildrand, größere mehr vom unteren." }
+      # Eigennamen (FC Treptow I, Freizeit Kickers) sind in allen Sprachen identisch
+      # und werden deshalb gespiegelt statt übersetzt.
+      - { name: name, label: Name, widget: string, i18n: duplicate }
+      - { name: shortName, label: Kurzname, widget: string, hint: "z. B. Herren I", i18n: true }
+      - { name: league, label: Liga, widget: string, hint: "Offizieller Liganame bleibt stehen, z. B. Kreisliga B. Nur der Zusatz (Staffel 1) wird übersetzt.", i18n: true }
+      - { name: order, label: Reihenfolge, widget: number, value_type: int, i18n: duplicate }
+      - { name: training, label: Trainingszeiten, widget: list, field: { name: zeit, label: Zeit, widget: string }, i18n: true }
+      - { name: ground, label: Platz, widget: string, default: "Willi-Sänger-Sportanlage, Köpenicker Landstraße 186, 12437 Berlin", i18n: duplicate }
+      - { name: contact, label: Kontakt-E-Mail, widget: string, default: kontakt@fc-treptow.de, i18n: duplicate }
+      - { name: image, label: Teamfoto, widget: image, i18n: duplicate }
+      - { name: imageFocus, label: Bildausschnitt Kopfbild, widget: number, value_type: int, default: 50, min: 0, max: 100, hint: "Nur nötig, wenn auf dem Kopfbild jemand angeschnitten wird. 50 = Bildmitte, kleinere Werte zeigen mehr vom oberen Bildrand, größere mehr vom unteren.", i18n: duplicate }
       - name: gallery
         label: Spieltagsfotos
         widget: list
         required: false
+        i18n: true
         fields:
-          - { name: src, label: Bild, widget: image }
-          - { name: alt, label: Bildunterschrift, widget: string }
+          - { name: src, label: Bild, widget: image, i18n: duplicate }
+          - { name: alt, label: Bildunterschrift, widget: string, i18n: true }
+      # Tabelle und Ergebnisse sind reine Zahlen und Vereinsnamen: einmal eintragen, überall gleich.
       - name: table
         label: Tabelle (Ausschnitt)
         widget: list
         required: false
+        i18n: duplicate
         hint: "Kurzer Tabellenausschnitt. Die eigene Mannschaft mit 'Unser Team' markieren."
         fields:
           - { name: pos, label: Platz, widget: number, value_type: int }
@@ -69,13 +85,14 @@ collections:
         label: Letzte Spiele
         widget: list
         required: false
+        i18n: true
         fields:
           - { name: date, label: Datum, widget: string, hint: "z. B. So, 12.07." }
           - { name: home, label: Heim, widget: string }
           - { name: away, label: Gast, widget: string }
           - { name: score, label: Ergebnis, widget: string, hint: "z. B. 3:1" }
           - { name: note, label: Notiz, widget: string, required: false }
-      - { name: body, label: Teambeschreibung, widget: markdown }
+      - { name: body, label: Teambeschreibung, widget: markdown, i18n: true }
 
   - name: sponsors
     label: Sponsoren
@@ -83,6 +100,8 @@ collections:
     folder: src/content/sponsors
     create: true
     slug: "{{slug}}"
+    # Sponsoren sind sprachneutral (Firmenname + Logo) und liegen bewusst ohne Sprachordner.
+    i18n: false
     fields:
       - { name: name, label: Name, widget: string }
       - { name: logo, label: Logo, widget: image, required: false, hint: "Ohne Logo wird automatisch ein Monogramm angezeigt." }

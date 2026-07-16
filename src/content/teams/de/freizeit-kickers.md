@@ -7,9 +7,6 @@ training:
   - "Donnerstag, 19:00 Uhr"
 image: "/images/hero-match.jpg"
 imageFocus: 50
-gallery:
-  - { src: "https://picsum.photos/seed/fct-fk-kick/1200/800", alt: "Freizeitkick unter Flutlicht" }
-  - { src: "https://picsum.photos/seed/fct-fk-gruppe/1200/800", alt: "Die Freizeit Kickers nach dem Training" }
 results:
   - { date: "Do, 09.07.", home: "Freizeit Kickers", away: "Kiezkicker Schöneweide", score: "5:4", note: "Torfestival auf dem Kunstrasen" }
 ---

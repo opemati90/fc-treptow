@@ -11,9 +11,6 @@ imageFocus: 50
 gallery:
   - { src: "/images/team-h1.jpg", alt: "İlk takımın 2026 sezonu takım fotoğrafı" }
   - { src: "/images/hero-match.jpg", alt: "River Plate duvar resmiyle kulüp binamız" }
-  - { src: "https://picsum.photos/seed/fct-h1-zweikampf/1200/800", alt: "Orta sahada ikili mücadele" }
-  - { src: "https://picsum.photos/seed/fct-h1-jubel/1200/800", alt: "Öne geçen golün sevinci" }
-  - { src: "https://picsum.photos/seed/fct-h1-team/1200/800", alt: "Maç öncesi takım fotoğrafı" }
 table:
   - { pos: 1, team: "SV Stern Britz II", games: 18, diff: "+31", points: 41 }
   - { pos: 2, team: "FC Treptow I", games: 18, diff: "+24", points: 38, us: true }
