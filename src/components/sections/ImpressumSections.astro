@@ -7,10 +7,39 @@ const t = pageT('impressum', lang);
 ---
 <section class="mx-auto max-w-3xl px-4 py-16 lg:px-6">
   <h1 class="display text-4xl">{t.h1}</h1>
-  <div class="mt-8 space-y-4 text-sm leading-relaxed text-ink-soft">
-    <p class="font-semibold text-ink">FC Treptow e. V.</p>
-    <p>Willi-Sänger-Sportanlage<br />Köpenicker Landstraße 186<br />12437 Berlin</p>
-    <p>{t.email}: <a href="mailto:kontakt@fc-treptow.de" class="font-semibold text-club">kontakt@fc-treptow.de</a></p>
-    <p>{t.note}</p>
+
+  <div class="mt-8 space-y-6 text-sm leading-relaxed text-ink-soft">
+    <div>
+      <p class="text-xs font-semibold uppercase tracking-widest text-ink-soft/80">{t.tmg}</p>
+      <p class="mt-2 font-semibold text-ink">{t.legalName}</p>
+      <p>Köpenicker Landstraße 186<br />12437 Berlin</p>
+    </div>
+
+    <dl class="space-y-1">
+      <div class="flex gap-2">
+        <dt class="text-ink-soft/80">{t.phoneLabel}:</dt>
+        <dd><a href="tel:+49302415328" class="font-medium text-ink hover:text-club">030 2415328</a></dd>
+      </div>
+      <div class="flex gap-2">
+        <dt class="text-ink-soft/80">{t.emailLabel}:</dt>
+        <dd><a href="mailto:vorstand@fc-treptow.de" class="font-medium text-club">vorstand@fc-treptow.de</a></dd>
+      </div>
+      <div class="flex gap-2">
+        <dt class="text-ink-soft/80">{t.contactLabel}:</dt>
+        <dd><a href="mailto:kontakt@fc-treptow.de" class="font-medium text-club">kontakt@fc-treptow.de</a></dd>
+      </div>
+    </dl>
+
+    <div>
+      <p class="text-xs font-semibold uppercase tracking-widest text-ink-soft/80">{t.registerHeading}</p>
+      <p class="mt-2">{t.court}: {t.courtValue}</p>
+      <p>{t.regNo}: VR14908</p>
+    </div>
+
+    <div>
+      <p class="text-xs font-semibold uppercase tracking-widest text-ink-soft/80">{t.repHeading}</p>
+      <p class="mt-2">{t.rep1}</p>
+      <p>{t.rep2}</p>
+    </div>
   </div>
 </section>

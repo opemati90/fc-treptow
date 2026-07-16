@@ -564,12 +564,15 @@ export const pages = {
   },
 
   impressum: {
-    de: { metaTitle: 'Impressum', h1: 'Impressum', note: 'Die vollständigen Impressumsangaben (Vertretungsberechtigte, Registereintrag) werden vor dem Livegang von der alten Webseite übernommen.', email: 'E-Mail' },
-    en: { metaTitle: 'Imprint', h1: 'Imprint', note: 'The complete legal notice (authorised representatives, registration details) will be carried over from the old website before launch.', email: 'Email' },
-    tr: { metaTitle: 'Yasal bilgiler', h1: 'Yasal bilgiler', note: 'Tam yasal bilgiler (yetkili temsilciler, sicil kaydı) yayına geçmeden önce eski web sitesinden aktarılacaktır.', email: 'E-posta' },
-    ar: { metaTitle: 'بيانات النشر', h1: 'بيانات النشر', note: 'سيتم نقل بيانات النشر الكاملة (الممثلون المخولون، بيانات السجل) من الموقع القديم قبل الإطلاق.', email: 'البريد الإلكتروني' },
-    es: { metaTitle: 'Aviso legal', h1: 'Aviso legal', note: 'Los datos legales completos (representantes autorizados, datos de registro) se trasladarán desde la web anterior antes del lanzamiento.', email: 'Correo electrónico' },
-    fr: { metaTitle: 'Mentions légales', h1: 'Mentions légales', note: 'Les mentions légales complètes (représentants habilités, informations d’immatriculation) seront reprises de l’ancien site avant la mise en ligne.', email: 'E-mail' },
+    // Rechtlich vorgeschriebene Angaben nach § 5 DDG. Vereinsdaten (Name, Anschrift,
+    // Register, Vorstand) sind Fakten und in allen Sprachen identisch; nur die
+    // Feldbezeichnungen sind übersetzt.
+    de: { metaTitle: 'Impressum', h1: 'Impressum', legalName: 'Fußball Club Treptow e.V.', tmg: 'Angaben gemäß § 5 DDG', phoneLabel: 'Telefon', emailLabel: 'E-Mail', contactLabel: 'Kontakt', registerHeading: 'Eintragung', court: 'Registergericht', courtValue: 'Amtsgericht Charlottenburg', regNo: 'Registernummer', repHeading: 'Vertretungsberechtigte Personen', rep1: 'Jannis Rußkamp, 1. Vorsitzender', rep2: 'Lars Lemke, 2. Vorsitzender' },
+    en: { metaTitle: 'Imprint', h1: 'Imprint', legalName: 'Fußball Club Treptow e.V.', tmg: 'Information pursuant to § 5 DDG', phoneLabel: 'Phone', emailLabel: 'Email', contactLabel: 'Contact', registerHeading: 'Registration', court: 'Register court', courtValue: 'Amtsgericht Charlottenburg (Charlottenburg Local Court)', regNo: 'Register number', repHeading: 'Authorised representatives', rep1: 'Jannis Rußkamp, 1st Chairman', rep2: 'Lars Lemke, 2nd Chairman' },
+    tr: { metaTitle: 'Yasal bilgiler', h1: 'Yasal bilgiler', legalName: 'Fußball Club Treptow e.V.', tmg: '§ 5 DDG uyarınca bilgiler', phoneLabel: 'Telefon', emailLabel: 'E-posta', contactLabel: 'İletişim', registerHeading: 'Sicil kaydı', court: 'Sicil mahkemesi', courtValue: 'Amtsgericht Charlottenburg', regNo: 'Sicil numarası', repHeading: 'Temsile yetkili kişiler', rep1: 'Jannis Rußkamp, 1. Başkan', rep2: 'Lars Lemke, 2. Başkan' },
+    ar: { metaTitle: 'بيانات النشر', h1: 'بيانات النشر', legalName: 'Fußball Club Treptow e.V.', tmg: 'بيانات وفقًا للمادة 5 من قانون DDG', phoneLabel: 'الهاتف', emailLabel: 'البريد الإلكتروني', contactLabel: 'للتواصل', registerHeading: 'التسجيل', court: 'محكمة السجل', courtValue: 'Amtsgericht Charlottenburg', regNo: 'رقم السجل', repHeading: 'الأشخاص المخوّلون بالتمثيل', rep1: 'Jannis Rußkamp، الرئيس الأول', rep2: 'Lars Lemke، الرئيس الثاني' },
+    es: { metaTitle: 'Aviso legal', h1: 'Aviso legal', legalName: 'Fußball Club Treptow e.V.', tmg: 'Información según el § 5 DDG', phoneLabel: 'Teléfono', emailLabel: 'Correo electrónico', contactLabel: 'Contacto', registerHeading: 'Registro', court: 'Juzgado de registro', courtValue: 'Amtsgericht Charlottenburg', regNo: 'Número de registro', repHeading: 'Personas autorizadas para representar', rep1: 'Jannis Rußkamp, presidente 1.º', rep2: 'Lars Lemke, presidente 2.º' },
+    fr: { metaTitle: 'Mentions légales', h1: 'Mentions légales', legalName: 'Fußball Club Treptow e.V.', tmg: 'Informations selon le § 5 DDG', phoneLabel: 'Téléphone', emailLabel: 'E-mail', contactLabel: 'Contact', registerHeading: 'Immatriculation', court: 'Tribunal du registre', courtValue: 'Amtsgericht Charlottenburg', regNo: 'Numéro de registre', repHeading: 'Personnes habilitées à représenter', rep1: 'Jannis Rußkamp, 1er président', rep2: 'Lars Lemke, 2e président' },
   },
 
   datenschutz: {
