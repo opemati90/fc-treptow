@@ -7,8 +7,6 @@ training:
   - "Jeudi, 19h00"
 image: "/images/hero-match.jpg"
 imageFocus: 50
-results:
-  - { date: "Jeu. 9 juil.", home: "Freizeit Kickers", away: "Kiezkicker Schöneweide", score: "5:4", note: "Festival de buts sur le synthétique" }
 ---
 
 Du football sans la pression du classement : les Freizeit Kickers se retrouvent chaque semaine sur le terrain du complexe sportif Willi-Sänger. Tout âge, tout niveau, il suffit d'aimer jouer.

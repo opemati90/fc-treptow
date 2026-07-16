@@ -96,18 +96,25 @@ const SOCIAL_LINKS = {
       <h2 class="display text-3xl md:text-4xl">{t.resultsHeading}</h2>
       <p class="text-sm text-ink-soft">{t.resultsSubtitle}</p>
     </div>
-    <div class="stagger mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {results.map((r) => (
-        <a href={`${prefix}/mannschaften/${r.teamSlug}`} class="group rounded-2xl border border-line bg-paper p-5 transition-colors duration-300 hover:border-club/40">
-          <div class="flex items-center justify-between text-xs text-ink-soft">
-            <span>{r.date}</span>
-            <span class="rounded-full bg-club/10 px-2.5 py-0.5 font-semibold text-club">{r.team}</span>
-          </div>
-          <p class="mt-4 text-sm font-medium leading-snug">{r.home}<br />{r.away}</p>
-          <p class="display mt-3 text-3xl">{r.score}</p>
-        </a>
-      ))}
-    </div>
+    {results.length > 0 ? (
+      <div class="stagger mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {results.map((r) => (
+          <a href={`${prefix}/mannschaften/${r.teamSlug}`} class="group rounded-2xl border border-line bg-paper p-5 transition-colors duration-300 hover:border-club/40">
+            <div class="flex items-center justify-between text-xs text-ink-soft">
+              <span>{r.date}</span>
+              <span class="rounded-full bg-club/10 px-2.5 py-0.5 font-semibold text-club">{r.team}</span>
+            </div>
+            <p class="mt-4 text-sm font-medium leading-snug">{r.home}<br />{r.away}</p>
+            <p class="display mt-3 text-3xl">{r.score}</p>
+          </a>
+        ))}
+      </div>
+    ) : (
+      <div class="reveal mt-10 rounded-2xl border border-dashed border-line bg-paper px-6 py-12 text-center">
+        <p class="mx-auto max-w-md text-sm leading-relaxed text-ink-soft">{t.resultsEmpty}</p>
+        <a href={`${prefix}/mannschaften`} class="mt-4 inline-flex text-sm font-semibold text-club hover:text-club-deep">{t.allTeams}</a>
+      </div>
+    )}
   </div>
 </section>
 

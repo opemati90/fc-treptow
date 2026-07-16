@@ -33,16 +33,18 @@ const teams = defineCollection({
       .array(z.object({ src: z.string(), alt: z.string() }))
       .nullish()
       .transform((v) => v ?? []),
-    // Beispieldaten bis die fussball.de-Widget-IDs eingetragen sind
-    table: z
-      .array(z.object({ pos: z.number(), team: z.string(), games: z.number(), diff: z.string(), points: z.number(), us: z.boolean().default(false) }))
-      .nullish()
-      .transform((v) => v ?? []),
+    // Tabelle und Spielplan kommen von fussball.de. Der Verein erzeugt das Widget in
+    // seinem fussball.de-Konto ("Deine Widgets" -> "Code anzeigen") und fügt den
+    // fertigen Code hier ein. Wir bauen die Einbettung bewusst nicht selbst nach:
+    // fussball.de erzeugt den Code pro Mannschaft, ein selbst geratenes Format wäre
+    // von vornherein kaputt. Ohne Widget zeigt die Seite einen ehrlichen Hinweis.
+    fussballDeWidget: z.string().optional(),
+    // Letzte Ergebnisse pflegt der Verein selbst: wenige Zeilen, dafür laufen sie auch
+    // auf der Startseite. Leer lassen ist erlaubt.
     results: z
       .array(z.object({ date: z.string(), home: z.string(), away: z.string(), score: z.string(), note: z.string().optional() }))
       .nullish()
       .transform((v) => v ?? []),
-    fussballDeWidgetId: z.string().optional(),
   }),
 });
 

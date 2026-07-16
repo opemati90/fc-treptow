@@ -67,20 +67,14 @@ collections:
         fields:
           - { name: src, label: Bild, widget: image, i18n: duplicate }
           - { name: alt, label: Bildunterschrift, widget: string, i18n: true }
-      # Tabelle und Ergebnisse sind reine Zahlen und Vereinsnamen: einmal eintragen, überall gleich.
-      - name: table
-        label: Tabelle (Ausschnitt)
-        widget: list
+      # Tabelle und Spielplan kommen direkt von fussball.de und müssen so nie von Hand
+      # gepflegt werden. Den Code erzeugt der Verein einmalig im eigenen fussball.de-Konto.
+      - name: fussballDeWidget
+        label: fussball.de Widget (Tabelle und Spielplan)
+        widget: text
         required: false
         i18n: duplicate
-        hint: "Kurzer Tabellenausschnitt. Die eigene Mannschaft mit 'Unser Team' markieren."
-        fields:
-          - { name: pos, label: Platz, widget: number, value_type: int }
-          - { name: team, label: Team, widget: string }
-          - { name: games, label: Spiele, widget: number, value_type: int }
-          - { name: diff, label: Tordifferenz, widget: string }
-          - { name: points, label: Punkte, widget: number, value_type: int }
-          - { name: us, label: Unser Team, widget: boolean, default: false, required: false }
+        hint: "Auf fussball.de einloggen, 'Inhalte verwalten' > 'Deine Widgets', Mannschaftswidget anlegen, dort auf 'Code anzeigen' klicken und den kompletten Code hier einfügen. Leer lassen, solange es noch kein Widget gibt."
       - name: results
         label: Letzte Spiele
         widget: list

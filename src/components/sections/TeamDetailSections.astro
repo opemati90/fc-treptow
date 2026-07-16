@@ -59,43 +59,23 @@ const t = pageT('teamDetail', lang);
     </div>
 
     <div class="lg:col-span-3">
-      {d.table.length > 0 && (
-        <div class="reveal rounded-2xl border border-line bg-card p-4 sm:p-6">
-          <div class="flex items-center justify-between px-2 sm:px-0">
-            <h2 class="display text-xl">{t.tabelle}</h2>
-            <span class="text-xs text-ink-soft">{t.tabelleHint}</span>
+      <div class="reveal rounded-2xl border border-line bg-card p-4 sm:p-6">
+        <h2 class="display text-xl">{t.spielplan}</h2>
+        {d.fussballDeWidget ? (
+          // Der fertige Code aus dem fussball.de-Widget-Center. Astro schreibt ihn zur
+          // Bauzeit direkt in die Seite, das enthaltene Script wird dadurch normal geladen.
+          <div class="mt-5 -mx-2 overflow-x-auto sm:mx-0" set:html={d.fussballDeWidget} />
+        ) : (
+          <div class="mt-5 rounded-xl border border-dashed border-line bg-paper px-5 py-8 text-center">
+            <p class="mx-auto max-w-sm text-sm leading-relaxed text-ink-soft">{t.tabelleEmpty}</p>
+            <a href="https://www.fussball.de" rel="noopener" class="mt-4 inline-flex text-sm font-semibold text-club hover:text-club-deep">{t.zufussballde}</a>
           </div>
-          <div class="mt-5 -mx-4 overflow-x-auto sm:mx-0">
-            <table class="w-full min-w-[420px] text-sm">
-              <thead>
-                <tr class="text-left text-xs uppercase tracking-wider text-ink-soft">
-                  <th class="py-0 pb-3 pl-4 pr-2 font-medium sm:pl-0">#</th>
-                  <th class="pb-3 font-medium">Team</th>
-                  <th class="pb-3 text-center font-medium">{t.sp}</th>
-                  <th class="pb-3 text-center font-medium">{t.diff}</th>
-                  <th class="pb-3 pr-4 text-right font-medium sm:pr-0">{t.pkt}</th>
-                </tr>
-              </thead>
-              <tbody>
-                {d.table.map((row) => (
-                  <tr class:list={['border-t border-line', row.us && 'bg-club/5 font-semibold']}>
-                    <td class="py-3 pl-4 pr-2 text-ink-soft sm:pl-0">{row.pos}</td>
-                    <td class:list={['py-3 whitespace-nowrap', row.us && 'text-club']}>{row.team}</td>
-                    <td class="py-3 text-center text-ink-soft">{row.games}</td>
-                    <td class="py-3 text-center text-ink-soft">{row.diff}</td>
-                    <td class="py-3 pr-4 text-right sm:pr-0">{row.points}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <p class="mt-4 text-xs text-ink-soft">{t.tabelleFull} <a href="https://www.fussball.de" rel="noopener" class="font-semibold text-club hover:text-club-deep">fussball.de</a></p>
-        </div>
-      )}
+        )}
+      </div>
 
-      {d.results.length > 0 && (
-        <div class="reveal mt-6">
-          <h2 class="display text-xl">{t.letzteSpiele}</h2>
+      <div class="reveal mt-6">
+        <h2 class="display text-xl">{t.letzteSpiele}</h2>
+        {d.results.length > 0 ? (
           <div class="mt-4 space-y-3">
             {d.results.map((r) => (
               <div class="flex items-center justify-between gap-4 rounded-2xl border border-line bg-card px-5 py-4">
@@ -107,8 +87,10 @@ const t = pageT('teamDetail', lang);
               </div>
             ))}
           </div>
-        </div>
-      )}
+        ) : (
+          <p class="mt-4 rounded-2xl border border-dashed border-line bg-card px-5 py-6 text-sm text-ink-soft">{t.ergebnisseEmpty}</p>
+        )}
+      </div>
     </div>
   </div>
 </section>
