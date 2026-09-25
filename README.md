@@ -90,6 +90,14 @@ will, setzt `PUBLIC_FORM_ENDPOINT` (dann ist ein AV-Vertrag mit dem Anbieter nö
 Freischalt-Code für die Anmeldung: `TREPTOW1925`, änderbar in
 `src/components/sections/AnmeldungSections.astro`.
 
+## Fanshop
+
+Der Shop läuft bei Spreadshirt (fc-treptow-fanshop.myspreadshop.de) und ist auf /shop **eingebettet**
+(Spreadshop-Plugin), inklusive Artikelansicht, Warenkorb und Kasse. Aus Datenschutzgründen lädt er
+erst nach einem Klick ("Shop hier öffnen"); vorher geht keine Anfrage an Spreadshirt. Die
+Artikelkarten auf Start- und Shopseite sind eine von Hand gepflegte Auswahl (CMS: Fanshop-Artikel)
+und öffnen den jeweiligen Artikel im eingebetteten Shop.
+
 ## Instagram (optional)
 
 Ohne Zugangsdaten zeigt die Startseite keinen Instagram-Bereich, nur den Link im Footer. Einrichtung
@@ -105,7 +113,8 @@ in `src/lib/instagram.ts`. Bilder werden beim Build heruntergeladen und selbst a
    Auftragsverarbeiter beschrieben; Löschfristen (Probetraining 6 Monate) müssen gelebt werden.
 4. Instagram: Die Seite verlinkt @fc.treptow (das Konto, das die alte Seite verlinkt). Es gibt auch
    @fctreptow mit mehr Followern; klären, welches offiziell ist.
-5. Fanshop-Preise alle paar Monate mit dem Shop abgleichen (Stand September 2026).
+5. Fanshop-Auswahl (Preise, Artikel) alle paar Monate mit dem Shop abgleichen (Stand September 2026).
+7. Die drei News-Beiträge stammen von der alten Seite (Vorstandswahl 2025, Gedenkturnier 2025, 30 Jahre 2024). Neue Beiträge über das CMS.
 6. `SITE_URL` in Vercel setzen, sobald die eigene Domain umzieht.
 
 ## Bekannte Einschränkungen

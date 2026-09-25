@@ -10,7 +10,7 @@ import { getNews, getTeams, leagueLabel, trainingLabel } from '../i18n/content';
 import { fixturesLabels } from '../i18n/fixtures';
 import { getInstagramPosts } from '../lib/instagram';
 import { buildFixtures, fixturesQuery } from '../lib/fixturesBuild';
-import { gameRow, type Game } from '../lib/fixturesView';
+import { gameRow, leagueTable, type Game } from '../lib/fixturesView';
 import { club } from '../data/club';
 
 const lang = (Astro.currentLocale ?? defaultLocale) as Locale;
@@ -27,6 +27,7 @@ const { posts: socialPosts, isLive: socialIsLive } = await getInstagramPosts(6);
 const fixtures = await buildFixtures();
 const query = await fixturesQuery();
 const teamLabels = Object.fromEntries(teams.map((tm) => [tm.slug, tm.data.shortName]));
+const leagueTeamList = teams.filter((tm) => tm.data.fussballDeTeamId);
 const nextGames = Object.entries(fixtures.teams)
   .map(([slug, f]) => (f.games?.[0] ? { slug, g: f.games[0] as Game } : null))
   .filter((x): x is { slug: string; g: Game } => !!x)
@@ -99,18 +100,38 @@ const fmt = (d: Date) => d.toLocaleDateString(bcp47[lang], { day: 'numeric', mon
       </a>
     </div>
     <div class="reveal lg:col-span-8">
-      <div
-        data-fixtures="next"
-        data-query={query}
-        data-built-at={fixtures.fetchedAt}
-        data-labels={JSON.stringify(fx)}
-        data-team-labels={JSON.stringify(teamLabels)}
-      >
-        {nextGames.length > 0 ? (
-          <ul class="border-t border-line" set:html={nextGames.map(({ slug, g }) => gameRow(g, fx, teamLabels[slug])).join('')} />
-        ) : (
-          <p class="border-y border-line py-8 text-sm text-ink-soft">{fx.unavailable}</p>
-        )}
+      <!-- Reiter: Spielplan / Tabelle. Ohne JavaScript ist der Spielplan sichtbar. -->
+      <div role="tablist" aria-label={t.fixturesHeading} class="flex gap-1 border-b border-ink" data-tabs>
+        <button role="tab" type="button" id="tab-schedule" aria-controls="panel-schedule" aria-selected="true" class="display -mb-px min-h-12 border-b-[3px] border-club px-3 text-2xl transition-colors aria-[selected=false]:border-transparent aria-[selected=false]:text-ink-soft aria-[selected=false]:hover:text-ink">{t.tabSchedule}</button>
+        <button role="tab" type="button" id="tab-table" aria-controls="panel-table" aria-selected="false" tabindex="-1" class="display -mb-px min-h-12 border-b-[3px] border-club px-3 text-2xl transition-colors aria-[selected=false]:border-transparent aria-[selected=false]:text-ink-soft aria-[selected=false]:hover:text-ink">{t.tabTable}</button>
+      </div>
+      <div id="panel-schedule" role="tabpanel" aria-labelledby="tab-schedule" tabindex="0">
+        <div
+          data-fixtures="next"
+          data-query={query}
+          data-built-at={fixtures.fetchedAt}
+          data-labels={JSON.stringify(fx)}
+          data-team-labels={JSON.stringify(teamLabels)}
+        >
+          {nextGames.length > 0 ? (
+            <ul set:html={nextGames.map(({ slug, g }) => gameRow(g, fx, teamLabels[slug])).join('')} />
+          ) : (
+            <p class="border-b border-line py-8 text-sm text-ink-soft">{fx.unavailable}</p>
+          )}
+        </div>
+      </div>
+      <div id="panel-table" role="tabpanel" aria-labelledby="tab-table" tabindex="0" hidden>
+        <div role="tablist" aria-label={t.teamsHeading} class="no-scrollbar -mx-4 flex gap-2 overflow-x-auto px-4 py-4 sm:mx-0 sm:px-0" data-team-tabs>
+          {leagueTeamList.map((tm, i) => (
+            <button role="tab" type="button" id={`ttab-${tm.slug}`} aria-controls={`tpanel-${tm.slug}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1} class="min-h-11 shrink-0 rounded-full px-4 text-sm font-semibold ring-1 ring-line transition-colors aria-[selected=true]:bg-ink aria-[selected=true]:text-paper aria-[selected=true]:ring-ink">{tm.data.shortName}</button>
+          ))}
+        </div>
+        {leagueTeamList.map((tm, i) => (
+          <div id={`tpanel-${tm.slug}`} role="tabpanel" aria-labelledby={`ttab-${tm.slug}`} tabindex="0" hidden={i !== 0}>
+            <div data-fixtures="table" data-team={tm.slug} data-query={query} data-built-at={fixtures.fetchedAt} data-labels={JSON.stringify(fx)} set:html={leagueTable(fixtures.teams[tm.slug]?.table ?? null, fx)} />
+            <a href={l(lang, `/mannschaften/${tm.slug}`)} class="mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-club hover:text-club-deep">{tm.data.name} <Icon name="arrow" size={16} /></a>
+          </div>
+        ))}
       </div>
       <p class="mt-3 text-xs text-ink-soft">{fx.source}</p>
     </div>
@@ -232,7 +253,7 @@ const fmt = (d: Date) => d.toLocaleDateString(bcp47[lang], { day: 'numeric', mon
     <div class="reveal lg:col-span-4">
       <h2 class="display text-5xl sm:text-6xl">{t.shopHeading}</h2>
       <p class="mt-5 max-w-sm leading-relaxed text-ink-soft">{t.shopText}</p>
-      <CtaButton href={club.shopUrl} external class="mt-8">{t.shopCta}</CtaButton>
+      <CtaButton href={l(lang, '/shop')} class="mt-8">{t.shopCta}</CtaButton>
       <p class="mt-4 max-w-xs text-xs leading-relaxed text-ink-soft">{t.shopNote}</p>
     </div>
     <div class="lg:col-span-8">
@@ -287,4 +308,5 @@ const fmt = (d: Date) => d.toLocaleDateString(bcp47[lang], { day: 'numeric', mon
 
 <script>
   import '../scripts/fixturesLive';
+  import '../scripts/tabs';
 </script>

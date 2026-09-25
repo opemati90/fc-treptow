@@ -5,9 +5,9 @@ Der Schutz Ihrer persönlichen Daten ist uns wichtig. Diese Datenschutzerklärun
 Unsere Website ist bewusst datensparsam gebaut:
 
 - Wir setzen **keine Cookies**, keine Analyse- oder Tracking-Werkzeuge und keine Werbung ein.
-- Es werden keine Informationen in Ihrem Browser gespeichert (auch kein Local Storage).
+- Es werden keine Informationen in Ihrem Browser gespeichert (auch kein Local Storage). Einzige Ausnahme: der Fanshop, und nur nachdem Sie ihn selbst per Klick geöffnet haben (Abschnitt 9).
 - Schriftarten werden von unserem eigenen Server ausgeliefert, nicht von Google Fonts.
-- Auf den öffentlichen Seiten sind keine Skripte, Videos, Karten oder Social-Media-Plugins von Drittanbietern eingebunden.
+- Auf den öffentlichen Seiten sind keine Skripte, Videos, Karten oder Social-Media-Plugins von Drittanbietern eingebunden. Der Fanshop lädt erst nach Ihrem Klick (Abschnitt 9).
 - Unsere Formulare übertragen keine Daten an einen Server. Sie öffnen lediglich Ihr eigenes E-Mail-Programm.
 
 Ihre Daten werden vertraulich und entsprechend den gesetzlichen Datenschutzvorschriften sowie dieser Datenschutzerklärung behandelt.
@@ -90,14 +90,17 @@ Auf die Datenverarbeitung durch diese Anbieter haben wir keinen Einfluss.
 
 ## 9. Fanshop
 
-Unser Fanshop wird extern unter [fc-treptow-fanshop.myspreadshop.de](https://fc-treptow-fanshop.myspreadshop.de) betrieben von:
+Unser Fanshop wird von unserem Partner betrieben:
 
 sprd.net AG  
 Gießerstraße 27  
 04229 Leipzig
 
-Auf unserer Website verlinken wir lediglich auf den Shop und zeigen Produktfotos, die auf unserem eigenen Server gespeichert sind. Beim Betrachten dieser Fotos werden keine Daten an Spreadshirt übermittelt. Bestellungen im Fanshop schließen Sie direkt mit Spreadshirt ab. Für die Verarbeitung Ihrer Daten beim Einkauf, zum Beispiel Bestell-, Liefer- und Zahlungsdaten, ist Spreadshirt verantwortlich. Es gilt die [Datenschutzerklärung von Spreadshirt](https://www.spreadshirt.de/datenschutz).
+Der Shop ist auf der Seite "Fanshop" unserer Website eingebettet. Er wird **erst geladen, wenn Sie auf "Shop hier öffnen" klicken** (Zwei-Klick-Lösung). Vorher werden keine Daten an Spreadshirt übermittelt; die Produktfotos auf unserer Website liegen auf unserem eigenen Server.
 
+Sobald Sie den Shop öffnen, lädt Ihr Browser Inhalte von Servern von Spreadshirt. Dabei werden technisch notwendige Daten wie Ihre IP-Adresse, Browsertyp und Uhrzeit an Spreadshirt übertragen. Der Shop speichert außerdem Ihren Warenkorb im lokalen Speicher Ihres Browsers und kann eigene Cookies setzen, für die Spreadshirt gegebenenfalls eine eigene Einwilligung einholt. Rechtsgrundlage für das Laden des Shops ist Ihre Einwilligung durch den Klick (Art. 6 Abs. 1 lit. a DSGVO, § 25 Abs. 1 TDDDG). Wenn Sie die Seite verlassen, ist der Shop beim nächsten Besuch wieder deaktiviert, bis Sie erneut klicken.
+
+Bestellungen schließen Sie direkt mit Spreadshirt ab. Für die Verarbeitung Ihrer Daten beim Einkauf, zum Beispiel Bestell-, Liefer- und Zahlungsdaten, ist Spreadshirt verantwortlich. Es gilt die [Datenschutzerklärung von Spreadshirt](https://www.spreadshirt.de/datenschutz).
 ## 10. Formulare für Probetraining, Mitgliedschaft und Kontakt
 
 Auf unserer Website finden Sie Formulare, um ein Probetraining anzufragen, sich nach einem Probetraining als Mitglied anzumelden oder uns eine Nachricht zu schreiben.

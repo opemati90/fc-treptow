@@ -41,6 +41,8 @@ const de = {
   trainingLabel: 'Training',
 
   fixturesHeading: 'Spielplan und Tabellen',
+  tabSchedule: 'Spielplan',
+  tabTable: 'Tabelle',
   fixturesText: 'Ansetzungen, Ergebnisse und Tabellen führt der Berliner Fußball-Verband auf fussball.de. Dort ist alles tagesaktuell.',
   fixturesLink: 'Auf fussball.de',
 
@@ -56,9 +58,9 @@ const de = {
   chronikCta: 'Zur Chronik',
 
   shopHeading: 'Fanshop',
-  shopText: 'Trikots, Hoodies, Caps und mehr mit Wappen und FCT-Monogramm. Gedruckt auf Bestellung bei Spreadshirt, jeder Kauf unterstützt den Verein.',
+  shopText: 'Trikots, Hoodies, Caps und mehr mit Wappen und FCT-Monogramm. Gedruckt auf Bestellung, jeder Kauf unterstützt den Verein.',
   shopCta: 'Zum Fanshop',
-  shopNote: 'Externer Shop, betrieben von Spreadshirt. Preise laut Shop, Stand September 2026.',
+  shopNote: 'Bestellung und Bezahlung laufen über unseren Partner Spreadshirt, direkt hier auf der Seite.',
 
   groundHeading: 'Unser Platz',
   groundText: 'Kunstrasen und Vereinsheim an der Köpenicker Landstraße, zwischen Baumschulenweg und Plänterwald.',
@@ -122,6 +124,8 @@ const en: UI = {
   trainingLabel: 'Training',
 
   fixturesHeading: 'Fixtures and tables',
+  tabSchedule: 'Fixtures',
+  tabTable: 'Table',
   fixturesText: 'Fixtures, results and tables are kept by the Berlin Football Association on fussball.de, always up to date.',
   fixturesLink: 'On fussball.de',
 
@@ -137,9 +141,9 @@ const en: UI = {
   chronikCta: 'Read the history',
 
   shopHeading: 'Fan shop',
-  shopText: 'Shirts, hoodies, caps and more with the crest and FCT monogram. Printed to order by Spreadshirt, every purchase supports the club.',
-  shopCta: 'Visit the fan shop',
-  shopNote: 'External shop run by Spreadshirt. Prices as listed in the shop, September 2026.',
+  shopText: 'Shirts, hoodies, caps and more with the crest and FCT monogram. Printed to order, every purchase supports the club.',
+  shopCta: 'To the fan shop',
+  shopNote: 'Orders and payment run through our partner Spreadshirt, right here on this site.',
 
   groundHeading: 'Our ground',
   groundText: 'Artificial turf and clubhouse on Köpenicker Landstraße, between Baumschulenweg and Plänterwald.',
@@ -201,6 +205,8 @@ const tr: UI = {
   trainingLabel: 'Antrenman',
 
   fixturesHeading: 'Fikstür ve puan durumu',
+  tabSchedule: 'Fikstür',
+  tabTable: 'Puan durumu',
   fixturesText: 'Maç programı, sonuçlar ve puan durumu Berlin Futbol Federasyonu tarafından fussball.de’de güncel tutulur.',
   fixturesLink: 'fussball.de’de',
 
@@ -218,7 +224,7 @@ const tr: UI = {
   shopHeading: 'Taraftar mağazası',
   shopText: 'Arma ve FCT monogramlı formalar, kapüşonlular, şapkalar ve daha fazlası. Spreadshirt tarafından siparişe göre basılır, her alışveriş kulübü destekler.',
   shopCta: 'Mağazaya git',
-  shopNote: 'Spreadshirt tarafından işletilen harici mağaza. Fiyatlar mağazadaki gibi, Eylül 2026.',
+  shopNote: 'Sipariş ve ödeme, partnerimiz Spreadshirt üzerinden doğrudan bu sitede yapılır.',
 
   groundHeading: 'Sahamız',
   groundText: 'Köpenicker Landstraße’de suni çim saha ve kulüp evi, Baumschulenweg ile Plänterwald arasında.',
@@ -280,6 +286,8 @@ const ar: UI = {
   trainingLabel: 'التدريب',
 
   fixturesHeading: 'جدول المباريات والترتيب',
+  tabSchedule: 'المباريات',
+  tabTable: 'الترتيب',
   fixturesText: 'يحدّث اتحاد برلين لكرة القدم المباريات والنتائج والترتيب على موقع fussball.de بشكل يومي.',
   fixturesLink: 'على fussball.de',
 
@@ -297,7 +305,7 @@ const ar: UI = {
   shopHeading: 'متجر المشجعين',
   shopText: 'قمصان وسترات بقلنسوة وقبعات وغيرها بشعار النادي وحروف FCT. تُطبع حسب الطلب لدى Spreadshirt، وكل عملية شراء تدعم النادي.',
   shopCta: 'إلى المتجر',
-  shopNote: 'متجر خارجي تديره Spreadshirt. الأسعار كما في المتجر، سبتمبر 2026.',
+  shopNote: 'يتم الطلب والدفع عبر شريكنا Spreadshirt مباشرة هنا على الموقع.',
 
   groundHeading: 'ملعبنا',
   groundText: 'ملعب بعشب صناعي ومقر للنادي في شارع كوبينيكر لاندشتراسه، بين باومشولنفيغ وبلينترفالد.',
@@ -359,6 +367,8 @@ const es: UI = {
   trainingLabel: 'Entrenamiento',
 
   fixturesHeading: 'Calendario y clasificación',
+  tabSchedule: 'Calendario',
+  tabTable: 'Clasificación',
   fixturesText: 'La Federación de Fútbol de Berlín publica calendario, resultados y clasificación en fussball.de, siempre al día.',
   fixturesLink: 'En fussball.de',
 
@@ -376,7 +386,7 @@ const es: UI = {
   shopHeading: 'Tienda',
   shopText: 'Camisetas, sudaderas, gorras y más con el escudo y el monograma FCT. Impresos bajo pedido por Spreadshirt; cada compra apoya al club.',
   shopCta: 'Ir a la tienda',
-  shopNote: 'Tienda externa gestionada por Spreadshirt. Precios según la tienda, septiembre de 2026.',
+  shopNote: 'Los pedidos y el pago se gestionan con nuestro socio Spreadshirt, aquí mismo en la web.',
 
   groundHeading: 'Nuestro campo',
   groundText: 'Césped artificial y sede del club en la Köpenicker Landstraße, entre Baumschulenweg y Plänterwald.',
@@ -438,6 +448,8 @@ const fr: UI = {
   trainingLabel: 'Entraînement',
 
   fixturesHeading: 'Calendrier et classements',
+  tabSchedule: 'Calendrier',
+  tabTable: 'Classement',
   fixturesText: 'La Fédération de football de Berlin tient le calendrier, les résultats et les classements à jour sur fussball.de.',
   fixturesLink: 'Sur fussball.de',
 
@@ -455,7 +467,7 @@ const fr: UI = {
   shopHeading: 'Boutique',
   shopText: 'Maillots, sweats, casquettes et plus avec le blason et le monogramme FCT. Imprimés à la demande par Spreadshirt, chaque achat soutient le club.',
   shopCta: 'Aller à la boutique',
-  shopNote: 'Boutique externe gérée par Spreadshirt. Prix affichés dans la boutique, septembre 2026.',
+  shopNote: 'Commande et paiement passent par notre partenaire Spreadshirt, directement sur ce site.',
 
   groundHeading: 'Notre terrain',
   groundText: 'Gazon synthétique et club-house sur la Köpenicker Landstraße, entre Baumschulenweg et Plänterwald.',
