@@ -1,0 +1,114 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import Icon from '../Icon.astro';
+import { defaultLocale, bcp47, l, type Locale } from '../../i18n/languages';
+import { pageT } from '../../i18n/pages';
+
+interface Props {
+  item: CollectionEntry<'shop'>;
+}
+const { item } = Astro.props;
+const d = item.data;
+const { Content } = await render(item);
+const hasBody = Boolean(item.body?.trim());
+const lang = (Astro.currentLocale ?? defaultLocale) as Locale;
+const t = pageT('shop', lang).detail;
+const price = new Intl.NumberFormat(bcp47[lang], { style: 'currency', currency: 'EUR' }).format(d.price);
+const images = [d.image, ...d.gallery];
+const others = (await getCollection('shop'))
+  .filter((e) => e.id !== item.id)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 4);
+---
+<section class="mx-auto max-w-7xl px-4 pb-8 pt-10 sm:px-6 sm:pt-14 lg:px-8 lg:pt-20">
+  <a href={l(lang, '/shop')} class="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-ink-soft transition-colors hover:text-ink"><span class="rtl:rotate-180" aria-hidden="true">←</span>{t.back}</a>
+  <div class="mt-6 grid gap-10 lg:grid-cols-12 lg:gap-16">
+    <!-- Bilder: Hauptbild groß, weitere Ansichten als Reihe darunter -->
+    <div class="lg:col-span-7">
+      <div class="rounded-[10px] bg-paper-deep p-1.5 ring-1 ring-line">
+        <div class="overflow-hidden rounded-sm bg-white">
+          <img id="shop-main" src={images[0]} alt={d.name} width="900" height="900" fetchpriority="high" class="aspect-square w-full object-contain p-6" />
+        </div>
+      </div>
+      {images.length > 1 && (
+        <ul class="mt-3 flex gap-3" data-thumbs>
+          {images.map((src, i) => (
+            <li>
+              <button type="button" data-src={src} aria-pressed={i === 0 ? 'true' : 'false'} aria-label={`${d.name} ${i + 1}`} class="block w-20 overflow-hidden rounded-sm bg-white ring-1 ring-line transition-[box-shadow] aria-[pressed=true]:ring-2 aria-[pressed=true]:ring-ink">
+                <img src={src} alt="" width="160" height="160" loading="lazy" class="aspect-square w-full object-contain p-1.5" />
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+
+    <!-- Angaben und Bestellung -->
+    <div class="hero-in lg:col-span-5">
+      {d.productType && <p class="text-xs font-semibold uppercase tracking-[0.14em] text-club">{d.productType}</p>}
+      <h1 class="display mt-2 text-5xl text-balance sm:text-6xl">{d.name}</h1>
+      <p class="nums mt-5 text-3xl font-semibold">{price}</p>
+      <p class="mt-1 text-sm text-ink-soft">{t.priceNote}</p>
+
+      <dl class="mt-8 border-t border-ink">
+        {d.sizes && (
+          <div class="flex gap-6 border-b border-line py-4">
+            <dt class="w-28 shrink-0 text-xs font-semibold uppercase tracking-[0.14em] text-ink-soft">{t.sizes}</dt>
+            <dd class="font-medium">{d.sizes}</dd>
+          </div>
+        )}
+        {d.colours.length > 0 && (
+          <div class="flex gap-6 border-b border-line py-4">
+            <dt class="w-28 shrink-0 text-xs font-semibold uppercase tracking-[0.14em] text-ink-soft">{t.colours}</dt>
+            <dd class="font-medium">{d.colours.join(', ')}</dd>
+          </div>
+        )}
+      </dl>
+
+      <a href={d.url} rel="noopener" target="_blank" class="group mt-8 inline-flex min-h-12 items-center gap-3 rounded-full bg-club py-1.5 ps-6 pe-1.5 text-[15px] font-semibold text-white transition-[background-color,transform] duration-200 ease-(--ease-club) hover:bg-club-deep active:scale-[0.97]">
+        {t.order}
+        <span class="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 transition-transform duration-300 group-hover:translate-x-0.5"><Icon name="bag" size={18} /></span>
+      </a>
+      <p class="mt-4 max-w-sm text-sm leading-relaxed text-ink-soft">{t.orderHint}</p>
+
+      {hasBody && (
+        <div lang="de" class="prose-club mt-10 border-t border-line pt-8 leading-relaxed text-ink-soft">
+          <Content />
+        </div>
+      )}
+    </div>
+  </div>
+</section>
+
+{others.length > 0 && (
+  <section class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
+    <h2 class="display text-4xl sm:text-5xl">{t.more}</h2>
+    <ul class="stagger mt-8 grid grid-cols-2 gap-x-4 gap-y-8 sm:gap-x-6 lg:grid-cols-4">
+      {others.map((o) => (
+        <li>
+          <a href={l(lang, `/shop/${o.id}`)} class="group block">
+            <div class="rounded-[10px] bg-paper-deep p-1.5 ring-1 ring-line">
+              <div class="overflow-hidden rounded-sm bg-white">
+                <img src={o.data.image} alt="" width="900" height="900" loading="lazy" class="aspect-square w-full object-contain p-3 transition-transform duration-500 ease-(--ease-club) group-hover:scale-[1.04]" />
+              </div>
+            </div>
+            <div class="mt-3 flex items-start justify-between gap-3 px-0.5">
+              <p class="text-sm font-semibold leading-snug">{o.data.name}</p>
+              <p class="nums shrink-0 text-sm text-ink-soft">{new Intl.NumberFormat(bcp47[lang], { style: 'currency', currency: 'EUR' }).format(o.data.price)}</p>
+            </div>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+)}
+
+<script>
+  const main = document.getElementById('shop-main') as HTMLImageElement | null;
+  document.querySelectorAll<HTMLButtonElement>('[data-thumbs] button').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      if (main && btn.dataset.src) main.src = btn.dataset.src;
+      document.querySelectorAll('[data-thumbs] button').forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+    });
+  });
+</script>

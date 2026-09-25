@@ -55,7 +55,7 @@ collections:
     create: true
     slug: '{{slug}}'
     sortable_fields: [date, title]
-    summary: '{{date | date("DD.MM.YYYY")}}  ·  {{title}}'
+    summary: '{{title}}'
     fields:
       - { name: title, label: Überschrift, widget: string, hint: 'Kurz und klar, z. B. "River Plate steigt auf"' }
       - { name: date, label: Datum, widget: datetime, format: 'YYYY-MM-DD', date_format: 'DD.MM.YYYY', time_format: false, picker_utc: true }
@@ -155,7 +155,12 @@ collections:
       - { name: price, label: Preis in Euro, widget: number, value_type: float, step: 0.01 }
       - { name: url, label: Link zum Artikel im Shop, widget: string, pattern: ['^https://.+', 'Der Link muss mit https:// beginnen.'], hint: 'Artikel im Fanshop öffnen und die Adresse aus dem Browser kopieren.' }
       - { name: image, label: Produktfoto, widget: image, media_folder: /public/images/shop, public_folder: /images/shop }
+      - { name: gallery, label: Weitere Ansichten, widget: list, required: false, field: { name: src, label: Foto, widget: image, media_folder: /public/images/shop, public_folder: /images/shop } }
+      - { name: productType, label: Produktart, widget: string, required: false, hint: 'z. B. Kontrast-Hoodie' }
+      - { name: sizes, label: Größen, widget: string, required: false, hint: 'z. B. S bis 3XL' }
+      - { name: colours, label: Farben, widget: list, required: false, hint: 'Eine Farbe pro Eintrag' }
       - { name: order, label: Reihenfolge, widget: number, value_type: int, default: 99 }
+      - { name: body, label: Beschreibung, widget: markdown, required: false, buttons: [bold, italic, bulleted-list], editor_components: [], modes: [rich_text], hint: 'Material, Passform, Pflege. Erscheint auf der Artikelseite.' }
 
   - name: downloads
     label: Downloads (PDF)

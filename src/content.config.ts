@@ -107,6 +107,11 @@ const shop = defineCollection({
     price: z.coerce.number(),
     url: z.url(),
     image: z.string(),
+    // Weitere Ansichten (Rückseite, Detail), freiwillig
+    gallery: list(z.string()),
+    productType: z.string().nullish(),
+    sizes: z.string().nullish(),
+    colours: list(z.string()),
     order: z.number().default(99),
   }),
 });
