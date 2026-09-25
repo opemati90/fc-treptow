@@ -94,13 +94,15 @@ const shopHost = new URL(club.shopUrl).host;
     return h && h !== 'fanshop' ? h : '';
   };
 
-  // Spreadshop meldet Einbettungsfehler (z. B. Domain nicht freigegeben) als unbehandelten Fehler
-  window.addEventListener('error', (e) => {
-    if (String(e.message).includes('SpreadShop')) {
-      shop?.classList.add('hidden');
-      document.getElementById('shop-failed')?.classList.remove('hidden');
-    }
-  });
+  // Spreadshop meldet Einbettungsfehler (z. B. Domain nicht freigegeben) als abgelehntes Promise.
+  // Zur Sicherheit greift zusätzlich ein Zeitlimit: bleibt der Shop leer, kommt der Ausweg.
+  const showFailed = () => {
+    shop?.classList.add('hidden');
+    document.getElementById('shop-failed')?.classList.remove('hidden');
+  };
+  const isShopError = (v: unknown) => /spread\s?shop/i.test(String((v as any)?.message ?? v ?? ''));
+  window.addEventListener('unhandledrejection', (e) => { if (isShopError(e.reason)) showFailed(); });
+  window.addEventListener('error', (e) => { if (isShopError(e.message)) showFailed(); });
   let loaded = false;
   function loadShop(startToken: string) {
     if (!shop || loaded) return;
@@ -120,8 +122,12 @@ const shopHost = new URL(club.shopUrl).host;
     const s = document.createElement('script');
     s.src = `https://${shop.dataset.host?.replace(/\.myspreadshop\.[a-z.]+$/, '.myspreadshop.net')}/js/shopclient.nocache.js`;
     s.async = true;
+    s.onerror = showFailed;
     document.body.appendChild(s);
     shop.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    setTimeout(() => {
+      if (shop.querySelector('*') === null) showFailed();
+    }, 15000);
   }
 
   btn?.addEventListener('click', () => loadShop(startFromHash()));
