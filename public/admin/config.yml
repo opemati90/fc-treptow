@@ -1,7 +1,7 @@
 # Redaktion FC Treptow (Decap CMS)
 #
 # Anmeldung: per E-Mail und Passwort über DecapBridge (kein GitHub-Konto nötig).
-# Einrichtung einmalig, siehe README, Abschnitt "Redaktion einrichten".
+# Einladungen und Passwörter verwaltet man unter decapbridge.com, Seite "FC Treptow".
 # Jede gespeicherte Änderung landet im GitHub-Repository, Vercel baut die Seite danach
 # automatisch neu. Nach etwa 1 bis 2 Minuten ist die Änderung online.
 #
@@ -11,16 +11,26 @@ backend:
   name: git-gateway
   repo: opemati90/fc-treptow
   branch: main
-  # Diese beiden Werte kommen aus dem DecapBridge-Dashboard (Seite anlegen, dann kopieren):
-  identity_url: https://auth.decapbridge.com/sites/DECAPBRIDGE_SITE_ID
+  auth_type: pkce
+  base_url: https://auth.decapbridge.com
+  auth_endpoint: /sites/696ff2cf-0c4d-46ca-95eb-6290f0dd30b7/pkce
+  auth_token_endpoint: /sites/696ff2cf-0c4d-46ca-95eb-6290f0dd30b7/token
   gateway_url: https://gateway.decapbridge.com
   commit_messages:
-    create: 'Neu: {{collection}} "{{slug}}"'
-    update: 'Geändert: {{collection}} "{{slug}}"'
-    delete: 'Gelöscht: {{collection}} "{{slug}}"'
-    uploadMedia: 'Datei hochgeladen: {{path}}'
-    deleteMedia: 'Datei gelöscht: {{path}}'
+    create: 'Neu: {{collection}} "{{slug}}" ({{author-name}})'
+    update: 'Geändert: {{collection}} "{{slug}}" ({{author-name}})'
+    delete: 'Gelöscht: {{collection}} "{{slug}}" ({{author-name}})'
+    uploadMedia: 'Datei hochgeladen: {{path}} ({{author-name}})'
+    deleteMedia: 'Datei gelöscht: {{path}} ({{author-name}})'
 
+auth:
+  email_claim: email
+  first_name_claim: first_name
+  last_name_claim: last_name
+  avatar_url_claim: avatar_url
+
+# Lokal (npx decap-server) ohne Anmeldung; in Produktion wird dieser Wert ignoriert,
+# solange kein Server auf localhost:8081 antwortet.
 local_backend: true
 
 # Deutsche Oberfläche

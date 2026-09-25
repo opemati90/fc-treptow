@@ -36,12 +36,11 @@ Faustregeln:
 Die Redaktion ist Decap CMS. Damit sich die Redaktion **ohne GitHub-Konto** anmelden kann, läuft die
 Anmeldung über [DecapBridge](https://decapbridge.com) (kostenlos bis 10 Personen):
 
-1. Auf decapbridge.com mit GitHub anmelden, "New site" anlegen, Repository `opemati90/fc-treptow`
-   und Branch `main` wählen.
-2. Die angezeigte `identity_url` in `public/admin/config.yml` eintragen (Platzhalter
-   `DECAPBRIDGE_SITE_ID` ersetzen). `gateway_url` bleibt wie sie ist.
-3. In DecapBridge die Redaktion per E-Mail einladen. Sie bekommt einen Link und setzt ein Passwort.
-4. In Vercel das Projekt mit dem GitHub-Repository verbinden (Project Settings → Git). Das ging per
+1. Erledigt (25.09.2026): Seite "FC Treptow" bei DecapBridge, PKCE-Login, Werte stehen in
+   `public/admin/config.yml`. Der GitHub-Token dort läuft ab und muss dann erneuert werden
+   (github.com/settings/tokens, Fine-grained, nur `fc-treptow`, Contents + Pull requests Read/Write).
+2. In DecapBridge die Redaktion per E-Mail einladen. Sie bekommt einen Link und setzt ein Passwort.
+3. In Vercel das Projekt mit dem GitHub-Repository verbinden (Project Settings → Git). Das ging per
    CLI nicht, weil das Vercel-Konto keinen Schreibzugriff auf das Repository hat; im Dashboard mit
    dem Konto verbinden, dem das Repository gehört. Ohne diesen Schritt baut Vercel nach CMS-Änderungen
    nicht automatisch neu.
@@ -105,7 +104,7 @@ in `src/lib/instagram.ts`. Bilder werden beim Build heruntergeladen und selbst a
 
 ## Offene Punkte vor dem Livegang
 
-1. DecapBridge einrichten und Redaktion einladen (siehe oben).
+1. Redaktion bei DecapBridge einladen (siehe oben).
 2. Vercel mit dem GitHub-Repository verbinden (siehe oben).
 3. Datenschutzerklärung vom Vorstand prüfen lassen. Offene Annahmen sind unten in der Datei
    `src/legal/datenschutz.md` nicht markiert, deshalb hier: kein Datenschutzbeauftragter benannt;
