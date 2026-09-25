@@ -1,0 +1,26 @@
+---
+// Kopf jeder Unterseite: große Überschrift, kurzer Einleitungstext, Linie darunter.
+interface Props {
+  title: string;
+  intro?: string;
+  kicker?: string;
+  kickerHref?: string;
+}
+const { title, intro, kicker, kickerHref } = Astro.props;
+---
+<header class="mx-auto max-w-7xl px-4 pb-10 pt-10 sm:px-6 sm:pt-14 lg:px-8 lg:pb-14 lg:pt-20">
+  <div class="hero-in border-b border-ink pb-10 lg:pb-14">
+    {kicker && (
+      kickerHref ? (
+        <a href={kickerHref} class="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-ink-soft transition-colors hover:text-ink">
+          <span class="rtl:rotate-180" aria-hidden="true">←</span>{kicker}
+        </a>
+      ) : (
+        <p class="flex items-center gap-2 text-sm font-medium text-ink-soft"><span class="h-px w-8 bg-club" aria-hidden="true"></span>{kicker}</p>
+      )
+    )}
+    <h1 class="display mt-4 max-w-5xl text-[clamp(3.25rem,10vw,7rem)] text-balance">{title}</h1>
+    {intro && <p class="mt-6 max-w-2xl text-lg leading-relaxed text-ink-soft">{intro}</p>}
+    <slot />
+  </div>
+</header>

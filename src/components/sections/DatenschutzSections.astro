@@ -1,15 +1,18 @@
 ---
+import PageHeader from '../PageHeader.astro';
+import { Content } from '../../legal/datenschutz.md';
 import { defaultLocale, type Locale } from '../../i18n/languages';
 import { pageT } from '../../i18n/pages';
 
 const lang = (Astro.currentLocale ?? defaultLocale) as Locale;
 const t = pageT('datenschutz', lang);
 ---
-<section class="mx-auto max-w-3xl px-4 py-16 lg:px-6">
-  <h1 class="display text-4xl">{t.h1}</h1>
-  <div class="mt-8 space-y-4 text-sm leading-relaxed text-ink-soft">
-    <p>{t.p1}</p>
-    <p>{t.p2}</p>
-    <p>{t.p3}</p>
+<PageHeader title={t.h1}>
+  {t.notice && <p class="mt-6 max-w-2xl rounded-sm bg-card p-5 leading-relaxed ring-1 ring-line">{t.notice}</p>}
+</PageHeader>
+
+<section class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+  <div lang="de" dir="ltr" class="legal max-w-3xl text-base leading-relaxed text-ink-soft [&>h2:first-child]:mt-0">
+    <Content />
   </div>
 </section>

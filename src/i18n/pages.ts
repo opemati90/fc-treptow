@@ -4,6 +4,7 @@ import type { Locale } from './languages';
 export const pages = {
   mitgliedschaft: {
     de: {
+      passiv: 'Passive Mitglieder', passivDetail: 'Für alle, die den Verein unterstützen, ohne zu spielen.', aufnahme: 'Einmalig 10 € Aufnahmegebühr, die an den Berliner Fußball-Verband geht. Beiträge sind bis zum 15. des Monats fällig. Kündigen geht schriftlich mit drei Monaten Frist zum Halbjahres- oder Jahresende.', beitragsordnungLabel: 'Beitragsordnung',
       metaTitle: 'Mitgliedschaft', metaDesc: 'Mitglied werden beim FC Treptow e.V.: Beiträge, Probetraining und Anmeldung.',
       h1: 'Mitglied werden', intro: 'Vom ersten Probetraining bis zur Spielberechtigung in drei Schritten.',
       steps: [
@@ -17,6 +18,7 @@ export const pages = {
       kontoinhaber: 'Kontoinhaber', iban: 'IBAN', formsHint: 'Formulare wie die Eintrittserklärung findest du unter', downloadsLabel: 'Downloads',
     },
     en: {
+      passiv: 'Supporting members', passivDetail: 'For everyone who backs the club without playing.', aufnahme: 'A one-off €10 joining fee, passed on to the Berlin Football Association. Fees are due by the 15th of each month. You can cancel in writing with three months’ notice to the end of the half-year or year.', beitragsordnungLabel: 'Fee regulations',
       metaTitle: 'Membership', metaDesc: 'Become a member of FC Treptow e.V.: fees, trial training and registration.',
       h1: 'Become a member', intro: 'From your first trial session to full playing eligibility in three steps.',
       steps: [
@@ -30,6 +32,7 @@ export const pages = {
       kontoinhaber: 'Account holder', iban: 'IBAN', formsHint: 'You’ll find forms like the membership declaration under', downloadsLabel: 'Downloads',
     },
     tr: {
+      passiv: 'Destekçi üyeler', passivDetail: 'Oynamadan kulübü desteklemek isteyen herkes için.', aufnahme: 'Bir kereye mahsus 10 € giriş ücreti, Berlin Futbol Federasyonu’na aktarılır. Aidatlar her ayın 15’ine kadar ödenir. Üyelik, yarıyıl veya yıl sonuna üç ay önceden yazılı olarak feshedilebilir.', beitragsordnungLabel: 'Aidat yönetmeliği',
       metaTitle: 'Üyelik', metaDesc: 'FC Treptow e.V.’ye üye ol: aidatlar, deneme antrenmanı ve kayıt.',
       h1: 'Üye ol', intro: 'İlk deneme antrenmanından oyuncu lisansına üç adımda.',
       steps: [
@@ -43,6 +46,7 @@ export const pages = {
       kontoinhaber: 'Hesap sahibi', iban: 'IBAN', formsHint: 'Üyelik beyanı gibi formları şurada bulabilirsin:', downloadsLabel: 'İndirilenler',
     },
     ar: {
+      passiv: 'أعضاء داعمون', passivDetail: 'لكل من يدعم النادي دون أن يلعب.', aufnahme: 'رسوم انتساب لمرة واحدة بقيمة 10 يورو تُحوَّل إلى اتحاد برلين لكرة القدم. تُستحق الاشتراكات حتى اليوم 15 من كل شهر. يمكن إنهاء العضوية كتابيًا بإشعار مدته ثلاثة أشهر قبل نهاية نصف السنة أو السنة.', beitragsordnungLabel: 'لائحة الاشتراكات',
       metaTitle: 'العضوية', metaDesc: 'انضم إلى نادي إف سي تريبتاو: الرسوم والتدريب التجريبي والتسجيل.',
       h1: 'انضم إلينا', intro: 'من أول تدريب تجريبي إلى أهلية اللعب الكاملة في ثلاث خطوات.',
       steps: [
@@ -56,6 +60,7 @@ export const pages = {
       kontoinhaber: 'صاحب الحساب', iban: 'الآيبان', formsHint: 'ستجد نماذج مثل إقرار العضوية تحت', downloadsLabel: 'التنزيلات',
     },
     es: {
+      passiv: 'Socios de apoyo', passivDetail: 'Para quienes apoyan al club sin jugar.', aufnahme: 'Cuota de alta única de 10 €, que se transfiere a la Federación de Fútbol de Berlín. Las cuotas vencen el día 15 de cada mes. La baja se comunica por escrito con tres meses de antelación al final del semestre o del año.', beitragsordnungLabel: 'Reglamento de cuotas',
       metaTitle: 'Membresía', metaDesc: 'Hazte socio del FC Treptow e.V.: cuotas, entrenamiento de prueba e inscripción.',
       h1: 'Hazte socio', intro: 'Desde tu primer entrenamiento de prueba hasta la ficha federativa en tres pasos.',
       steps: [
@@ -69,6 +74,7 @@ export const pages = {
       kontoinhaber: 'Titular de la cuenta', iban: 'IBAN', formsHint: 'Encontrarás formularios como la declaración de socio en', downloadsLabel: 'Descargas',
     },
     fr: {
+      passiv: 'Membres de soutien', passivDetail: 'Pour celles et ceux qui soutiennent le club sans jouer.', aufnahme: 'Frais d’adhésion uniques de 10 €, reversés à la Fédération de football de Berlin. Les cotisations sont dues avant le 15 de chaque mois. La résiliation se fait par écrit avec un préavis de trois mois avant la fin du semestre ou de l’année.', beitragsordnungLabel: 'Règlement des cotisations',
       metaTitle: 'Adhésion', metaDesc: 'Devenez membre du FC Treptow e.V. : cotisations, séance d’essai et inscription.',
       h1: 'Devenir membre', intro: 'De la première séance d’essai à la qualification en trois étapes.',
       steps: [
@@ -85,6 +91,7 @@ export const pages = {
 
   kontakt: {
     de: {
+      anreise: 'Anreise', sbahn: 'S-Bahnhof Baumschulenweg (S45, S46, S47, S8, S85, S9)', bus: 'Bus 167', parken: 'Parken auf dem Mittelstreifen der Köpenicker Landstraße. Auf dem Vereinsgelände ist Parken nicht erlaubt.', telefon: 'Telefon', vorstandLink: 'Ansprechpersonen im Vorstand',
       metaTitle: 'Kontakt', metaDesc: 'Kontakt und Anfahrt: FC Treptow e.V., Willi-Sänger-Sportanlage, Köpenicker Landstraße 186, 12437 Berlin.',
       h1: 'Kontakt', intro: 'Schreib uns oder komm einfach an einem Trainingstag vorbei.',
       heading: 'So erreichst du uns', email: 'E-Mail', sportanlage: 'Sportanlage', training: 'Training',
@@ -92,6 +99,7 @@ export const pages = {
       imgAlt: 'Vereinsbüro des FC Treptow auf der Willi-Sänger-Sportanlage',
     },
     en: {
+      anreise: 'Getting here', sbahn: 'S-Bahn station Baumschulenweg (S45, S46, S47, S8, S85, S9)', bus: 'Bus 167', parken: 'Park on the central reservation of Köpenicker Landstraße. Parking on the club grounds is not allowed.', telefon: 'Phone', vorstandLink: 'Board contacts',
       metaTitle: 'Contact', metaDesc: 'Contact and directions: FC Treptow e.V., Willi-Sänger sports ground, Köpenicker Landstraße 186, 12437 Berlin.',
       h1: 'Contact', intro: 'Write to us, or just drop by on a training day.',
       heading: 'How to reach us', email: 'Email', sportanlage: 'Sports ground', training: 'Training',
@@ -99,6 +107,7 @@ export const pages = {
       imgAlt: 'FC Treptow club office at the Willi-Sänger sports ground',
     },
     tr: {
+      anreise: 'Ulaşım', sbahn: 'Baumschulenweg S-Bahn istasyonu (S45, S46, S47, S8, S85, S9)', bus: '167 numaralı otobüs', parken: 'Köpenicker Landstraße’nin orta şeridine park edebilirsin. Kulüp alanına park etmek yasaktır.', telefon: 'Telefon', vorstandLink: 'Yönetimdeki kişiler',
       metaTitle: 'İletişim', metaDesc: 'İletişim ve yol tarifi: FC Treptow e.V., Willi-Sänger Spor Tesisi, Köpenicker Landstraße 186, 12437 Berlin.',
       h1: 'İletişim', intro: 'Bize yaz ya da bir antrenman günü uğra.',
       heading: 'Bize şu şekilde ulaşabilirsin', email: 'E-posta', sportanlage: 'Spor tesisi', training: 'Antrenman',
@@ -106,6 +115,7 @@ export const pages = {
       imgAlt: 'Willi-Sänger Spor Tesisi’ndeki FC Treptow kulüp ofisi',
     },
     ar: {
+      anreise: 'الوصول', sbahn: 'محطة S-Bahn باومشولنفيغ (S45، S46، S47، S8، S85، S9)', bus: 'الحافلة 167', parken: 'الوقوف على الجزيرة الوسطى لشارع كوبينيكر لاندشتراسه. الوقوف داخل أرض النادي غير مسموح.', telefon: 'الهاتف', vorstandLink: 'جهات الاتصال في مجلس الإدارة',
       metaTitle: 'اتصل بنا', metaDesc: 'التواصل والاتجاهات: نادي إف سي تريبتاو، منشأة فيلي زانغر الرياضية، Köpenicker Landstraße 186، 12437 برلين.',
       h1: 'اتصل بنا', intro: 'راسلنا أو تعالَ في أحد أيام التدريب.',
       heading: 'كيف تصل إلينا', email: 'البريد الإلكتروني', sportanlage: 'المنشأة الرياضية', training: 'التدريب',
@@ -113,6 +123,7 @@ export const pages = {
       imgAlt: 'مكتب نادي إف سي تريبتاو في منشأة فيلي زانغر الرياضية',
     },
     es: {
+      anreise: 'Cómo llegar', sbahn: 'Estación de S-Bahn Baumschulenweg (S45, S46, S47, S8, S85, S9)', bus: 'Autobús 167', parken: 'Aparca en la mediana de la Köpenicker Landstraße. No está permitido aparcar en el recinto del club.', telefon: 'Teléfono', vorstandLink: 'Contactos de la junta directiva',
       metaTitle: 'Contacto', metaDesc: 'Contacto y cómo llegar: FC Treptow e.V., instalación deportiva Willi-Sänger, Köpenicker Landstraße 186, 12437 Berlín.',
       h1: 'Contacto', intro: 'Escríbenos o pásate cualquier día de entrenamiento.',
       heading: 'Cómo contactarnos', email: 'Correo electrónico', sportanlage: 'Instalación deportiva', training: 'Entrenamiento',
@@ -120,6 +131,7 @@ export const pages = {
       imgAlt: 'Oficina del club FC Treptow en la instalación deportiva Willi-Sänger',
     },
     fr: {
+      anreise: 'Accès', sbahn: 'Gare S-Bahn Baumschulenweg (S45, S46, S47, S8, S85, S9)', bus: 'Bus 167', parken: 'Stationnement sur le terre-plein central de la Köpenicker Landstraße. Le stationnement sur le terrain du club est interdit.', telefon: 'Téléphone', vorstandLink: 'Contacts du comité directeur',
       metaTitle: 'Contact', metaDesc: 'Contact et itinéraire : FC Treptow e.V., complexe sportif Willi-Sänger, Köpenicker Landstraße 186, 12437 Berlin.',
       h1: 'Contact', intro: 'Écrivez-nous ou passez tout simplement un jour d’entraînement.',
       heading: 'Comment nous joindre', email: 'E-mail', sportanlage: 'Complexe sportif', training: 'Entraînement',
@@ -235,64 +247,106 @@ export const pages = {
 
   downloads: {
     de: {
-      metaTitle: 'Downloads', metaDesc: 'Formulare und Dokumente des FC Treptow e.V. zum Herunterladen.',
-      h1: 'Downloads', intro: 'Alle Formulare und Vereinsdokumente an einem Ort. Die PDF-Dateien werden beim Umzug von der alten Webseite übernommen.',
-      files: [
-        { name: 'Eintrittserklärung', desc: 'Für neue Mitglieder, ausgefüllt und unterschrieben ans Vereinsbüro.' },
-        { name: 'Antrag auf Spielberechtigung', desc: 'Nötig für den Punktspielbetrieb, zusammen mit der Eintrittserklärung.' },
-        { name: 'Vereinssatzung', desc: 'Die aktuelle Satzung des FC Treptow e.V.' },
-        { name: 'Datenschutzinformation', desc: 'Informationen zur Verarbeitung von Mitgliederdaten.' },
-      ],
+      metaTitle: 'Downloads', metaDesc: 'Formulare und Vereinsdokumente des FC Treptow e.V. als PDF.',
+      h1: 'Downloads', intro: 'Formulare für die Anmeldung und die Ordnungen des Vereins. Ausgefüllte Formulare bitte unterschrieben beim Training abgeben oder an kontakt@fc-treptow.de schicken.',
+      groups: { join: 'Für neue Mitglieder', bfv: 'Spielberechtigung (Berliner Fußball-Verband)', club: 'Ordnungen des Vereins' },
+      pages: 'Seiten', page: 'Seite',
+      files: {
+        eintritt: 'Eintrittserklärung', eintrittDesc: 'Aufnahmeantrag mit Angaben zur Person und SEPA-Lastschrift.',
+        einwilligung: 'Einwilligung Datenschutz', einwilligungDesc: 'Anlage zum Aufnahmeantrag.',
+        foto: 'Einverständnis Spielerfoto', fotoDesc: 'Für das Passfoto im DFBnet.',
+        spielberechtigung: 'Antrag auf Spielberechtigung', spielberechtigungDesc: 'Nötig für Punktspiele, zusammen mit der Eintrittserklärung.',
+        zweitspielrecht: 'Antrag auf Zweitspielrecht', zweitspielrechtDesc: 'Wenn du zusätzlich in einem anderen Verein spielst.',
+        satzung: 'Satzung', satzungDesc: 'Stand der Mitgliederversammlung vom 11.05.2017.',
+        beitrag: 'Beitragsordnung', beitragDesc: 'Gültig seit 01.01.2024.',
+        ehren: 'Ehrenordnung', ehrenDesc: 'Ehrungen und Auszeichnungen im Verein.',
+      },
+      germanOnly: '',
     },
     en: {
-      metaTitle: 'Downloads', metaDesc: 'Forms and documents from FC Treptow e.V. to download.',
-      h1: 'Downloads', intro: 'All club forms and documents in one place. The PDF files will be carried over from the old website during the migration.',
-      files: [
-        { name: 'Membership declaration', desc: 'For new members, completed and signed, to the club office.' },
-        { name: 'Playing eligibility application', desc: 'Required for league play, together with the membership declaration.' },
-        { name: 'Club statutes', desc: 'The current statutes of FC Treptow e.V.' },
-        { name: 'Privacy information', desc: 'Information on how member data is processed.' },
-      ],
+      metaTitle: 'Downloads', metaDesc: 'Forms and club documents of FC Treptow e.V. as PDF.',
+      h1: 'Downloads', intro: 'Registration forms and the club’s rules. Please hand in completed, signed forms at training or send them to kontakt@fc-treptow.de.',
+      groups: { join: 'For new members', bfv: 'Playing eligibility (Berlin Football Association)', club: 'Club rules' },
+      pages: 'pages', page: 'page',
+      files: {
+        eintritt: 'Membership application', eintrittDesc: 'Personal details and SEPA direct debit mandate.',
+        einwilligung: 'Data protection consent', einwilligungDesc: 'Annex to the membership application.',
+        foto: 'Player photo consent', fotoDesc: 'For the ID photo in DFBnet.',
+        spielberechtigung: 'Playing eligibility application', spielberechtigungDesc: 'Needed for league matches, together with the membership application.',
+        zweitspielrecht: 'Second playing right application', zweitspielrechtDesc: 'If you also play for another club.',
+        satzung: 'Statutes', satzungDesc: 'As adopted by the general meeting on 11 May 2017.',
+        beitrag: 'Fee regulations', beitragDesc: 'Valid since 1 January 2024.',
+        ehren: 'Honours regulations', ehrenDesc: 'Honours and awards within the club.',
+      },
+      germanOnly: 'All documents are in German.',
     },
     tr: {
-      metaTitle: 'İndirilenler', metaDesc: 'FC Treptow e.V. formları ve belgeleri indir.',
-      h1: 'İndirilenler', intro: 'Tüm kulüp formları ve belgeleri tek bir yerde. PDF dosyaları eski web sitesinden aktarılacak.',
-      files: [
-        { name: 'Üyelik beyanı', desc: 'Yeni üyeler için, doldurulmuş ve imzalanmış şekilde kulüp ofisine.' },
-        { name: 'Oyuncu lisansı başvurusu', desc: 'Lig maçları için üyelik beyanıyla birlikte gereklidir.' },
-        { name: 'Kulüp tüzüğü', desc: 'FC Treptow e.V.’nin güncel tüzüğü.' },
-        { name: 'Gizlilik bilgilendirmesi', desc: 'Üye verilerinin işlenmesi hakkında bilgiler.' },
-      ],
+      metaTitle: 'İndirilenler', metaDesc: 'FC Treptow e.V. formları ve kulüp belgeleri PDF olarak.',
+      h1: 'İndirilenler', intro: 'Kayıt formları ve kulüp yönetmelikleri. Doldurulmuş ve imzalanmış formları antrenmanda teslim et ya da kontakt@fc-treptow.de adresine gönder.',
+      groups: { join: 'Yeni üyeler için', bfv: 'Oyun hakkı (Berlin Futbol Federasyonu)', club: 'Kulüp yönetmelikleri' },
+      pages: 'sayfa', page: 'sayfa',
+      files: {
+        eintritt: 'Üyelik başvurusu', eintrittDesc: 'Kişisel bilgiler ve SEPA otomatik ödeme talimatı.',
+        einwilligung: 'Veri koruma onayı', einwilligungDesc: 'Üyelik başvurusunun eki.',
+        foto: 'Oyuncu fotoğrafı onayı', fotoDesc: 'DFBnet’teki vesikalık fotoğraf için.',
+        spielberechtigung: 'Oyun hakkı başvurusu', spielberechtigungDesc: 'Lig maçları için gerekli, üyelik başvurusuyla birlikte.',
+        zweitspielrecht: 'İkinci oyun hakkı başvurusu', zweitspielrechtDesc: 'Başka bir kulüpte de oynuyorsan.',
+        satzung: 'Tüzük', satzungDesc: '11.05.2017 genel kurul kararına göre.',
+        beitrag: 'Aidat yönetmeliği', beitragDesc: '01.01.2024’ten beri geçerli.',
+        ehren: 'Onur yönetmeliği', ehrenDesc: 'Kulüp içi onurlandırmalar ve ödüller.',
+      },
+      germanOnly: 'Tüm belgeler Almancadır.',
     },
     ar: {
-      metaTitle: 'التنزيلات', metaDesc: 'نماذج ووثائق نادي إف سي تريبتاو للتنزيل.',
-      h1: 'التنزيلات', intro: 'جميع نماذج ووثائق النادي في مكان واحد. سيتم نقل ملفات PDF من الموقع القديم أثناء النقل.',
-      files: [
-        { name: 'إقرار العضوية', desc: 'للأعضاء الجدد، مملوءًا وموقعًا، يُرسل إلى مكتب النادي.' },
-        { name: 'طلب أهلية اللعب', desc: 'مطلوب للمشاركة في مباريات الدوري، مع إقرار العضوية.' },
-        { name: 'النظام الأساسي للنادي', desc: 'النظام الأساسي الحالي لنادي إف سي تريبتاو.' },
-        { name: 'معلومات الخصوصية', desc: 'معلومات حول معالجة بيانات الأعضاء.' },
-      ],
+      metaTitle: 'التنزيلات', metaDesc: 'نماذج ووثائق نادي إف سي تريبتاو بصيغة PDF.',
+      h1: 'التنزيلات', intro: 'نماذج التسجيل ولوائح النادي. يرجى تسليم النماذج المعبأة والموقعة في التدريب أو إرسالها إلى kontakt@fc-treptow.de.',
+      groups: { join: 'للأعضاء الجدد', bfv: 'أهلية اللعب (اتحاد برلين لكرة القدم)', club: 'لوائح النادي' },
+      pages: 'صفحات', page: 'صفحة',
+      files: {
+        eintritt: 'طلب العضوية', eintrittDesc: 'البيانات الشخصية وتفويض الخصم المباشر SEPA.',
+        einwilligung: 'الموافقة على حماية البيانات', einwilligungDesc: 'ملحق بطلب العضوية.',
+        foto: 'الموافقة على صورة اللاعب', fotoDesc: 'لصورة الهوية في DFBnet.',
+        spielberechtigung: 'طلب أهلية اللعب', spielberechtigungDesc: 'مطلوب لمباريات الدوري، مع طلب العضوية.',
+        zweitspielrecht: 'طلب حق اللعب الثاني', zweitspielrechtDesc: 'إذا كنت تلعب أيضًا في نادٍ آخر.',
+        satzung: 'النظام الأساسي', satzungDesc: 'وفق قرار الجمعية العامة في 11.05.2017.',
+        beitrag: 'لائحة الاشتراكات', beitragDesc: 'سارية منذ 01.01.2024.',
+        ehren: 'لائحة التكريم', ehrenDesc: 'التكريمات والجوائز داخل النادي.',
+      },
+      germanOnly: 'جميع الوثائق باللغة الألمانية.',
     },
     es: {
-      metaTitle: 'Descargas', metaDesc: 'Formularios y documentos del FC Treptow e.V. para descargar.',
-      h1: 'Descargas', intro: 'Todos los formularios y documentos del club en un solo lugar. Los archivos PDF se trasladarán desde la web anterior.',
-      files: [
-        { name: 'Declaración de socio', desc: 'Para nuevos socios, cumplimentada y firmada, entregar en la oficina del club.' },
-        { name: 'Solicitud de ficha federativa', desc: 'Necesaria para competir en liga, junto con la declaración de socio.' },
-        { name: 'Estatutos del club', desc: 'Los estatutos vigentes del FC Treptow e.V.' },
-        { name: 'Información de privacidad', desc: 'Información sobre el tratamiento de los datos de los socios.' },
-      ],
+      metaTitle: 'Descargas', metaDesc: 'Formularios y documentos del FC Treptow e.V. en PDF.',
+      h1: 'Descargas', intro: 'Formularios de inscripción y reglamentos del club. Entrega los formularios rellenados y firmados en el entrenamiento o envíalos a kontakt@fc-treptow.de.',
+      groups: { join: 'Para nuevos socios', bfv: 'Ficha federativa (Federación de Fútbol de Berlín)', club: 'Reglamentos del club' },
+      pages: 'páginas', page: 'página',
+      files: {
+        eintritt: 'Solicitud de socio', eintrittDesc: 'Datos personales y orden de domiciliación SEPA.',
+        einwilligung: 'Consentimiento de protección de datos', einwilligungDesc: 'Anexo a la solicitud de socio.',
+        foto: 'Consentimiento foto de jugador', fotoDesc: 'Para la foto de ficha en DFBnet.',
+        spielberechtigung: 'Solicitud de ficha', spielberechtigungDesc: 'Necesaria para partidos de liga, junto con la solicitud de socio.',
+        zweitspielrecht: 'Solicitud de segunda ficha', zweitspielrechtDesc: 'Si también juegas en otro club.',
+        satzung: 'Estatutos', satzungDesc: 'Según la asamblea general del 11/05/2017.',
+        beitrag: 'Reglamento de cuotas', beitragDesc: 'Vigente desde el 01/01/2024.',
+        ehren: 'Reglamento de honores', ehrenDesc: 'Distinciones y premios del club.',
+      },
+      germanOnly: 'Todos los documentos están en alemán.',
     },
     fr: {
-      metaTitle: 'Téléchargements', metaDesc: 'Formulaires et documents du FC Treptow e.V. à télécharger.',
-      h1: 'Téléchargements', intro: 'Tous les formulaires et documents du club au même endroit. Les fichiers PDF seront repris de l’ancien site lors de la migration.',
-      files: [
-        { name: 'Déclaration d’adhésion', desc: 'Pour les nouveaux membres, complétée et signée, à remettre au bureau du club.' },
-        { name: 'Demande de qualification', desc: 'Nécessaire pour les matchs de championnat, avec la déclaration d’adhésion.' },
-        { name: 'Statuts du club', desc: 'Les statuts actuels du FC Treptow e.V.' },
-        { name: 'Informations sur la confidentialité', desc: 'Informations sur le traitement des données des membres.' },
-      ],
+      metaTitle: 'Téléchargements', metaDesc: 'Formulaires et documents du FC Treptow e.V. en PDF.',
+      h1: 'Téléchargements', intro: 'Formulaires d’inscription et règlements du club. Merci de remettre les formulaires remplis et signés à l’entraînement ou de les envoyer à kontakt@fc-treptow.de.',
+      groups: { join: 'Pour les nouveaux membres', bfv: 'Licence (Fédération de football de Berlin)', club: 'Règlements du club' },
+      pages: 'pages', page: 'page',
+      files: {
+        eintritt: 'Demande d’adhésion', eintrittDesc: 'Données personnelles et mandat de prélèvement SEPA.',
+        einwilligung: 'Consentement protection des données', einwilligungDesc: 'Annexe à la demande d’adhésion.',
+        foto: 'Autorisation photo du joueur', fotoDesc: 'Pour la photo d’identité dans DFBnet.',
+        spielberechtigung: 'Demande de licence', spielberechtigungDesc: 'Nécessaire pour les matchs de championnat, avec la demande d’adhésion.',
+        zweitspielrecht: 'Demande de double licence', zweitspielrechtDesc: 'Si tu joues aussi dans un autre club.',
+        satzung: 'Statuts', satzungDesc: 'Version de l’assemblée générale du 11/05/2017.',
+        beitrag: 'Règlement des cotisations', beitragDesc: 'En vigueur depuis le 01/01/2024.',
+        ehren: 'Règlement des distinctions', ehrenDesc: 'Distinctions et récompenses au sein du club.',
+      },
+      germanOnly: 'Tous les documents sont en allemand.',
     },
   },
 
@@ -331,6 +385,7 @@ export const pages = {
 
   probetraining: {
     de: {
+      mailTitle: 'Fast geschafft', mailText: 'Dein E-Mail-Programm hat sich mit einer fertigen Nachricht geöffnet. Bitte dort noch auf Senden tippen.', mailFallback: 'Nichts passiert? Dann öffne die E-Mail hier noch einmal:', mailAgain: 'E-Mail erneut öffnen',
       metaTitle: 'Probetraining', metaDesc: 'Kostenloses Probetraining beim FC Treptow e.V. vereinbaren.',
       h1: 'Probetraining', intro: 'Kostenlos und unverbindlich. Wir melden uns innerhalb weniger Tage mit einem Termin bei dir.',
       name: 'Name', age: 'Alter', email: 'E-Mail', phone: 'Telefon', optional: '(optional)',
@@ -348,6 +403,7 @@ export const pages = {
       regLinkLabel: 'Online-Anmeldung',
     },
     en: {
+      mailTitle: 'Almost done', mailText: 'Your e-mail app has opened with a ready-made message. Please tap send there.', mailFallback: 'Nothing happened? Open the e-mail again here:', mailAgain: 'Open e-mail again',
       metaTitle: 'Trial training', metaDesc: 'Arrange a free trial session at FC Treptow e.V.',
       h1: 'Trial training', intro: 'Free and no obligation. We’ll get back to you within a few days with a date.',
       name: 'Name', age: 'Age', email: 'Email', phone: 'Phone', optional: '(optional)',
@@ -365,6 +421,7 @@ export const pages = {
       regLinkLabel: 'online registration',
     },
     tr: {
+      mailTitle: 'Neredeyse tamam', mailText: 'E-posta uygulaman hazır bir mesajla açıldı. Lütfen orada gönder’e dokun.', mailFallback: 'Bir şey olmadı mı? E-postayı buradan tekrar aç:', mailAgain: 'E-postayı tekrar aç',
       metaTitle: 'Deneme antrenmanı', metaDesc: 'FC Treptow e.V.’de ücretsiz deneme antrenmanı ayarla.',
       h1: 'Deneme antrenmanı', intro: 'Ücretsiz ve taahhütsüz. Birkaç gün içinde bir tarihle sana dönüş yaparız.',
       name: 'Ad', age: 'Yaş', email: 'E-posta', phone: 'Telefon', optional: '(isteğe bağlı)',
@@ -382,6 +439,7 @@ export const pages = {
       regLinkLabel: 'online kayıt',
     },
     ar: {
+      mailTitle: 'اقتربت', mailText: 'فُتح تطبيق البريد الإلكتروني برسالة جاهزة. يرجى الضغط على إرسال هناك.', mailFallback: 'لم يحدث شيء؟ افتح الرسالة مرة أخرى من هنا:', mailAgain: 'افتح الرسالة مرة أخرى',
       metaTitle: 'التدريب التجريبي', metaDesc: 'حدد موعد تدريب تجريبي مجاني في نادي إف سي تريبتاو.',
       h1: 'التدريب التجريبي', intro: 'مجاني وبدون التزام. سنتواصل معك خلال أيام قليلة بموعد محدد.',
       name: 'الاسم', age: 'العمر', email: 'البريد الإلكتروني', phone: 'الهاتف', optional: '(اختياري)',
@@ -399,6 +457,7 @@ export const pages = {
       regLinkLabel: 'التسجيل عبر الإنترنت',
     },
     es: {
+      mailTitle: 'Casi listo', mailText: 'Tu aplicación de correo se ha abierto con un mensaje preparado. Pulsa enviar allí.', mailFallback: '¿No ha pasado nada? Abre el correo de nuevo aquí:', mailAgain: 'Abrir el correo de nuevo',
       metaTitle: 'Entrenamiento de prueba', metaDesc: 'Concierta un entrenamiento de prueba gratuito en el FC Treptow e.V.',
       h1: 'Entrenamiento de prueba', intro: 'Gratuito y sin compromiso. Te contactaremos en pocos días con una fecha.',
       name: 'Nombre', age: 'Edad', email: 'Correo electrónico', phone: 'Teléfono', optional: '(opcional)',
@@ -416,6 +475,7 @@ export const pages = {
       regLinkLabel: 'inscripción online',
     },
     fr: {
+      mailTitle: 'Presque fini', mailText: 'Ton application e-mail s’est ouverte avec un message prêt. Appuie sur envoyer là-bas.', mailFallback: 'Rien ne s’est passé ? Ouvre l’e-mail à nouveau ici :', mailAgain: 'Rouvrir l’e-mail',
       metaTitle: 'Séance d’essai', metaDesc: 'Organisez une séance d’essai gratuite au FC Treptow e.V.',
       h1: 'Séance d’essai', intro: 'Gratuit et sans engagement. Nous vous recontactons sous quelques jours avec une date.',
       name: 'Nom', age: 'Âge', email: 'E-mail', phone: 'Téléphone', optional: '(facultatif)',
@@ -436,13 +496,14 @@ export const pages = {
 
   anmeldung: {
     de: {
+      mailTitle: 'Fast geschafft', mailText: 'Dein E-Mail-Programm hat sich mit einer fertigen Nachricht geöffnet. Bitte dort noch auf Senden tippen.', mailFallback: 'Nichts passiert? Dann öffne die E-Mail hier noch einmal:', mailAgain: 'E-Mail erneut öffnen',
       metaTitle: 'Anmeldung', metaDesc: 'Online-Anmeldung für neue Spieler des FC Treptow e.V. nach dem Probetraining.',
       h1: 'Anmeldung', intro: 'Die Anmeldung ist für Spieler nach abgeschlossenem Probetraining. Deinen Freischalt-Code bekommst du vom Trainer.',
       gateTitle: 'Freischalt-Code eingeben', gateText: 'Du hast noch keinen Code? Dann starte zuerst mit einem', gateLink: 'Probetraining',
       codePlaceholder: 'Code', gateSubmit: 'Öffnen', gateError: 'Der Code stimmt nicht. Frag im Zweifel deinen Trainer.',
       formTitle: 'Deine Daten', firstname: 'Vorname', lastname: 'Nachname', birthdate: 'Geburtsdatum', email: 'E-Mail',
       address: 'Anschrift', team: 'Team', lastclub: 'Letzter Verein', optional: '(optional)',
-      tariff: 'Beitrag', tariffOptions: ['Aktiv, 15 € pro Monat', 'Ermäßigt, 10 € pro Monat (Azubi, Studium, erwerbslos, Freizeitsport)'],
+      tariff: 'Beitrag', tariffOptions: ['Aktiv, 15 € pro Monat', 'Ermäßigt, 10 € pro Monat (Azubi, Studium, erwerbslos, Freizeitsport)', 'Passiv, 6 € pro Monat (ohne Spielbetrieb)'],
       consent: 'Ich habe die', consentLink: 'Datenschutzhinweise', consentRest: 'gelesen und bin mit der Verarbeitung meiner Daten zur Mitgliederverwaltung einverstanden.',
       formError: 'Bitte fülle alle Pflichtfelder aus und bestätige den Datenschutz.', submit: 'Anmeldung senden',
       sending: 'Wird gesendet …', sendFailed: 'Das hat nicht geklappt. Bitte schreib uns direkt an kontakt@fc-treptow.de.',
@@ -451,13 +512,14 @@ export const pages = {
       teamOptions: ['FC Treptow I', 'FC Treptow II River Plate', 'FC Treptow III', 'Freizeit Kickers'],
     },
     en: {
+      mailTitle: 'Almost done', mailText: 'Your e-mail app has opened with a ready-made message. Please tap send there.', mailFallback: 'Nothing happened? Open the e-mail again here:', mailAgain: 'Open e-mail again',
       metaTitle: 'Registration', metaDesc: 'Online registration for new FC Treptow e.V. players after trial training.',
       h1: 'Registration', intro: 'Registration is for players who have completed trial training. You’ll get your activation code from the coach.',
       gateTitle: 'Enter your activation code', gateText: 'Don’t have a code yet? Start with a', gateLink: 'trial session',
       codePlaceholder: 'Code', gateSubmit: 'Unlock', gateError: 'That code isn’t right. If in doubt, ask your coach.',
       formTitle: 'Your details', firstname: 'First name', lastname: 'Last name', birthdate: 'Date of birth', email: 'Email',
       address: 'Address', team: 'Team', lastclub: 'Previous club', optional: '(optional)',
-      tariff: 'Fee', tariffOptions: ['Active, €15 per month', 'Reduced, €10 per month (apprentice, student, unemployed, leisure sport)'],
+      tariff: 'Fee', tariffOptions: ['Active, €15 per month', 'Reduced, €10 per month (apprentice, student, unemployed, leisure sport)', 'Supporting, €6 per month (not playing)'],
       consent: 'I have read the', consentLink: 'privacy notice', consentRest: 'and agree to the processing of my data for membership administration.',
       formError: 'Please fill in all required fields and confirm the privacy notice.', submit: 'Send registration',
       sending: 'Sending …', sendFailed: 'That did not work. Please email us directly at kontakt@fc-treptow.de.',
@@ -466,13 +528,14 @@ export const pages = {
       teamOptions: ['FC Treptow I', 'FC Treptow II River Plate', 'FC Treptow III', 'Freizeit Kickers'],
     },
     tr: {
+      mailTitle: 'Neredeyse tamam', mailText: 'E-posta uygulaman hazır bir mesajla açıldı. Lütfen orada gönder’e dokun.', mailFallback: 'Bir şey olmadı mı? E-postayı buradan tekrar aç:', mailAgain: 'E-postayı tekrar aç',
       metaTitle: 'Kayıt', metaDesc: 'Deneme antrenmanı sonrası FC Treptow e.V. yeni oyuncuları için online kayıt.',
       h1: 'Kayıt', intro: 'Kayıt, deneme antrenmanını tamamlamış oyuncular içindir. Aktivasyon kodunu antrenörden alırsın.',
       gateTitle: 'Aktivasyon kodunu gir', gateText: 'Henüz kodun yok mu? O zaman önce bir', gateLink: 'deneme antrenmanı',
       codePlaceholder: 'Kod', gateSubmit: 'Aç', gateError: 'Kod doğru değil. Emin değilsen antrenörüne sor.',
       formTitle: 'Bilgilerin', firstname: 'Ad', lastname: 'Soyad', birthdate: 'Doğum tarihi', email: 'E-posta',
       address: 'Adres', team: 'Takım', lastclub: 'Önceki kulüp', optional: '(isteğe bağlı)',
-      tariff: 'Aidat', tariffOptions: ['Aktif, ayda 15 €', 'İndirimli, ayda 10 € (çırak, öğrenci, işsiz, hobi sporu)'],
+      tariff: 'Aidat', tariffOptions: ['Aktif, ayda 15 €', 'İndirimli, ayda 10 € (çırak, öğrenci, işsiz, hobi sporu)', 'Destekçi, ayda 6 € (oynamadan)'],
       consent: 'Aşağıdakini okudum:', consentLink: 'gizlilik bildirimi', consentRest: 've verilerimin üye yönetimi için işlenmesini kabul ediyorum.',
       formError: 'Lütfen tüm zorunlu alanları doldur ve gizlilik bildirimini onayla.', submit: 'Kaydı gönder',
       sending: 'Gönderiliyor …', sendFailed: 'Bu işe yaramadı. Lütfen doğrudan kontakt@fc-treptow.de adresine yaz.',
@@ -481,13 +544,14 @@ export const pages = {
       teamOptions: ['FC Treptow I', 'FC Treptow II River Plate', 'FC Treptow III', 'Freizeit Kickers'],
     },
     ar: {
+      mailTitle: 'اقتربت', mailText: 'فُتح تطبيق البريد الإلكتروني برسالة جاهزة. يرجى الضغط على إرسال هناك.', mailFallback: 'لم يحدث شيء؟ افتح الرسالة مرة أخرى من هنا:', mailAgain: 'افتح الرسالة مرة أخرى',
       metaTitle: 'التسجيل', metaDesc: 'التسجيل عبر الإنترنت للاعبين الجدد في نادي إف سي تريبتاو بعد التدريب التجريبي.',
       h1: 'التسجيل', intro: 'التسجيل مخصص للاعبين الذين أكملوا التدريب التجريبي. ستحصل على رمز التفعيل من المدرب.',
       gateTitle: 'أدخل رمز التفعيل', gateText: 'ليس لديك رمز بعد؟ ابدأ أولًا بـ', gateLink: 'تدريب تجريبي',
       codePlaceholder: 'الرمز', gateSubmit: 'فتح', gateError: 'الرمز غير صحيح. إذا لم تكن متأكدًا، اسأل مدربك.',
       formTitle: 'بياناتك', firstname: 'الاسم الأول', lastname: 'اسم العائلة', birthdate: 'تاريخ الميلاد', email: 'البريد الإلكتروني',
       address: 'العنوان', team: 'الفريق', lastclub: 'النادي السابق', optional: '(اختياري)',
-      tariff: 'الرسوم', tariffOptions: ['نشط، 15 يورو شهريًا', 'مخفض، 10 يورو شهريًا (متدرب، طالب، عاطل عن العمل، رياضة ترفيهية)'],
+      tariff: 'الرسوم', tariffOptions: ['نشط، 15 يورو شهريًا', 'مخفض، 10 يورو شهريًا (متدرب، طالب، عاطل عن العمل، رياضة ترفيهية)', 'داعم، 6 يورو شهريًا (دون لعب)'],
       consent: 'لقد قرأت', consentLink: 'إشعار الخصوصية', consentRest: 'وأوافق على معالجة بياناتي لأغراض إدارة العضوية.',
       formError: 'يرجى ملء جميع الحقول المطلوبة وتأكيد إشعار الخصوصية.', submit: 'إرسال التسجيل',
       sending: 'جارٍ الإرسال …', sendFailed: 'لم تنجح العملية. يرجى مراسلتنا مباشرة على kontakt@fc-treptow.de.',
@@ -496,13 +560,14 @@ export const pages = {
       teamOptions: ['FC Treptow I', 'FC Treptow II River Plate', 'FC Treptow III', 'Freizeit Kickers'],
     },
     es: {
+      mailTitle: 'Casi listo', mailText: 'Tu aplicación de correo se ha abierto con un mensaje preparado. Pulsa enviar allí.', mailFallback: '¿No ha pasado nada? Abre el correo de nuevo aquí:', mailAgain: 'Abrir el correo de nuevo',
       metaTitle: 'Inscripción', metaDesc: 'Inscripción online para nuevos jugadores del FC Treptow e.V. tras el entrenamiento de prueba.',
       h1: 'Inscripción', intro: 'La inscripción es para jugadores que ya han completado el entrenamiento de prueba. Recibirás tu código de activación del entrenador.',
       gateTitle: 'Introduce tu código de activación', gateText: '¿Todavía no tienes un código? Empieza primero con un', gateLink: 'entrenamiento de prueba',
       codePlaceholder: 'Código', gateSubmit: 'Desbloquear', gateError: 'Ese código no es correcto. Si tienes dudas, pregunta a tu entrenador.',
       formTitle: 'Tus datos', firstname: 'Nombre', lastname: 'Apellido', birthdate: 'Fecha de nacimiento', email: 'Correo electrónico',
       address: 'Dirección', team: 'Equipo', lastclub: 'Club anterior', optional: '(opcional)',
-      tariff: 'Cuota', tariffOptions: ['Activo, 15 € al mes', 'Reducida, 10 € al mes (aprendiz, estudiante, desempleado, deporte de ocio)'],
+      tariff: 'Cuota', tariffOptions: ['Activo, 15 € al mes', 'Reducida, 10 € al mes (aprendiz, estudiante, desempleado, deporte de ocio)', 'De apoyo, 6 € al mes (sin jugar)'],
       consent: 'He leído el', consentLink: 'aviso de privacidad', consentRest: 'y acepto el tratamiento de mis datos para la gestión de socios.',
       formError: 'Completa todos los campos obligatorios y confirma el aviso de privacidad.', submit: 'Enviar inscripción',
       sending: 'Enviando …', sendFailed: 'No ha funcionado. Escríbenos directamente a kontakt@fc-treptow.de.',
@@ -511,13 +576,14 @@ export const pages = {
       teamOptions: ['FC Treptow I', 'FC Treptow II River Plate', 'FC Treptow III', 'Freizeit Kickers'],
     },
     fr: {
+      mailTitle: 'Presque fini', mailText: 'Ton application e-mail s’est ouverte avec un message prêt. Appuie sur envoyer là-bas.', mailFallback: 'Rien ne s’est passé ? Ouvre l’e-mail à nouveau ici :', mailAgain: 'Rouvrir l’e-mail',
       metaTitle: 'Inscription', metaDesc: 'Inscription en ligne pour les nouveaux joueurs du FC Treptow e.V. après la séance d’essai.',
       h1: 'Inscription', intro: 'L’inscription est réservée aux joueurs ayant terminé leur séance d’essai. Vous recevrez votre code d’activation de l’entraîneur.',
       gateTitle: 'Entrez votre code d’activation', gateText: 'Vous n’avez pas encore de code ? Commencez par une', gateLink: 'séance d’essai',
       codePlaceholder: 'Code', gateSubmit: 'Déverrouiller', gateError: 'Ce code n’est pas correct. En cas de doute, demandez à votre entraîneur.',
       formTitle: 'Vos informations', firstname: 'Prénom', lastname: 'Nom', birthdate: 'Date de naissance', email: 'E-mail',
       address: 'Adresse', team: 'Équipe', lastclub: 'Club précédent', optional: '(facultatif)',
-      tariff: 'Cotisation', tariffOptions: ['Actif, 15 € par mois', 'Réduit, 10 € par mois (apprenti, étudiant, demandeur d’emploi, sport loisir)'],
+      tariff: 'Cotisation', tariffOptions: ['Actif, 15 € par mois', 'Réduit, 10 € par mois (apprenti, étudiant, demandeur d’emploi, sport loisir)', 'Soutien, 6 € par mois (sans jouer)'],
       consent: 'J’ai lu les', consentLink: 'mentions de confidentialité', consentRest: 'et j’accepte le traitement de mes données pour la gestion des membres.',
       formError: 'Merci de remplir tous les champs obligatoires et de confirmer les mentions de confidentialité.', submit: 'Envoyer l’inscription',
       sending: 'Envoi en cours …', sendFailed: 'Cela n’a pas fonctionné. Écrivez-nous directement à kontakt@fc-treptow.de.',
@@ -537,12 +603,12 @@ export const pages = {
   },
 
   teamDetail: {
-    de: { tabelleEmpty: 'Tabelle und Spielplan stehen bei fussball.de. Sobald der Verein dort ein Widget erstellt hat, erscheint es direkt hier.', ergebnisseEmpty: 'Sobald ein Spiel gelaufen ist, tragen wir das Ergebnis hier ein.', spielplan: 'Tabelle und Spielplan', zufussballde: 'Bei fussball.de ansehen', training: 'Training', platz: 'Platz', kontakt: 'Kontakt', probetrainingCta: 'Zum Probetraining', tabelle: 'Tabelle', tabelleHint: 'Ausschnitt, Beispieldaten', tabelleFull: 'Vollständige Tabelle und Spielplan auf', sp: 'Sp.', diff: 'Diff.', pkt: 'Pkt.', letzteSpiele: 'Letzte Spiele', gegen: 'gegen', fotos: 'Spieltagsfotos', zurueck: 'Zurück', weiter: 'Weiter' },
-    en: { tabelleEmpty: 'The table and fixtures live on fussball.de. As soon as the club creates a widget there, it appears right here.', ergebnisseEmpty: 'Once a match has been played, we add the result here.', spielplan: 'Table and fixtures', zufussballde: 'View on fussball.de', training: 'Training', platz: 'Ground', kontakt: 'Contact', probetrainingCta: 'To trial training', tabelle: 'Table', tabelleHint: 'Excerpt, sample data', tabelleFull: 'Full table and fixtures on', sp: 'P', diff: 'GD', pkt: 'Pts', letzteSpiele: 'Recent results', gegen: 'vs', fotos: 'Matchday photos', zurueck: 'Back', weiter: 'Next' },
-    tr: { tabelleEmpty: 'Puan durumu ve fikstür fussball.de üzerinde. Kulüp orada bir widget oluşturduğunda burada görünecek.', ergebnisseEmpty: 'Bir maç oynandığında sonucu buraya ekliyoruz.', spielplan: 'Puan durumu ve fikstür', zufussballde: 'fussball.de üzerinde gör', training: 'Antrenman', platz: 'Saha', kontakt: 'İletişim', probetrainingCta: 'Deneme antrenmanına git', tabelle: 'Puan durumu', tabelleHint: 'Kesit, örnek veriler', tabelleFull: 'Tam puan durumu ve fikstür için', sp: 'O', diff: 'AV', pkt: 'P', letzteSpiele: 'Son maçlar', gegen: 'karşı', fotos: 'Maç günü fotoğrafları', zurueck: 'Geri', weiter: 'İleri' },
-    ar: { tabelleEmpty: 'الترتيب وجدول المباريات موجودان على fussball.de. بمجرد أن ينشئ النادي أداة هناك، ستظهر هنا مباشرة.', ergebnisseEmpty: 'بمجرد انتهاء المباراة، نضيف النتيجة هنا.', spielplan: 'الترتيب وجدول المباريات', zufussballde: 'شاهد على fussball.de', training: 'التدريب', platz: 'الملعب', kontakt: 'اتصل بنا', probetrainingCta: 'إلى التدريب التجريبي', tabelle: 'الترتيب', tabelleHint: 'مقتطف، بيانات نموذجية', tabelleFull: 'الترتيب الكامل والمباريات على', sp: 'لعب', diff: 'ف.أ', pkt: 'نقاط', letzteSpiele: 'آخر المباريات', gegen: 'ضد', fotos: 'صور أيام المباريات', zurueck: 'رجوع', weiter: 'التالي' },
-    es: { tabelleEmpty: 'La clasificación y el calendario están en fussball.de. En cuanto el club cree allí un widget, aparecerá aquí mismo.', ergebnisseEmpty: 'En cuanto se juegue un partido, añadiremos el resultado aquí.', spielplan: 'Clasificación y calendario', zufussballde: 'Ver en fussball.de', training: 'Entrenamiento', platz: 'Campo', kontakt: 'Contacto', probetrainingCta: 'Ir al entrenamiento de prueba', tabelle: 'Clasificación', tabelleHint: 'Extracto, datos de ejemplo', tabelleFull: 'Clasificación completa y calendario en', sp: 'PJ', diff: 'Dif', pkt: 'Pts', letzteSpiele: 'Últimos partidos', gegen: 'vs', fotos: 'Fotos de los partidos', zurueck: 'Atrás', weiter: 'Siguiente' },
-    fr: { tabelleEmpty: 'Le classement et le calendrier sont sur fussball.de. Dès que le club y crée un widget, il apparaît directement ici.', ergebnisseEmpty: 'Dès qu’un match est joué, nous ajoutons le résultat ici.', spielplan: 'Classement et calendrier', zufussballde: 'Voir sur fussball.de', training: 'Entraînement', platz: 'Terrain', kontakt: 'Contact', probetrainingCta: 'Vers la séance d’essai', tabelle: 'Classement', tabelleHint: 'Extrait, données d’exemple', tabelleFull: 'Classement complet et calendrier sur', sp: 'J', diff: 'Diff', pkt: 'Pts', letzteSpiele: 'Derniers résultats', gegen: 'contre', fotos: 'Photos des matchs', zurueck: 'Précédent', weiter: 'Suivant' },
+    de: { training: 'Training', platz: 'Platz', kontakt: 'Kontakt', spielplan: 'Nächste Spiele', tabelle: 'Tabelle', saison: 'Saison', fotos: 'Fotos', roles: { coach: 'Trainer', assistant: 'Co-Trainer', manager: 'Teammanager' }, team: 'Team', noLeague: 'Die Freizeit Kickers spielen ohne Ligabetrieb. Kein Spielplan, keine Tabelle, einfach dienstags kicken.', onFussballDe: 'Alles auf fussball.de', back: 'Alle Mannschaften', zurueck: 'Zurück', weiter: 'Weiter' },
+    en: { training: 'Training', platz: 'Ground', kontakt: 'Contact', spielplan: 'Upcoming matches', tabelle: 'League table', saison: 'Season', fotos: 'Photos', roles: { coach: 'Coach', assistant: 'Assistant coach', manager: 'Team manager' }, team: 'Team', noLeague: 'The Freizeit Kickers play without a league. No fixtures, no table, just football on Tuesdays.', onFussballDe: 'Everything on fussball.de', back: 'All teams', zurueck: 'Previous', weiter: 'Next' },
+    tr: { training: 'Antrenman', platz: 'Saha', kontakt: 'İletişim', spielplan: 'Sıradaki maçlar', tabelle: 'Puan durumu', saison: 'Sezon', fotos: 'Fotoğraflar', roles: { coach: 'Antrenör', assistant: 'Yardımcı antrenör', manager: 'Takım menajeri' }, team: 'Takım', noLeague: 'Freizeit Kickers lig dışında oynar. Fikstür yok, puan durumu yok, salı günleri sadece futbol.', onFussballDe: 'Hepsi fussball.de’de', back: 'Tüm takımlar', zurueck: 'Geri', weiter: 'İleri' },
+    ar: { training: 'التدريب', platz: 'الملعب', kontakt: 'التواصل', spielplan: 'المباريات القادمة', tabelle: 'جدول الترتيب', saison: 'الموسم', fotos: 'صور', roles: { coach: 'المدرب', assistant: 'مساعد المدرب', manager: 'مدير الفريق' }, team: 'الفريق', noLeague: 'يلعب فريق Freizeit Kickers خارج الدوري. لا جدول مباريات ولا ترتيب، فقط كرة القدم أيام الثلاثاء.', onFussballDe: 'كل شيء على fussball.de', back: 'جميع الفرق', zurueck: 'السابق', weiter: 'التالي' },
+    es: { training: 'Entrenamiento', platz: 'Campo', kontakt: 'Contacto', spielplan: 'Próximos partidos', tabelle: 'Clasificación', saison: 'Temporada', fotos: 'Fotos', roles: { coach: 'Entrenador', assistant: 'Segundo entrenador', manager: 'Delegado' }, team: 'Equipo', noLeague: 'Los Freizeit Kickers juegan sin liga. Sin calendario ni clasificación, solo fútbol los martes.', onFussballDe: 'Todo en fussball.de', back: 'Todos los equipos', zurueck: 'Anterior', weiter: 'Siguiente' },
+    fr: { training: 'Entraînement', platz: 'Terrain', kontakt: 'Contact', spielplan: 'Prochains matchs', tabelle: 'Classement', saison: 'Saison', fotos: 'Photos', roles: { coach: 'Entraîneur', assistant: 'Entraîneur adjoint', manager: 'Team manager' }, team: 'Équipe', noLeague: 'Les Freizeit Kickers jouent hors championnat. Pas de calendrier ni de classement, juste du foot le mardi.', onFussballDe: 'Tout sur fussball.de', back: 'Toutes les équipes', zurueck: 'Précédent', weiter: 'Suivant' },
   },
 
   newsIndex: {
@@ -567,33 +633,52 @@ export const pages = {
     // Rechtlich vorgeschriebene Angaben nach § 5 DDG. Vereinsdaten (Name, Anschrift,
     // Register, Vorstand) sind Fakten und in allen Sprachen identisch; nur die
     // Feldbezeichnungen sind übersetzt.
-    de: { metaTitle: 'Impressum', h1: 'Impressum', legalName: 'Fußball Club Treptow e.V.', tmg: 'Angaben gemäß § 5 DDG', phoneLabel: 'Telefon', emailLabel: 'E-Mail', contactLabel: 'Kontakt', registerHeading: 'Eintragung', court: 'Registergericht', courtValue: 'Amtsgericht Charlottenburg', regNo: 'Registernummer', repHeading: 'Vertretungsberechtigte Personen', rep1: 'Jannis Rußkamp, 1. Vorsitzender', rep2: 'Lars Lemke, 2. Vorsitzender' },
-    en: { metaTitle: 'Imprint', h1: 'Imprint', legalName: 'Fußball Club Treptow e.V.', tmg: 'Information pursuant to § 5 DDG', phoneLabel: 'Phone', emailLabel: 'Email', contactLabel: 'Contact', registerHeading: 'Registration', court: 'Register court', courtValue: 'Amtsgericht Charlottenburg (Charlottenburg Local Court)', regNo: 'Register number', repHeading: 'Authorised representatives', rep1: 'Jannis Rußkamp, 1st Chairman', rep2: 'Lars Lemke, 2nd Chairman' },
-    tr: { metaTitle: 'Yasal bilgiler', h1: 'Yasal bilgiler', legalName: 'Fußball Club Treptow e.V.', tmg: '§ 5 DDG uyarınca bilgiler', phoneLabel: 'Telefon', emailLabel: 'E-posta', contactLabel: 'İletişim', registerHeading: 'Sicil kaydı', court: 'Sicil mahkemesi', courtValue: 'Amtsgericht Charlottenburg', regNo: 'Sicil numarası', repHeading: 'Temsile yetkili kişiler', rep1: 'Jannis Rußkamp, 1. Başkan', rep2: 'Lars Lemke, 2. Başkan' },
-    ar: { metaTitle: 'بيانات النشر', h1: 'بيانات النشر', legalName: 'Fußball Club Treptow e.V.', tmg: 'بيانات وفقًا للمادة 5 من قانون DDG', phoneLabel: 'الهاتف', emailLabel: 'البريد الإلكتروني', contactLabel: 'للتواصل', registerHeading: 'التسجيل', court: 'محكمة السجل', courtValue: 'Amtsgericht Charlottenburg', regNo: 'رقم السجل', repHeading: 'الأشخاص المخوّلون بالتمثيل', rep1: 'Jannis Rußkamp، الرئيس الأول', rep2: 'Lars Lemke، الرئيس الثاني' },
-    es: { metaTitle: 'Aviso legal', h1: 'Aviso legal', legalName: 'Fußball Club Treptow e.V.', tmg: 'Información según el § 5 DDG', phoneLabel: 'Teléfono', emailLabel: 'Correo electrónico', contactLabel: 'Contacto', registerHeading: 'Registro', court: 'Juzgado de registro', courtValue: 'Amtsgericht Charlottenburg', regNo: 'Número de registro', repHeading: 'Personas autorizadas para representar', rep1: 'Jannis Rußkamp, presidente 1.º', rep2: 'Lars Lemke, presidente 2.º' },
-    fr: { metaTitle: 'Mentions légales', h1: 'Mentions légales', legalName: 'Fußball Club Treptow e.V.', tmg: 'Informations selon le § 5 DDG', phoneLabel: 'Téléphone', emailLabel: 'E-mail', contactLabel: 'Contact', registerHeading: 'Immatriculation', court: 'Tribunal du registre', courtValue: 'Amtsgericht Charlottenburg', regNo: 'Numéro de registre', repHeading: 'Personnes habilitées à représenter', rep1: 'Jannis Rußkamp, 1er président', rep2: 'Lars Lemke, 2e président' },
+    de: { metaDesc: 'Impressum des Fußball Club Treptow e.V., Köpenicker Landstraße 186, 12437 Berlin.', metaTitle: 'Impressum', h1: 'Impressum', legalName: 'Fußball Club Treptow e.V.', tmg: 'Angaben gemäß § 5 DDG', phoneLabel: 'Telefon', emailLabel: 'E-Mail', contactLabel: 'Kontakt', registerHeading: 'Eintragung', court: 'Registergericht', courtValue: 'Amtsgericht Charlottenburg', regNo: 'Registernummer', repHeading: 'Vertretungsberechtigte Personen', rep1: 'Jannis Rußkamp, 1. Vorsitzender', rep2: 'Lars Lemke, 2. Vorsitzender' },
+    en: { metaDesc: 'Imprint of Fußball Club Treptow e.V., Köpenicker Landstraße 186, 12437 Berlin.', metaTitle: 'Imprint', h1: 'Imprint', legalName: 'Fußball Club Treptow e.V.', tmg: 'Information pursuant to § 5 DDG', phoneLabel: 'Phone', emailLabel: 'Email', contactLabel: 'Contact', registerHeading: 'Registration', court: 'Register court', courtValue: 'Amtsgericht Charlottenburg (Charlottenburg Local Court)', regNo: 'Register number', repHeading: 'Authorised representatives', rep1: 'Jannis Rußkamp, 1st Chairman', rep2: 'Lars Lemke, 2nd Chairman' },
+    tr: { metaDesc: 'Fußball Club Treptow e.V. yasal bilgileri, Köpenicker Landstraße 186, 12437 Berlin.', metaTitle: 'Yasal bilgiler', h1: 'Yasal bilgiler', legalName: 'Fußball Club Treptow e.V.', tmg: '§ 5 DDG uyarınca bilgiler', phoneLabel: 'Telefon', emailLabel: 'E-posta', contactLabel: 'İletişim', registerHeading: 'Sicil kaydı', court: 'Sicil mahkemesi', courtValue: 'Amtsgericht Charlottenburg', regNo: 'Sicil numarası', repHeading: 'Temsile yetkili kişiler', rep1: 'Jannis Rußkamp, 1. Başkan', rep2: 'Lars Lemke, 2. Başkan' },
+    ar: { metaDesc: 'بيانات النشر لنادي Fußball Club Treptow e.V.، Köpenicker Landstraße 186، 12437 برلين.', metaTitle: 'بيانات النشر', h1: 'بيانات النشر', legalName: 'Fußball Club Treptow e.V.', tmg: 'بيانات وفقًا للمادة 5 من قانون DDG', phoneLabel: 'الهاتف', emailLabel: 'البريد الإلكتروني', contactLabel: 'للتواصل', registerHeading: 'التسجيل', court: 'محكمة السجل', courtValue: 'Amtsgericht Charlottenburg', regNo: 'رقم السجل', repHeading: 'الأشخاص المخوّلون بالتمثيل', rep1: 'Jannis Rußkamp، الرئيس الأول', rep2: 'Lars Lemke، الرئيس الثاني' },
+    es: { metaDesc: 'Aviso legal del Fußball Club Treptow e.V., Köpenicker Landstraße 186, 12437 Berlín.', metaTitle: 'Aviso legal', h1: 'Aviso legal', legalName: 'Fußball Club Treptow e.V.', tmg: 'Información según el § 5 DDG', phoneLabel: 'Teléfono', emailLabel: 'Correo electrónico', contactLabel: 'Contacto', registerHeading: 'Registro', court: 'Juzgado de registro', courtValue: 'Amtsgericht Charlottenburg', regNo: 'Número de registro', repHeading: 'Personas autorizadas para representar', rep1: 'Jannis Rußkamp, presidente 1.º', rep2: 'Lars Lemke, presidente 2.º' },
+    fr: { metaDesc: 'Mentions légales du Fußball Club Treptow e.V., Köpenicker Landstraße 186, 12437 Berlin.', metaTitle: 'Mentions légales', h1: 'Mentions légales', legalName: 'Fußball Club Treptow e.V.', tmg: 'Informations selon le § 5 DDG', phoneLabel: 'Téléphone', emailLabel: 'E-mail', contactLabel: 'Contact', registerHeading: 'Immatriculation', court: 'Tribunal du registre', courtValue: 'Amtsgericht Charlottenburg', regNo: 'Numéro de registre', repHeading: 'Personnes habilitées à représenter', rep1: 'Jannis Rußkamp, 1er président', rep2: 'Lars Lemke, 2e président' },
   },
 
   datenschutz: {
-    de: { metaTitle: 'Datenschutz', h1: 'Datenschutz', p1: 'Diese Webseite ist statisch, setzt keine Tracking-Cookies und bindet keine Werbedienste ein.', p2: 'Bei Nutzung der Formulare (Probetraining, Anmeldung, Kontakt) werden die eingegebenen Daten ausschließlich zur Bearbeitung der Anfrage bzw. zur Mitgliederverwaltung verarbeitet.', p3: 'Die vollständige Datenschutzerklärung wird vor dem Livegang von der alten Webseite übernommen und an die neue Technik angepasst.' },
-    en: { metaTitle: 'Privacy', h1: 'Privacy', p1: 'This website is static, sets no tracking cookies and embeds no advertising services.', p2: 'When using the forms (trial training, registration, contact), the data entered is processed solely to handle the request or for membership administration.', p3: 'The complete privacy policy will be carried over from the old website and adapted to the new technology before launch.' },
-    tr: { metaTitle: 'Gizlilik', h1: 'Gizlilik', p1: 'Bu web sitesi statiktir, izleme çerezleri kullanmaz ve reklam hizmetleri içermez.', p2: 'Formların kullanımında (deneme antrenmanı, kayıt, iletişim) girilen veriler yalnızca talebin işlenmesi veya üye yönetimi amacıyla işlenir.', p3: 'Tam gizlilik politikası, yayına geçmeden önce eski web sitesinden aktarılacak ve yeni teknolojiye uyarlanacaktır.' },
-    ar: { metaTitle: 'الخصوصية', h1: 'الخصوصية', p1: 'هذا الموقع ثابت، ولا يستخدم ملفات تعريف ارتباط للتتبع، ولا يتضمن خدمات إعلانية.', p2: 'عند استخدام النماذج (التدريب التجريبي، التسجيل، الاتصال)، تُعالج البيانات المدخلة فقط لمعالجة الطلب أو لإدارة العضوية.', p3: 'سيتم نقل سياسة الخصوصية الكاملة من الموقع القديم وتكييفها مع التقنية الجديدة قبل الإطلاق.' },
-    es: { metaTitle: 'Privacidad', h1: 'Privacidad', p1: 'Este sitio web es estático, no utiliza cookies de seguimiento ni incluye servicios publicitarios.', p2: 'Al utilizar los formularios (entrenamiento de prueba, inscripción, contacto), los datos introducidos se procesan únicamente para gestionar la solicitud o para la administración de socios.', p3: 'La política de privacidad completa se trasladará desde la web anterior y se adaptará a la nueva tecnología antes del lanzamiento.' },
-    fr: { metaTitle: 'Confidentialité', h1: 'Confidentialité', p1: 'Ce site est statique, ne dépose aucun cookie de suivi et n’intègre aucun service publicitaire.', p2: 'Lors de l’utilisation des formulaires (séance d’essai, inscription, contact), les données saisies sont traitées uniquement pour traiter la demande ou pour la gestion des membres.', p3: 'La politique de confidentialité complète sera reprise de l’ancien site et adaptée à la nouvelle technologie avant la mise en ligne.' },
+    de: { metaDesc: 'Wie der FC Treptow e.V. auf dieser Website mit personenbezogenen Daten umgeht.', metaTitle: 'Datenschutz', h1: 'Datenschutzerklärung', notice: '' },
+    en: { metaDesc: 'How FC Treptow e.V. handles personal data on this website.', metaTitle: 'Privacy', h1: 'Privacy policy', notice: 'The privacy policy is legally binding in German. In short: this website sets no cookies, uses no tracking and loads nothing from third parties. Forms only open your own e-mail program.' },
+    tr: { metaDesc: 'FC Treptow e.V.’nin bu web sitesinde kişisel verileri nasıl işlediği.', metaTitle: 'Gizlilik', h1: 'Gizlilik politikası', notice: 'Gizlilik politikasının bağlayıcı metni Almancadır. Kısaca: Bu site çerez kullanmaz, izleme yapmaz ve üçüncü taraflardan hiçbir şey yüklemez. Formlar yalnızca kendi e-posta programını açar.' },
+    ar: { metaDesc: 'كيف يتعامل نادي إف سي تريبتاو مع البيانات الشخصية على هذا الموقع.', metaTitle: 'الخصوصية', h1: 'سياسة الخصوصية', notice: 'النص الملزم قانونيًا لسياسة الخصوصية هو النص الألماني. باختصار: لا يستخدم هذا الموقع ملفات تعريف الارتباط ولا أدوات تتبع ولا يحمّل أي شيء من أطراف ثالثة. النماذج تفتح فقط برنامج البريد الإلكتروني الخاص بك.' },
+    es: { metaDesc: 'Cómo trata el FC Treptow e.V. los datos personales en este sitio web.', metaTitle: 'Privacidad', h1: 'Política de privacidad', notice: 'La versión jurídicamente vinculante de la política de privacidad es la alemana. En resumen: este sitio no usa cookies ni seguimiento y no carga nada de terceros. Los formularios solo abren tu propio programa de correo.' },
+    fr: { metaDesc: 'Comment le FC Treptow e.V. traite les données personnelles sur ce site.', metaTitle: 'Confidentialité', h1: 'Politique de confidentialité', notice: 'La version juridiquement contraignante de la politique de confidentialité est l’allemande. En bref : ce site n’utilise ni cookies ni suivi et ne charge rien de tiers. Les formulaires ouvrent seulement ton propre logiciel de messagerie.' },
   },
 
   inGedenken: {
-    de: { metaTitle: 'In Gedenken', metaDesc: 'Wir erinnern an verstorbene Mitglieder und Freunde des FC Treptow e.V.', h1: 'In Gedenken', p1: 'Wir erinnern an die Mitglieder, Freunde und Wegbegleiter des FC Treptow, die nicht mehr unter uns sind. Ihr Einsatz für den Verein bleibt unvergessen.', p2: 'Die Inhalte dieser Seite werden von der alten Webseite übernommen und vom Vorstand gepflegt.' },
-    en: { metaTitle: 'In memory', metaDesc: 'Remembering members and friends of FC Treptow e.V. who have passed away.', h1: 'In memory', p1: 'We remember the members, friends and companions of FC Treptow who are no longer with us. Their dedication to the club will never be forgotten.', p2: 'The content of this page will be carried over from the old website and maintained by the board.' },
-    tr: { metaTitle: 'Anısına', metaDesc: 'FC Treptow e.V.’nin aramızdan ayrılan üyelerini ve dostlarını anıyoruz.', h1: 'Anısına', p1: 'Artık aramızda olmayan FC Treptow üyelerini, dostlarını ve yol arkadaşlarını anıyoruz. Kulübe verdikleri emek unutulmayacak.', p2: 'Bu sayfanın içeriği eski web sitesinden aktarılacak ve yönetim kurulu tarafından güncellenecektir.' },
-    ar: { metaTitle: 'في الذكرى', metaDesc: 'نتذكر أعضاء وأصدقاء نادي إف سي تريبتاو الذين رحلوا.', h1: 'في الذكرى', p1: 'نتذكر أعضاء وأصدقاء ورفاق نادي إف سي تريبتاو الذين لم يعودوا بيننا. لن يُنسى عطاؤهم للنادي.', p2: 'سيتم نقل محتوى هذه الصفحة من الموقع القديم وسيتولى مجلس الإدارة تحديثه.' },
-    es: { metaTitle: 'En memoria', metaDesc: 'Recordamos a los miembros y amigos del FC Treptow e.V. que ya no están con nosotros.', h1: 'En memoria', p1: 'Recordamos a los miembros, amigos y compañeros del FC Treptow que ya no están con nosotros. Su dedicación al club nunca se olvidará.', p2: 'El contenido de esta página se trasladará desde la web anterior y será mantenido por la junta directiva.' },
-    fr: { metaTitle: 'En mémoire', metaDesc: 'Nous nous souvenons des membres et amis du FC Treptow e.V. qui nous ont quittés.', h1: 'En mémoire', p1: 'Nous nous souvenons des membres, amis et compagnons du FC Treptow qui ne sont plus parmi nous. Leur engagement pour le club restera inoubliable.', p2: 'Le contenu de cette page sera repris de l’ancien site et tenu à jour par le comité directeur.' },
+    de: { metaTitle: 'In Gedenken', metaDesc: 'Der FC Treptow erinnert an verstorbene Mitglieder und Wegbegleiter.', h1: 'In Gedenken', quote: 'Ein Verein lebt durch seine Menschen und erinnert sich an sie.', intro: 'Mit dieser Seite danken wir allen, die unseren Weg begleitet und geprägt haben. Ihre Leidenschaft, ihr Einsatz und ihre Verbundenheit mit dem FC Treptow bleiben unvergessen.', original: '', summaries: { 'Konrad Wich': 'Mitglied seit 1967, Kassenwart von 2009 bis 2023, DFB-Ehrenamtspreis 2018.', 'Wolfgang Döbler': 'Mitglied seit 1969, Schiedsrichter von 1974 bis 2013, Vorsitzender von 2009 bis 2023, Ehrenvorsitzender.' } },
+    en: { metaTitle: 'In memory', metaDesc: 'FC Treptow remembers members and companions who have passed away.', h1: 'In memory', quote: 'A club lives through its people, and remembers them.', intro: 'With this page we thank everyone who has accompanied and shaped our path. Their passion, commitment and loyalty to FC Treptow will not be forgotten.', original: 'The obituaries are shown in the board’s original German words.', summaries: { 'Konrad Wich': 'Member since 1967, treasurer from 2009 to 2023, DFB volunteer award 2018.', 'Wolfgang Döbler': 'Member since 1969, referee from 1974 to 2013, chairman from 2009 to 2023, honorary chairman.' } },
+    tr: { metaTitle: 'Anısına', metaDesc: 'FC Treptow aramızdan ayrılan üyelerini ve yol arkadaşlarını anıyor.', h1: 'Anısına', quote: 'Bir kulüp insanlarıyla yaşar ve onları hatırlar.', intro: 'Bu sayfayla yolumuza eşlik eden ve onu şekillendiren herkese teşekkür ediyoruz. FC Treptow’a olan tutkuları, emekleri ve bağlılıkları unutulmayacak.', original: 'Anma yazıları yönetim kurulunun Almanca orijinal sözleriyle yer alıyor.', summaries: { 'Konrad Wich': '1967’den beri üye, 2009–2023 arası sayman, 2018 DFB gönüllülük ödülü.', 'Wolfgang Döbler': '1969’dan beri üye, 1974–2013 arası hakem, 2009–2023 arası başkan, onursal başkan.' } },
+    ar: { metaTitle: 'في الذكرى', metaDesc: 'يتذكر نادي إف سي تريبتاو أعضاءه ورفاقه الراحلين.', h1: 'في الذكرى', quote: 'النادي يحيا بأهله، ويتذكرهم.', intro: 'نشكر بهذه الصفحة كل من رافق مسيرتنا وأثّر فيها. لن يُنسى شغفهم والتزامهم وارتباطهم بنادي إف سي تريبتاو.', original: 'تُعرض كلمات الرثاء بنصها الألماني الأصلي كما كتبها مجلس الإدارة.', summaries: { 'Konrad Wich': 'عضو منذ 1967، أمين الصندوق من 2009 إلى 2023، جائزة الاتحاد الألماني للعمل التطوعي 2018.', 'Wolfgang Döbler': 'عضو منذ 1969، حكم من 1974 إلى 2013، رئيس النادي من 2009 إلى 2023، رئيس فخري.' } },
+    es: { metaTitle: 'En memoria', metaDesc: 'El FC Treptow recuerda a los socios y compañeros fallecidos.', h1: 'En memoria', quote: 'Un club vive de su gente, y la recuerda.', intro: 'Con esta página damos las gracias a todos los que han acompañado y marcado nuestro camino. Su pasión, su entrega y su vínculo con el FC Treptow no se olvidarán.', original: 'Los obituarios se muestran con las palabras originales en alemán de la junta directiva.', summaries: { 'Konrad Wich': 'Socio desde 1967, tesorero de 2009 a 2023, premio al voluntariado de la DFB en 2018.', 'Wolfgang Döbler': 'Socio desde 1969, árbitro de 1974 a 2013, presidente de 2009 a 2023, presidente de honor.' } },
+    fr: { metaTitle: 'En mémoire', metaDesc: 'Le FC Treptow se souvient de ses membres et compagnons disparus.', h1: 'En mémoire', quote: 'Un club vit par ses membres, et se souvient d’eux.', intro: 'Par cette page, nous remercions toutes celles et ceux qui ont accompagné et marqué notre chemin. Leur passion, leur engagement et leur attachement au FC Treptow resteront inoubliables.', original: 'Les nécrologies sont présentées dans les mots originaux en allemand du comité directeur.', summaries: { 'Konrad Wich': 'Membre depuis 1967, trésorier de 2009 à 2023, prix du bénévolat de la DFB en 2018.', 'Wolfgang Döbler': 'Membre depuis 1969, arbitre de 1974 à 2013, président de 2009 à 2023, président d’honneur.' } },
+  },
+
+  vorstand: {
+    de: { metaTitle: 'Vorstand', metaDesc: 'Vorstand, Beisitzer und Kontrollrat des FC Treptow e.V.', h1: 'Vorstand', intro: 'Der FC Treptow wird ehrenamtlich geführt. Das sind die Menschen, die sich darum kümmern.', committeesHeading: 'Weitere Ämter', thanks: 'Wir bedanken uns bei allen Mitgliedern, ehrenamtlich Tätigen und Unterstützern für ihr Engagement, ihre Ausdauer und ihre Treue zum Verein.', roles: { chair: 'Vorsitzender', viceChair: '2. Vorsitzender', treasurer: 'Schatzmeisterin', refereeLead: 'Schiedsrichterobmann', assessor: 'Beisitzer', controlBoard: 'Kontrollrat' }, general: 'Allgemeine Anfragen' },
+    en: { metaTitle: 'Board', metaDesc: 'Board, assessors and control board of FC Treptow e.V.', h1: 'Board', intro: 'FC Treptow is run entirely by volunteers. These are the people who look after it.', committeesHeading: 'Other offices', thanks: 'We thank all members, volunteers and supporters for their commitment, stamina and loyalty to the club.', roles: { chair: 'Chairman', viceChair: 'Vice chairman', treasurer: 'Treasurer', refereeLead: 'Head of referees', assessor: 'Assessors', controlBoard: 'Control board' }, general: 'General enquiries' },
+    tr: { metaTitle: 'Yönetim', metaDesc: 'FC Treptow e.V. yönetim kurulu, üyeleri ve denetim kurulu.', h1: 'Yönetim', intro: 'FC Treptow tamamen gönüllüler tarafından yönetiliyor. Kulüple ilgilenen kişiler bunlar.', committeesHeading: 'Diğer görevler', thanks: 'Tüm üyelerimize, gönüllülerimize ve destekçilerimize kulübe olan bağlılıkları ve emekleri için teşekkür ederiz.', roles: { chair: 'Başkan', viceChair: 'Başkan yardımcısı', treasurer: 'Sayman', refereeLead: 'Hakem sorumlusu', assessor: 'Yönetim üyeleri', controlBoard: 'Denetim kurulu' }, general: 'Genel sorular' },
+    ar: { metaTitle: 'مجلس الإدارة', metaDesc: 'مجلس إدارة نادي إف سي تريبتاو وأعضاؤه ومجلس الرقابة.', h1: 'مجلس الإدارة', intro: 'يُدار نادي إف سي تريبتاو بالكامل من قبل متطوعين. هؤلاء هم من يهتمون به.', committeesHeading: 'مناصب أخرى', thanks: 'نشكر جميع الأعضاء والمتطوعين والداعمين على التزامهم ومثابرتهم ووفائهم للنادي.', roles: { chair: 'الرئيس', viceChair: 'نائب الرئيس', treasurer: 'أمينة الصندوق', refereeLead: 'مسؤول الحكام', assessor: 'أعضاء المجلس', controlBoard: 'مجلس الرقابة' }, general: 'استفسارات عامة' },
+    es: { metaTitle: 'Junta directiva', metaDesc: 'Junta directiva, vocales y comisión de control del FC Treptow e.V.', h1: 'Junta directiva', intro: 'El FC Treptow lo dirigen personas voluntarias. Estas son quienes se encargan del club.', committeesHeading: 'Otros cargos', thanks: 'Damos las gracias a todos los socios, voluntarios y colaboradores por su compromiso, constancia y fidelidad al club.', roles: { chair: 'Presidente', viceChair: 'Vicepresidente', treasurer: 'Tesorera', refereeLead: 'Responsable de árbitros', assessor: 'Vocales', controlBoard: 'Comisión de control' }, general: 'Consultas generales' },
+    fr: { metaTitle: 'Comité directeur', metaDesc: 'Comité directeur, assesseurs et commission de contrôle du FC Treptow e.V.', h1: 'Comité directeur', intro: 'Le FC Treptow est géré entièrement par des bénévoles. Voici les personnes qui s’en occupent.', committeesHeading: 'Autres fonctions', thanks: 'Nous remercions tous les membres, bénévoles et soutiens pour leur engagement, leur persévérance et leur fidélité au club.', roles: { chair: 'Président', viceChair: 'Vice-président', treasurer: 'Trésorière', refereeLead: 'Responsable des arbitres', assessor: 'Assesseurs', controlBoard: 'Commission de contrôle' }, general: 'Demandes générales' },
+  },
+
+  shop: {
+    de: { metaTitle: 'Fanshop', metaDesc: 'Trikots, Hoodies, Caps und mehr im offiziellen Fanshop des FC Treptow.', h1: 'Fanshop', intro: 'Zeig Farbe, auf dem Platz und im Kiez. Die Artikel werden bei Spreadshirt auf Bestellung gedruckt und direkt zu dir geschickt.', designsHeading: 'Die Motive', designs: [{ title: 'Das Wappen', text: 'Das Vereinswappen, klassisch in Schwarz.' }, { title: 'FCT-Monogramm', text: 'Die ineinander verschränkten Buchstaben, in mehreren Farben.' }], allHeading: 'Auswahl aus dem Shop', how: 'So funktioniert es', howItems: ['Artikel antippen, du landest direkt im Fanshop bei Spreadshirt.', 'Größe und Farbe wählen, dort bestellen und bezahlen.', 'Spreadshirt druckt und liefert, Rückgabe und Service laufen ebenfalls über den Shop.'] },
+    en: { metaTitle: 'Fan shop', metaDesc: 'Shirts, hoodies, caps and more in the official FC Treptow fan shop.', h1: 'Fan shop', intro: 'Show your colours, on the pitch and around the neighbourhood. Items are printed to order by Spreadshirt and shipped straight to you.', designsHeading: 'The designs', designs: [{ title: 'The crest', text: 'The club crest, classic in black.' }, { title: 'FCT monogram', text: 'The interlocking letters, in several colours.' }], allHeading: 'A selection from the shop', how: 'How it works', howItems: ['Tap an item and you land straight in the fan shop on Spreadshirt.', 'Choose size and colour, then order and pay there.', 'Spreadshirt prints and delivers; returns and service also go through the shop.'] },
+    tr: { metaTitle: 'Taraftar mağazası', metaDesc: 'FC Treptow resmi taraftar mağazasında formalar, kapüşonlular, şapkalar ve daha fazlası.', h1: 'Taraftar mağazası', intro: 'Renklerini göster, sahada ve mahallede. Ürünler Spreadshirt tarafından siparişe göre basılır ve doğrudan sana gönderilir.', designsHeading: 'Motifler', designs: [{ title: 'Arma', text: 'Kulüp arması, klasik siyah.' }, { title: 'FCT monogramı', text: 'İç içe geçmiş harfler, farklı renklerde.' }], allHeading: 'Mağazadan seçmeler', how: 'Nasıl çalışır', howItems: ['Bir ürüne dokun, doğrudan Spreadshirt’teki mağazaya gidersin.', 'Beden ve renk seç, orada sipariş ver ve öde.', 'Baskı ve teslimatı Spreadshirt yapar; iade ve destek de mağaza üzerinden.'] },
+    ar: { metaTitle: 'متجر المشجعين', metaDesc: 'قمصان وسترات وقبعات وغيرها في متجر المشجعين الرسمي لنادي إف سي تريبتاو.', h1: 'متجر المشجعين', intro: 'أظهر ألوانك في الملعب وفي الحي. تُطبع المنتجات حسب الطلب لدى Spreadshirt وتُرسل إليك مباشرة.', designsHeading: 'التصاميم', designs: [{ title: 'شعار النادي', text: 'شعار النادي باللون الأسود الكلاسيكي.' }, { title: 'حروف FCT', text: 'الحروف المتشابكة، بعدة ألوان.' }], allHeading: 'مختارات من المتجر', how: 'كيف يعمل', howItems: ['اضغط على منتج لتنتقل مباشرة إلى المتجر على Spreadshirt.', 'اختر المقاس واللون، ثم اطلب وادفع هناك.', 'تتولى Spreadshirt الطباعة والتوصيل، وكذلك الإرجاع وخدمة العملاء.'] },
+    es: { metaTitle: 'Tienda', metaDesc: 'Camisetas, sudaderas, gorras y más en la tienda oficial del FC Treptow.', h1: 'Tienda', intro: 'Muestra tus colores, en el campo y en el barrio. Los artículos se imprimen bajo pedido en Spreadshirt y te llegan directamente.', designsHeading: 'Los diseños', designs: [{ title: 'El escudo', text: 'El escudo del club, clásico en negro.' }, { title: 'Monograma FCT', text: 'Las letras entrelazadas, en varios colores.' }], allHeading: 'Una selección de la tienda', how: 'Cómo funciona', howItems: ['Toca un artículo y llegarás directamente a la tienda en Spreadshirt.', 'Elige talla y color, y pide y paga allí.', 'Spreadshirt imprime y envía; las devoluciones y la atención también van por la tienda.'] },
+    fr: { metaTitle: 'Boutique', metaDesc: 'Maillots, sweats, casquettes et plus dans la boutique officielle du FC Treptow.', h1: 'Boutique', intro: 'Affiche tes couleurs, sur le terrain et dans le quartier. Les articles sont imprimés à la demande par Spreadshirt et livrés directement chez toi.', designsHeading: 'Les motifs', designs: [{ title: 'Le blason', text: 'Le blason du club, classique en noir.' }, { title: 'Monogramme FCT', text: 'Les lettres entrelacées, en plusieurs couleurs.' }], allHeading: 'Une sélection de la boutique', how: 'Comment ça marche', howItems: ['Touche un article et tu arrives directement dans la boutique Spreadshirt.', 'Choisis la taille et la couleur, puis commande et paie là-bas.', 'Spreadshirt imprime et livre ; retours et service passent aussi par la boutique.'] },
   },
 } satisfies Record<string, Record<Locale, any>>;
 
-export function pageT<K extends keyof typeof pages>(page: K, locale: Locale) {
-  return pages[page][locale] ?? pages[page].de;
+// Deutsch ist die Vorlage für die Typen; alle Sprachen haben dieselben Schlüssel.
+export function pageT<K extends keyof typeof pages>(page: K, locale: Locale): (typeof pages)[K]['de'] {
+  return (pages[page][locale] ?? pages[page].de) as (typeof pages)[K]['de'];
 }

@@ -1,12 +1,7 @@
 ---
-name: "Freizeit Kickers"
 shortName: "Ocio"
-league: "Freizeitliga Berlin"
-order: 4
-training:
-  - "Jueves, 19:00"
-image: "/images/hero-match.jpg"
-imageFocus: 50
 ---
 
-Fútbol sin la presión de los puntos de liga: los Freizeit Kickers se reúnen cada semana para jugar en la instalación deportiva Willi-Sänger. Cualquier edad, cualquier nivel, lo único que hace falta son ganas de jugar.
+Somos un equipo recreativo que se reúne una vez por semana para jugar. ¿Cansado de entrenamientos duros y prefieres pasar los fines de semana sin partidos de liga? Entonces este es tu sitio.
+
+Jugamos los martes de 18:00 a 19:30 en el césped artificial de la instalación deportiva Willi-Sänger.

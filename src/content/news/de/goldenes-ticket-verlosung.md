@@ -2,7 +2,7 @@
 title: "Goldenes Ticket: Jetzt mitmachen"
 date: 2026-07-01
 teaser: "Unsere Vereinslotterie geht in die nächste Runde. Mitspielen, gewinnen und dabei den Club unterstützen."
-image: "/images/willi-saenger.png"
+image: "/images/team-freizeit.jpg"
 tag: "Goldenes Ticket"
 ---
 

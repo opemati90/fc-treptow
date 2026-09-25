@@ -1,64 +1,74 @@
 ---
-import { defaultLocale, type Locale } from '../../i18n/languages';
+import PageHeader from '../PageHeader.astro';
+import CtaButton from '../CtaButton.astro';
+import Icon from '../Icon.astro';
+import { defaultLocale, l, type Locale } from '../../i18n/languages';
 import { pageT } from '../../i18n/pages';
+import { useTranslations } from '../../i18n/ui';
+import { club } from '../../data/club';
 
 const lang = (Astro.currentLocale ?? defaultLocale) as Locale;
 const t = pageT('mitgliedschaft', lang);
+const ui = useTranslations(lang);
 const stepLinks = ['/probetraining', undefined, '/anmeldung'];
+const fees = [
+  { label: t.aktive, detail: t.aktiveDetail, amount: club.fees.regular },
+  { label: t.ermaessigt, detail: t.ermaessigtDetail, amount: club.fees.reduced },
+  { label: t.passiv, detail: t.passivDetail, amount: club.fees.passive },
+];
 ---
-<section class="mx-auto max-w-6xl px-4 pb-8 pt-16 lg:px-6">
-  <h1 class="display text-4xl md:text-5xl">{t.h1}</h1>
-  <p class="mt-4 max-w-xl text-base leading-relaxed text-ink-soft">{t.intro}</p>
-</section>
+<PageHeader title={t.h1} intro={t.intro} />
 
-<section class="mx-auto max-w-6xl px-4 py-12 lg:px-6">
-  <div class="grid gap-6 md:grid-cols-3">
+<section class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+  <ol class="stagger grid gap-px bg-line md:grid-cols-3">
     {t.steps.map((s: any, i: number) => (
-      <div class="reveal flex flex-col rounded-2xl border border-line bg-card p-7">
-        <span class="display text-4xl text-club/25">{i + 1}</span>
-        <h2 class="mt-4 text-lg font-bold">{s.title}</h2>
-        <p class="mt-2 flex-1 text-sm leading-relaxed text-ink-soft">{s.text}</p>
-        {s.linkLabel && <a href={stepLinks[i]} class="mt-5 inline-flex w-max items-center gap-1 text-sm font-semibold text-club hover:text-club-deep">{s.linkLabel} →</a>}
-      </div>
+      <li class="flex flex-col bg-paper py-8 md:px-8 md:first:ps-0 md:last:pe-0">
+        <span class="display nums text-6xl text-club">{i + 1}</span>
+        <h2 class="mt-5 text-xl font-bold">{s.title}</h2>
+        <p class="mt-2 flex-1 leading-relaxed text-ink-soft">{s.text}</p>
+        {s.linkLabel && stepLinks[i] && (
+          <a href={l(lang, stepLinks[i]!)} class="mt-5 inline-flex min-h-11 w-max items-center gap-2 font-semibold text-club hover:text-club-deep">{s.linkLabel} <Icon name="arrow" size={16} /></a>
+        )}
+      </li>
     ))}
-  </div>
+  </ol>
 </section>
 
-<section class="mx-auto max-w-6xl px-4 py-12 lg:px-6">
-  <div class="grid gap-6 lg:grid-cols-2">
-    <div class="reveal rounded-2xl border border-line bg-card p-8">
-      <h2 class="display text-2xl">{t.beitraege}</h2>
-      <div class="mt-6 space-y-5">
-        <div class="flex items-baseline justify-between gap-4 border-b border-line pb-5">
-          <div>
-            <p class="font-semibold">{t.aktive}</p>
-            <p class="mt-1 text-sm text-ink-soft">{t.aktiveDetail}</p>
+<section class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
+  <div class="grid gap-14 lg:grid-cols-12 lg:gap-12">
+    <div class="reveal lg:col-span-7">
+      <h2 class="display text-5xl sm:text-6xl">{t.beitraege}</h2>
+      <dl class="mt-8 border-t border-ink">
+        {fees.map((f) => (
+          <div class="flex items-baseline justify-between gap-6 border-b border-line py-6">
+            <div>
+              <dt class="text-lg font-semibold">{f.label}</dt>
+              <dd class="mt-1 max-w-md text-sm leading-relaxed text-ink-soft">{f.detail}</dd>
+            </div>
+            <dd class="display nums shrink-0 text-5xl">{f.amount} €<span class="ms-1 font-sans text-sm font-normal normal-case tracking-normal text-ink-soft">{t.proMonat}</span></dd>
           </div>
-          <p class="display whitespace-nowrap text-3xl">15 €<span class="ml-1 text-sm font-sans font-normal text-ink-soft">{t.proMonat}</span></p>
-        </div>
-        <div class="flex items-baseline justify-between gap-4">
-          <div>
-            <p class="font-semibold">{t.ermaessigt}</p>
-            <p class="mt-1 text-sm text-ink-soft">{t.ermaessigtDetail}</p>
-          </div>
-          <p class="display whitespace-nowrap text-3xl">10 €<span class="ml-1 text-sm font-sans font-normal text-ink-soft">{t.proMonat}</span></p>
-        </div>
-      </div>
+        ))}
+      </dl>
+      <p class="mt-6 max-w-xl text-sm leading-relaxed text-ink-soft">{t.aufnahme}</p>
     </div>
-    <div class="reveal rounded-2xl bg-ink p-8 text-white">
-      <h2 class="display text-2xl">{t.bankverbindung}</h2>
-      <p class="mt-4 text-sm leading-relaxed text-white/75">{t.bankHint}</p>
+    <aside class="reveal self-start rounded-sm bg-ink p-8 text-paper lg:col-span-5 lg:p-10">
+      <h2 class="display text-3xl">{t.bankverbindung}</h2>
+      <p class="mt-3 text-sm leading-relaxed text-paper/70">{t.bankHint}</p>
       <dl class="mt-6 space-y-4 text-sm">
         <div>
-          <dt class="text-white/50">{t.kontoinhaber}</dt>
+          <dt class="text-paper/50">{t.kontoinhaber}</dt>
           <dd class="mt-0.5 font-medium">FC Treptow e. V.</dd>
         </div>
         <div>
-          <dt class="text-white/50">{t.iban}</dt>
-          <dd class="mt-0.5 font-mono font-medium tracking-wide">DE57 1009 0000 3946 9680 04</dd>
+          <dt class="text-paper/50">{t.iban}</dt>
+          <dd class="nums mt-0.5 select-all font-mono text-base font-medium tracking-wide" dir="ltr">{club.iban}</dd>
         </div>
       </dl>
-      <p class="mt-6 text-sm text-white/75">{t.formsHint} <a href="/downloads" class="font-semibold text-white underline decoration-club decoration-2 underline-offset-4">{t.downloadsLabel}</a>.</p>
-    </div>
+      <p class="mt-8 text-sm leading-relaxed text-paper/70">{t.formsHint} <a href={l(lang, '/downloads')} class="font-semibold text-paper underline decoration-club decoration-2 underline-offset-4">{t.downloadsLabel}</a>.</p>
+    </aside>
+  </div>
+  <div class="reveal mt-16 flex flex-wrap items-center gap-x-6 gap-y-4 border-t border-ink pt-10">
+    <CtaButton href={l(lang, '/probetraining')}>{ui.trialCta}</CtaButton>
+    <a href={l(lang, '/downloads')} class="inline-flex min-h-12 items-center font-semibold underline decoration-line decoration-2 underline-offset-[6px] hover:decoration-ink">{t.beitragsordnungLabel}</a>
   </div>
 </section>

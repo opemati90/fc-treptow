@@ -1,40 +1,54 @@
 ---
-import { defaultLocale, type Locale } from '../../i18n/languages';
+import PageHeader from '../PageHeader.astro';
+import CtaButton from '../CtaButton.astro';
+import Icon from '../Icon.astro';
+import { defaultLocale, l, type Locale } from '../../i18n/languages';
 import { pageT } from '../../i18n/pages';
+import { club } from '../../data/club';
 
 const lang = (Astro.currentLocale ?? defaultLocale) as Locale;
 const t = pageT('kontakt', lang);
 ---
-<section class="mx-auto max-w-6xl px-4 pb-8 pt-16 lg:px-6">
-  <h1 class="display text-4xl md:text-5xl">{t.h1}</h1>
-  <p class="mt-4 max-w-xl text-base leading-relaxed text-ink-soft">{t.intro}</p>
-</section>
+<PageHeader title={t.h1} intro={t.intro} />
 
-<section class="mx-auto max-w-6xl px-4 py-12 lg:px-6">
-  <div class="grid gap-6 lg:grid-cols-2">
-    <div class="reveal rounded-2xl border border-line bg-card p-8">
-      <h2 class="display text-2xl">{t.heading}</h2>
-      <dl class="mt-6 space-y-5 text-sm">
-        <div>
-          <dt class="text-xs font-semibold uppercase tracking-widest text-ink-soft">{t.email}</dt>
-          <dd class="mt-1"><a href="mailto:kontakt@fc-treptow.de" class="text-base font-semibold text-club hover:text-club-deep">kontakt@fc-treptow.de</a></dd>
+<section class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+  <div class="grid gap-14 lg:grid-cols-12 lg:gap-12">
+    <div class="reveal lg:col-span-5">
+      <dl class="border-t border-ink">
+        <div class="border-b border-line py-6">
+          <dt class="text-xs font-semibold uppercase tracking-[0.14em] text-ink-soft">{t.email}</dt>
+          <dd class="mt-1"><a href={`mailto:${club.email}`} class="inline-flex min-h-11 items-center text-xl font-semibold text-club hover:text-club-deep">{club.email}</a></dd>
         </div>
-        <div>
-          <dt class="text-xs font-semibold uppercase tracking-widest text-ink-soft">{t.sportanlage}</dt>
-          <dd class="mt-1 text-base font-medium">Willi-Sänger-Sportanlage<br />Köpenicker Landstraße 186<br />12437 Berlin</dd>
+        <div class="border-b border-line py-6">
+          <dt class="text-xs font-semibold uppercase tracking-[0.14em] text-ink-soft">{t.telefon}</dt>
+          <dd class="mt-1"><a href={club.phoneHref} class="nums inline-flex min-h-11 items-center text-xl font-semibold" dir="ltr">{club.phone}</a></dd>
         </div>
-        <div>
-          <dt class="text-xs font-semibold uppercase tracking-widest text-ink-soft">{t.training}</dt>
-          <dd class="mt-1 text-base font-medium">{t.trainingTimes}</dd>
+        <div class="border-b border-line py-6">
+          <dt class="text-xs font-semibold uppercase tracking-[0.14em] text-ink-soft">{t.sportanlage}</dt>
+          <dd class="mt-2 text-lg font-semibold leading-snug">{club.ground.name}<br />{club.ground.street}<br />{club.ground.city}</dd>
+        </div>
+        <div class="border-b border-line py-6">
+          <dt class="text-xs font-semibold uppercase tracking-[0.14em] text-ink-soft">{t.training}</dt>
+          <dd class="mt-2 text-lg font-semibold">{t.trainingTimes}</dd>
         </div>
       </dl>
-      <a href="https://www.google.com/maps/search/?api=1&query=Willi-S%C3%A4nger-Sportanlage+K%C3%B6penicker+Landstra%C3%9Fe+186+12437+Berlin" rel="noopener" class="group mt-8 inline-flex items-center gap-2 rounded-full bg-club px-6 py-3 text-sm font-semibold text-white transition-all duration-300 ease-(--ease-club) hover:bg-club-deep active:scale-[0.98]">
-        {t.routeCta}
-        <span class="flex h-6 w-6 items-center justify-center rounded-full bg-white/15 transition-transform duration-300 ease-(--ease-club) group-hover:translate-x-0.5 rtl:rotate-180">→</span>
-      </a>
+      <CtaButton href={club.ground.mapsUrl} external class="mt-8">{t.routeCta}</CtaButton>
+      <p class="mt-6 text-sm text-ink-soft"><a href={l(lang, '/vorstand')} class="font-semibold text-club hover:text-club-deep">{t.vorstandLink}</a></p>
     </div>
-    <div class="reveal overflow-hidden rounded-2xl">
-      <img src="/images/vereinsbuero.jpg" alt={t.imgAlt} class="h-full min-h-[320px] w-full object-cover" loading="lazy" />
+    <div class="lg:col-span-7">
+      <figure class="reveal">
+        <div class="overflow-hidden rounded-sm bg-ink">
+          <img src="/images/vereinsbuero.jpg" alt={t.imgAlt} width="1200" height="630" loading="lazy" class="aspect-[16/9] w-full object-cover" />
+        </div>
+      </figure>
+      <div class="reveal mt-10">
+        <h2 class="display text-4xl">{t.anreise}</h2>
+        <ul class="mt-6 border-t border-ink">
+          <li class="flex gap-4 border-b border-line py-5"><Icon name="pin" size={22} class="mt-0.5 text-club" /><span class="text-lg">{t.sbahn}</span></li>
+          <li class="flex gap-4 border-b border-line py-5"><Icon name="pin" size={22} class="mt-0.5 text-club" /><span class="text-lg">{t.bus}</span></li>
+          <li class="flex gap-4 border-b border-line py-5"><Icon name="pin" size={22} class="mt-0.5 text-club" /><span class="text-lg">{t.parken}</span></li>
+        </ul>
+      </div>
     </div>
   </div>
 </section>

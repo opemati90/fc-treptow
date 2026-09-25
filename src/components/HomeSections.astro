@@ -1,26 +1,38 @@
 ---
-import SponsorMark from './SponsorMark.astro';
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import CtaButton from './CtaButton.astro';
+import ShopGrid from './ShopGrid.astro';
 import { getCollection } from 'astro:content';
-import { defaultLocale, type Locale } from '../i18n/languages';
+import { defaultLocale, bcp47, l, type Locale } from '../i18n/languages';
 import { useTranslations } from '../i18n/ui';
-import { getLocalized } from '../i18n/content';
+import { getNews, getTeams, leagueLabel, trainingLabel } from '../i18n/content';
+import { fixturesLabels } from '../i18n/fixtures';
 import { getInstagramPosts } from '../lib/instagram';
-
-const localeToBcp47: Record<Locale, string> = { de: 'de-DE', en: 'en-GB', tr: 'tr-TR', ar: 'ar-EG', es: 'es-ES', fr: 'fr-FR' };
+import { buildFixtures, fixturesQuery } from '../lib/fixturesBuild';
+import { gameRow, type Game } from '../lib/fixturesView';
+import { club } from '../data/club';
 
 const lang = (Astro.currentLocale ?? defaultLocale) as Locale;
 const t = useTranslations(lang);
-const prefix = lang === defaultLocale ? '' : `/${lang}`;
+const fx = fixturesLabels(lang);
 
 const sponsors = (await getCollection('sponsors')).sort((a, b) => a.data.order - b.data.order);
-const teams = (await getLocalized('teams', lang)).sort((a, b) => a.data.order - b.data.order);
-const news = (await getLocalized('news', lang)).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-const [featured, ...restNews] = news;
-const results = teams
-  .flatMap((team) => team.data.results.map((r) => ({ ...r, team: team.data.shortName, teamSlug: team.slug })))
-  .slice(0, 4);
+const teams = await getTeams(lang);
+const news = await getNews(lang);
+const [lead, ...moreNews] = news;
 const { posts: socialPosts, isLive: socialIsLive } = await getInstagramPosts(6);
 
+// Nächstes Spiel je Mannschaft, zeitlich sortiert
+const fixtures = await buildFixtures();
+const query = await fixturesQuery();
+const teamLabels = Object.fromEntries(teams.map((tm) => [tm.slug, tm.data.shortName]));
+const nextGames = Object.entries(fixtures.teams)
+  .map(([slug, f]) => (f.games?.[0] ? { slug, g: f.games[0] as Game } : null))
+  .filter((x): x is { slug: string; g: Game } => !!x)
+  .sort((a, b) => `${a.g.date}${a.g.time}`.localeCompare(`${b.g.date}${b.g.time}`));
+
+const numerals = ['I', 'II', 'III', 'F'];
 const chronik = [
   { year: '1925', img: '/images/chronik-1925.jpg', label: 'Werksverein Bewag' },
   { year: '1932', img: '/images/chronik-1932.jpg', label: 'SV Bewag Berlin' },
@@ -30,249 +42,249 @@ const chronik = [
   { year: '1990', img: '/images/chronik-1990.jpg', label: 'SV Turbine Berlin' },
   { year: '1994', img: '/images/crest.jpg', label: 'FC Treptow e.V.' },
 ];
-
-const fmt = (d: Date) => d.toLocaleDateString(localeToBcp47[lang], { day: '2-digit', month: 'long', year: 'numeric' });
-
-const SOCIAL_LINKS = {
-  instagram: 'https://www.instagram.com/fctreptow',
-  facebook: 'https://www.facebook.com/fctreptow',
-  tiktok: 'https://www.tiktok.com/@fctreptow',
-};
+const fmt = (d: Date) => d.toLocaleDateString(bcp47[lang], { day: 'numeric', month: 'long', year: 'numeric' });
 ---
-<section class="relative flex min-h-[82dvh] items-end overflow-hidden bg-ink">
-  <img src="/images/hero-match.jpg" alt="Vereinsheim des FC Treptow mit Wandbild und Vereinswappen" class="hero-media absolute inset-0 h-full w-full object-cover opacity-70" fetchpriority="high" />
-  <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-transparent"></div>
-  <div class="hero-in relative mx-auto w-full max-w-6xl px-4 pb-16 pt-24 lg:px-6">
-    <p class="mb-4 inline-block rounded-full border border-white/25 bg-white/10 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em] text-white backdrop-blur-sm">{t.heroEyebrow}</p>
-    <h1 class="display max-w-3xl text-4xl leading-[1.02] text-white md:text-6xl">
-      {t.heroTitle}
-    </h1>
-    <p class="mt-5 max-w-xl text-base leading-relaxed text-white/85 md:text-lg">
-      {t.heroSubtitle}
-    </p>
-    <div class="mt-8 flex flex-wrap gap-3">
-      <a href={`${prefix}/mitgliedschaft`} data-magnetic class="magnetic group inline-flex items-center gap-2 rounded-full bg-club px-6 py-3 text-sm font-semibold text-white transition-colors duration-300 ease-(--ease-club) hover:bg-club-deep">
-        {t.joinCta}
-        <span class="flex h-6 w-6 items-center justify-center rounded-full bg-white/15 transition-transform duration-300 ease-(--ease-club) group-hover:translate-x-0.5 rtl:rotate-180">→</span>
+
+<!-- 1. Auftakt: große Schrift links, echtes Mannschaftsfoto als Dokument rechts -->
+<section class="mx-auto max-w-7xl px-4 pb-20 pt-10 sm:px-6 sm:pt-14 lg:px-8 lg:pb-28 lg:pt-20">
+  <div class="grid items-end gap-10 lg:grid-cols-12 lg:gap-12">
+    <div class="hero-in lg:col-span-6">
+      <p class="flex items-center gap-2 text-sm font-medium text-ink-soft">
+        <span class="h-px w-8 bg-club" aria-hidden="true"></span>
+        {club.legalName}
+      </p>
+      <h1 class="display mt-5 text-[clamp(3.6rem,11vw,7.75rem)] text-balance">{t.heroTitle}</h1>
+      <p class="mt-6 max-w-lg text-lg leading-relaxed text-ink-soft">{t.heroText}</p>
+      <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
+        <CtaButton href={l(lang, '/mitgliedschaft')}>{t.joinCta}</CtaButton>
+        <a href={l(lang, '/mannschaften')} class="inline-flex min-h-12 items-center gap-2 text-[15px] font-semibold underline decoration-line decoration-2 underline-offset-[6px] transition-colors hover:decoration-ink">{t.allTeams}</a>
+      </div>
+    </div>
+    <figure class="lg:col-span-6">
+      <div class="hero-photo overflow-hidden rounded-sm bg-ink">
+        <img src="/images/team-h1.jpg" alt={teams[0]?.data.name ?? 'FC Treptow I'} width="1536" height="864" fetchpriority="high" class="aspect-[16/10] w-full object-cover" />
+      </div>
+      <figcaption class="mt-3 flex items-center justify-between gap-4 text-xs text-ink-soft">
+        <span>{t.heroCaption}</span>
+        <span>{club.ground.name}</span>
+      </figcaption>
+    </figure>
+  </div>
+
+  <dl class="mt-14 grid grid-cols-1 border-t border-ink sm:grid-cols-3 lg:mt-20">
+    <div class="flex items-baseline justify-between gap-4 border-b border-line py-4 sm:block sm:border-b-0 sm:border-e sm:py-5 sm:pe-6">
+      <dt class="text-xs font-semibold uppercase tracking-[0.14em] text-ink-soft">{t.factTraining}</dt>
+      <dd class="text-end text-base font-semibold sm:mt-2 sm:text-start sm:text-lg">{t.factTrainingValue}</dd>
+    </div>
+    <div class="flex items-baseline justify-between gap-4 border-b border-line py-4 sm:block sm:border-b-0 sm:border-e sm:px-6 sm:py-5">
+      <dt class="text-xs font-semibold uppercase tracking-[0.14em] text-ink-soft">{t.factGround}</dt>
+      <dd class="text-end text-base font-semibold sm:mt-2 sm:text-start sm:text-lg">{club.ground.name}</dd>
+    </div>
+    <div class="flex items-baseline justify-between gap-4 py-4 sm:block sm:py-5 sm:ps-6">
+      <dt class="text-xs font-semibold uppercase tracking-[0.14em] text-ink-soft">{t.factFee}</dt>
+      <dd class="text-end text-base font-semibold sm:mt-2 sm:text-start sm:text-lg">{t.factFeeValue}</dd>
+    </div>
+  </dl>
+</section>
+
+<!-- 2. Nächste Spiele, live von fussball.de -->
+<section class="bg-card">
+  <div class="mx-auto grid max-w-7xl gap-10 px-4 py-20 sm:px-6 lg:grid-cols-12 lg:gap-12 lg:px-8 lg:py-28">
+    <div class="reveal lg:col-span-4">
+      <h2 class="display text-5xl sm:text-6xl">{t.fixturesHeading}</h2>
+      <p class="mt-5 max-w-sm leading-relaxed text-ink-soft">{t.fixturesText}</p>
+      <a href={club.fussballDeClubUrl} rel="noopener" target="_blank" class="mt-6 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-club hover:text-club-deep">
+        {t.fixturesLink}
+        <Icon name="external" size={16} />
       </a>
-      <a href={`${prefix}/mannschaften`} class="inline-flex items-center rounded-full border border-white/30 bg-white/10 px-6 py-3 text-sm font-semibold text-white backdrop-blur-sm transition-colors duration-300 ease-(--ease-club) hover:bg-white/20">
-        {t.heroTeamsCta}
-      </a>
+    </div>
+    <div class="reveal lg:col-span-8">
+      <div
+        data-fixtures="next"
+        data-query={query}
+        data-built-at={fixtures.fetchedAt}
+        data-labels={JSON.stringify(fx)}
+        data-team-labels={JSON.stringify(teamLabels)}
+      >
+        {nextGames.length > 0 ? (
+          <ul class="border-t border-line" set:html={nextGames.map(({ slug, g }) => gameRow(g, fx, teamLabels[slug])).join('')} />
+        ) : (
+          <p class="border-y border-line py-8 text-sm text-ink-soft">{fx.unavailable}</p>
+        )}
+      </div>
+      <p class="mt-3 text-xs text-ink-soft">{fx.source}</p>
     </div>
   </div>
 </section>
 
-<!-- Teams bento -->
-<section class="mx-auto max-w-6xl px-4 py-24 lg:px-6">
-  <div class="reveal flex flex-wrap items-end justify-between gap-4">
-    <h2 class="display text-3xl md:text-4xl">{t.teamsHeading}</h2>
-    <a href={`${prefix}/mannschaften`} class="text-sm font-semibold text-club hover:text-club-deep">{t.allTeams}</a>
+<!-- 3. Mannschaften als Index, nicht als Kachelwand -->
+<section class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
+  <div class="reveal flex items-end justify-between gap-6">
+    <h2 class="display text-5xl sm:text-6xl">{t.teamsHeading}</h2>
+    <a href={l(lang, '/mannschaften')} class="hidden min-h-11 items-center gap-2 text-sm font-semibold text-club hover:text-club-deep sm:inline-flex">{t.allTeams} <Icon name="arrow" size={16} /></a>
   </div>
-  <div class="stagger mt-10 grid grid-cols-1 gap-6 md:grid-cols-12">
-    <a href={`${prefix}/mannschaften/${teams[0].slug}`} class="group relative overflow-hidden rounded-2xl bg-ink md:col-span-7 md:row-span-3 md:min-h-[420px]">
-      <img src={teams[0].data.image} alt={teams[0].data.name} class="absolute inset-0 h-full w-full object-cover opacity-80 transition-transform duration-700 ease-(--ease-club) group-hover:scale-[1.03]" />
-      <div class="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/20 to-transparent"></div>
-      <div class="relative flex h-full min-h-[280px] flex-col justify-end p-7">
-        <p class="text-sm font-medium text-white/70">{teams[0].data.league}</p>
-        <p class="display mt-1 text-2xl text-white md:text-3xl">{teams[0].data.name}</p>
-      </div>
-    </a>
-    {teams.slice(1).map((team) => (
-      <a href={`${prefix}/mannschaften/${team.slug}`} class="group flex items-center justify-between gap-4 rounded-2xl border border-line bg-card p-6 transition-all duration-300 ease-(--ease-club) hover:border-club/40 hover:shadow-[0_12px_40px_-16px_rgba(191,46,39,0.25)] md:col-span-5">
-        <div>
-          <p class="text-sm text-ink-soft">{team.data.league}</p>
-          <p class="display mt-1 text-xl">{team.data.name}</p>
-        </div>
-        <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-paper text-ink transition-all duration-300 ease-(--ease-club) group-hover:bg-club group-hover:text-white rtl:rotate-180">→</span>
-      </a>
+  <ol class="stagger mt-10 border-t border-ink">
+    {teams.map((team, i) => (
+      <li class="border-b border-line">
+        <a href={l(lang, `/mannschaften/${team.slug}`)} class="group grid grid-cols-[4rem_1fr_auto] items-center gap-4 py-4 sm:grid-cols-[5rem_1fr_1fr_auto] sm:gap-6 sm:py-6">
+          <span class="overflow-hidden rounded-sm bg-ink">
+            <img src={team.data.image} alt="" width="160" height="160" loading="lazy" class="aspect-square w-full object-cover transition-transform duration-500 ease-(--ease-club) group-hover:scale-105" style={`object-position: 50% ${team.data.imageFocus}%`} />
+          </span>
+          <span class="min-w-0">
+            <span class="nums block text-xs font-semibold uppercase tracking-[0.14em] text-club">{numerals[i] ?? i + 1}</span>
+            <span class="display mt-1 block text-3xl text-balance sm:truncate sm:text-4xl lg:text-5xl">{team.data.name}</span>
+            <span class="mt-1 block text-sm text-ink-soft sm:hidden">{leagueLabel(team.data.league, lang)}</span>
+          </span>
+          <span class="hidden text-sm leading-relaxed sm:block">
+            <span class="block font-semibold">{leagueLabel(team.data.league, lang)}</span>
+            {team.data.training.map((slot) => <span class="block text-ink-soft">{trainingLabel(slot, lang)}</span>)}
+          </span>
+          <span class="flex h-11 w-11 items-center justify-center rounded-full text-ink ring-1 ring-line transition-colors duration-200 group-hover:bg-ink group-hover:text-paper">
+            <Icon name="arrow" size={18} />
+          </span>
+        </a>
+      </li>
     ))}
-  </div>
+  </ol>
 </section>
 
-<!-- Results strip -->
-<section class="border-y border-line bg-card">
-  <div class="mx-auto max-w-6xl px-4 py-20 lg:px-6">
-    <div class="reveal flex flex-wrap items-end justify-between gap-4">
-      <h2 class="display text-3xl md:text-4xl">{t.resultsHeading}</h2>
-      <p class="text-sm text-ink-soft">{t.resultsSubtitle}</p>
+<!-- 4. Das eine rote Band: Mitspielen -->
+<section class="bg-club text-white">
+  <div class="mx-auto grid max-w-7xl gap-10 px-4 py-20 sm:px-6 lg:grid-cols-12 lg:gap-12 lg:px-8 lg:py-28">
+    <div class="reveal lg:col-span-6">
+      <h2 class="display text-[clamp(3.25rem,9vw,6.5rem)]">{t.joinHeading}</h2>
+      <p class="mt-6 max-w-md text-lg leading-relaxed text-white/85">{t.joinText}</p>
+      <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
+        <CtaButton href={l(lang, '/probetraining')} variant="light">{t.trialCta}</CtaButton>
+        <a href={l(lang, '/mitgliedschaft')} class="inline-flex min-h-12 items-center text-[15px] font-semibold underline decoration-white/40 decoration-2 underline-offset-[6px] hover:decoration-white">{t.nav.mitgliedschaft}</a>
+      </div>
     </div>
-    {results.length > 0 ? (
-      <div class="stagger mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {results.map((r) => (
-          <a href={`${prefix}/mannschaften/${r.teamSlug}`} class="group rounded-2xl border border-line bg-paper p-5 transition-colors duration-300 hover:border-club/40">
-            <div class="flex items-center justify-between text-xs text-ink-soft">
-              <span>{r.date}</span>
-              <span class="rounded-full bg-club/10 px-2.5 py-0.5 font-semibold text-club">{r.team}</span>
-            </div>
-            <p class="mt-4 text-sm font-medium leading-snug">{r.home}<br />{r.away}</p>
-            <p class="display mt-3 text-3xl">{r.score}</p>
-          </a>
-        ))}
-      </div>
-    ) : (
-      <div class="reveal mt-10 rounded-2xl border border-dashed border-line bg-paper px-6 py-12 text-center">
-        <p class="mx-auto max-w-md text-sm leading-relaxed text-ink-soft">{t.resultsEmpty}</p>
-        <a href={`${prefix}/mannschaften`} class="mt-4 inline-flex text-sm font-semibold text-club hover:text-club-deep">{t.allTeams}</a>
-      </div>
-    )}
+    <ol class="stagger self-end lg:col-span-6">
+      {t.joinSteps.map((step, i) => (
+        <li class="flex items-baseline gap-6 border-t border-white/25 py-5 last:border-b">
+          <span class="display nums w-10 shrink-0 text-4xl text-white/50">{i + 1}</span>
+          <span class="text-lg font-medium leading-snug">{step}</span>
+        </li>
+      ))}
+    </ol>
   </div>
 </section>
 
-<!-- News -->
-<section class="mx-auto max-w-6xl px-4 py-24 lg:px-6">
-  <div class="reveal flex flex-wrap items-end justify-between gap-4">
-    <h2 class="display text-3xl md:text-4xl">{t.newsHeading}</h2>
-    <a href={`${prefix}/news`} class="text-sm font-semibold text-club hover:text-club-deep">{t.allNews}</a>
-  </div>
-  <div class="stagger mt-10 grid gap-6 lg:grid-cols-2">
-    <a href={`${prefix}/news/${featured.slug}`} class="group overflow-hidden rounded-2xl border border-line bg-card">
-      <div class="overflow-hidden">
-        <img src={featured.data.image} alt="" class="aspect-[16/9] w-full object-cover transition-transform duration-700 ease-(--ease-club) group-hover:scale-[1.03]" />
-      </div>
-      <div class="p-7">
-        <p class="text-xs font-semibold uppercase tracking-widest text-club">{featured.data.tag}</p>
-        <h3 class="display mt-2 text-2xl">{featured.data.title}</h3>
-        <p class="mt-3 text-sm leading-relaxed text-ink-soft">{featured.data.teaser}</p>
-        <p class="mt-4 text-xs text-ink-soft">{fmt(featured.data.date)}</p>
-      </div>
-    </a>
-    <div class="flex flex-col gap-6">
-      {restNews.slice(0, 2).map((n) => (
-        <a href={`${prefix}/news/${n.slug}`} class="group flex flex-1 gap-5 rounded-2xl border border-line bg-card p-6 transition-colors duration-300 ease-(--ease-club) hover:border-club/40">
-          <img src={n.data.image} alt="" class="hidden h-28 w-40 shrink-0 rounded-xl object-cover sm:block" />
-          <div>
-            <p class="text-xs font-semibold uppercase tracking-widest text-club">{n.data.tag}</p>
-            <h3 class="mt-2 text-lg font-bold leading-snug">{n.data.title}</h3>
-            <p class="mt-2 line-clamp-2 text-sm text-ink-soft">{n.data.teaser}</p>
+<!-- 5. News: ein Aufmacher, der Rest als Liste -->
+{lead && (
+  <section class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
+    <div class="reveal flex items-end justify-between gap-6">
+      <h2 class="display text-5xl sm:text-6xl">{t.newsHeading}</h2>
+      <a href={l(lang, '/news')} class="inline-flex min-h-11 shrink-0 items-center gap-2 whitespace-nowrap text-sm font-semibold text-club hover:text-club-deep">{t.allNews} <Icon name="arrow" size={16} /></a>
+    </div>
+    <div class="mt-10 grid gap-10 lg:grid-cols-12 lg:gap-12">
+      <a href={l(lang, `/news/${lead.slug}`)} class="reveal group lg:col-span-7">
+        {lead.data.image && (
+          <div class="overflow-hidden rounded-sm bg-ink">
+            <img src={lead.data.image} alt="" loading="lazy" class="aspect-[3/2] w-full object-cover transition-transform duration-700 ease-(--ease-club) group-hover:scale-[1.02]" />
           </div>
-        </a>
-      ))}
-    </div>
-  </div>
-</section>
-
-<!-- Chronik -->
-<section class="overflow-hidden border-y border-line bg-card">
-  <div class="mx-auto max-w-6xl px-4 py-20 lg:px-6">
-    <div class="reveal max-w-2xl">
-      <h2 class="display text-3xl md:text-4xl">{t.chronikHeading}</h2>
-      <p class="mt-4 text-base leading-relaxed text-ink-soft">{t.chronikSubtitle}</p>
-    </div>
-    <div class="stagger mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4">
-      {chronik.map((c) => (
-        <a href={`${prefix}/vereinschronik`} class="group w-40 shrink-0 snap-start rounded-2xl border border-line bg-paper p-5 text-center transition-colors duration-300 hover:border-club/40">
-          <img src={c.img} alt={c.label} class="mx-auto h-16 w-16 rounded-full bg-white object-contain p-1 ring-1 ring-line" />
-          <p class="display mt-4 text-lg text-club">{c.year}</p>
-          <p class="mt-1 text-xs leading-snug text-ink-soft">{c.label}</p>
-        </a>
-      ))}
-    </div>
-  </div>
-</section>
-
-<!-- Sponsors -->
-<section class="mx-auto max-w-6xl px-4 py-24 lg:px-6">
-  <div class="reveal flex flex-wrap items-end justify-between gap-4">
-    <div>
-      <h2 class="display text-3xl md:text-4xl">{t.sponsorsHeading}</h2>
-      <p class="mt-3 max-w-md text-sm leading-relaxed text-ink-soft">{t.sponsorsSubtitle}</p>
-    </div>
-    <a href={`${prefix}/sponsoren`} class="text-sm font-semibold text-club hover:text-club-deep">{t.becomePartner}</a>
-  </div>
-  {sponsors.length > 0 ? (
-    <div class="stagger mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
-      {sponsors.map((s) => (
-        <a href={s.data.url ?? `${prefix}/sponsoren`} rel="noopener" class="group flex flex-col items-center gap-4 rounded-2xl border border-line bg-card px-6 py-10 text-center transition-all duration-300 ease-(--ease-club) hover:-translate-y-1 hover:border-club/40 hover:shadow-[0_16px_40px_-20px_rgba(20,23,31,0.35)]">
-          <SponsorMark name={s.data.name} logo={s.data.logo} />
-          <div>
-            <p class="text-sm font-bold leading-snug">{s.data.name}</p>
-            {s.data.tier === 'Hauptsponsor' && <p class="mt-1 text-xs font-semibold uppercase tracking-widest text-club">{t.hauptsponsor}</p>}
-          </div>
-        </a>
-      ))}
-    </div>
-  ) : (
-    <a href={`${prefix}/sponsoren`} class="reveal group mt-10 flex flex-col items-center gap-4 rounded-2xl border border-dashed border-line bg-card px-6 py-14 text-center transition-colors duration-300 hover:border-club/50">
-      <span class="flex h-14 w-14 items-center justify-center rounded-full bg-paper text-2xl text-club ring-1 ring-line">+</span>
-      <p class="max-w-sm text-sm leading-relaxed text-ink-soft">{t.sponsorsEmpty}</p>
-      <span class="text-sm font-semibold text-club">{t.becomePartner}</span>
-    </a>
-  )}
-</section>
-
-<!-- Training / ground -->
-<section class="mx-auto max-w-6xl border-t border-line px-4 py-24 lg:px-6">
-  <div class="grid items-center gap-10 lg:grid-cols-2">
-    <div class="reveal overflow-hidden rounded-2xl">
-      <img src="/images/willi-saenger.png" alt="Die Willi-Sänger-Sportanlage" class="aspect-[4/3] w-full object-cover" loading="lazy" />
-    </div>
-    <div class="reveal">
-      <h2 class="display text-3xl md:text-4xl">{t.trainingHeading}</h2>
-      <p class="mt-4 max-w-md text-base leading-relaxed text-ink-soft">{t.trainingIntro}</p>
-      <dl class="mt-8 space-y-4">
-        <div class="flex items-center justify-between border-b border-line pb-4">
-          <dt class="text-sm font-medium">{t.tuesday}</dt>
-          <dd class="text-sm text-ink-soft">{t.trainingTime}</dd>
-        </div>
-        <div class="flex items-center justify-between border-b border-line pb-4">
-          <dt class="text-sm font-medium">{t.thursday}</dt>
-          <dd class="text-sm text-ink-soft">{t.trainingTime}</dd>
-        </div>
-      </dl>
-      <a href={`${prefix}/kontakt`} class="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-club hover:text-club-deep">{t.directionsCta} <span class="rtl:rotate-180">→</span></a>
-    </div>
-  </div>
-</section>
-
-<!-- Social -->
-<section class="border-t border-line bg-card">
-  <div class="mx-auto max-w-6xl px-4 py-20 lg:px-6">
-    <div class="reveal flex flex-wrap items-end justify-between gap-4">
-      <div>
-        <h2 class="display text-3xl md:text-4xl">{t.socialHeading}</h2>
-        <p class="mt-3 text-sm text-ink-soft">{t.socialSubtitle}</p>
-        <span class:list={['mt-3 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-semibold', socialIsLive ? 'bg-club/10 text-club' : 'bg-ink/5 text-ink-soft']}>
-          <span class:list={['h-1.5 w-1.5 rounded-full', socialIsLive ? 'bg-club' : 'bg-ink-soft/50']}></span>
-          {socialIsLive ? t.socialLiveBadge : t.socialFallbackBadge}
-        </span>
-      </div>
-      <div class="flex flex-wrap gap-2.5">
-        <a href={SOCIAL_LINKS.instagram} rel="noopener" class="inline-flex items-center gap-2 rounded-full border border-ink/15 px-4 py-2.5 text-sm font-semibold transition-colors duration-300 hover:border-club hover:text-club">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="5" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.6"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor"/></svg>
-          {t.followInstagram}
-        </a>
-        <a href={SOCIAL_LINKS.facebook} rel="noopener" class="inline-flex items-center gap-2 rounded-full border border-ink/15 px-4 py-2.5 text-sm font-semibold transition-colors duration-300 hover:border-club hover:text-club">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 8.5h2V5.2c-.35-.05-1.55-.15-2.95-.15-2.92 0-4.92 1.78-4.92 5.05V13H6.4v3.7h2.73V22h3.72v-5.3h2.62l.42-3.7h-3.04v-2.5c0-1.07.29-1.8 1.85-1.8Z" stroke="currentColor" stroke-width="0.4" fill="currentColor"/></svg>
-          {t.followFacebook}
-        </a>
-        <a href={SOCIAL_LINKS.tiktok} rel="noopener" class="inline-flex items-center gap-2 rounded-full border border-ink/15 px-4 py-2.5 text-sm font-semibold transition-colors duration-300 hover:border-club hover:text-club">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14 3v10.6a2.9 2.9 0 1 1-2.4-2.86" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M14 3c.4 2.6 2.2 4.3 4.6 4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-          {t.followTiktok}
-        </a>
-      </div>
-    </div>
-    <div class="stagger mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-6">
-      {socialPosts.map((post, i) => (
-        <a href={post.permalink} rel="noopener" class:list={['group overflow-hidden rounded-xl', i > 3 && 'hidden md:block']}>
-          <img src={post.imageUrl} alt={post.caption || t.socialPhotoAlt} loading="lazy" class="aspect-square w-full object-cover transition-transform duration-500 ease-(--ease-club) group-hover:scale-[1.05]" />
-        </a>
-      ))}
-    </div>
-  </div>
-</section>
-
-<!-- Membership band -->
-<section class="mx-auto max-w-6xl px-4 pt-24 lg:px-6">
-  <div class="reveal overflow-hidden rounded-2xl bg-club px-8 py-14 text-white md:px-14">
-    <div class="flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
-      <div>
-        <h2 class="display text-3xl md:text-4xl">{t.membershipHeading}</h2>
-        <p class="mt-3 max-w-md text-white/85">{t.membershipSubtitle}</p>
-      </div>
-      <a href={`${prefix}/mitgliedschaft`} class="group inline-flex shrink-0 items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-club transition-transform duration-300 ease-(--ease-club) active:scale-[0.98]">
-        {t.joinNow}
-        <span class="flex h-6 w-6 items-center justify-center rounded-full bg-club/10 transition-transform duration-300 ease-(--ease-club) group-hover:translate-x-0.5 rtl:rotate-180">→</span>
+        )}
+        <p class="mt-5 text-xs font-semibold uppercase tracking-[0.14em] text-ink-soft"><span class="text-club">{lead.data.tag}</span> · <time datetime={lead.data.date.toISOString().slice(0, 10)}>{fmt(lead.data.date)}</time></p>
+        <h3 class="mt-3 text-3xl font-bold leading-tight tracking-tight text-balance group-hover:underline group-hover:decoration-2 group-hover:underline-offset-4 sm:text-4xl">{lead.data.title}</h3>
+        <p class="mt-3 max-w-xl leading-relaxed text-ink-soft">{lead.data.teaser}</p>
       </a>
+      <ul class="stagger border-t border-ink lg:col-span-5">
+        {moreNews.slice(0, 4).map((n) => (
+          <li class="border-b border-line">
+            <a href={l(lang, `/news/${n.slug}`)} class="group block py-6">
+              <p class="text-xs font-semibold uppercase tracking-[0.14em] text-ink-soft"><span class="text-club">{n.data.tag}</span> · <time datetime={n.data.date.toISOString().slice(0, 10)}>{fmt(n.data.date)}</time></p>
+              <h3 class="mt-2 text-xl font-bold leading-snug group-hover:underline group-hover:decoration-2 group-hover:underline-offset-4">{n.data.title}</h3>
+              <p class="mt-2 line-clamp-2 text-sm leading-relaxed text-ink-soft">{n.data.teaser}</p>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+)}
+
+<!-- 6. Chronik: 1925 als Zahl, die Wappen als Dokumente -->
+<section class="border-y border-line bg-card">
+  <div class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
+    <div class="grid gap-8 lg:grid-cols-12 lg:gap-12">
+      <p class="reveal display nums text-[clamp(6rem,22vw,15rem)] leading-[0.8] text-club lg:col-span-6" aria-hidden="true">1925</p>
+      <div class="reveal self-end lg:col-span-6">
+        <h2 class="display text-4xl sm:text-5xl">{t.chronikHeading}</h2>
+        <p class="mt-5 max-w-lg font-serif text-lg leading-relaxed text-ink-soft">{t.chronikText}</p>
+        <a href={l(lang, '/vereinschronik')} class="mt-6 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-club hover:text-club-deep">{t.chronikCta} <Icon name="arrow" size={16} /></a>
+      </div>
+    </div>
+    <ol class="no-scrollbar stagger -mx-4 mt-14 flex snap-x scroll-px-4 gap-4 overflow-x-auto px-4 sm:gap-px sm:mx-0 sm:grid sm:grid-cols-7 sm:overflow-visible sm:px-0">
+      {chronik.map((c) => (
+        <li class="w-32 shrink-0 snap-start border-t border-ink pt-4 sm:w-auto">
+          <img src={c.img} alt="" width="64" height="64" loading="lazy" class="h-14 w-14 object-contain mix-blend-multiply" />
+          <p class="display nums mt-4 text-2xl">{c.year}</p>
+          <p class="mt-1 text-xs leading-snug text-ink-soft">{c.label}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<!-- 7. Fanshop -->
+<section class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
+  <div class="grid gap-10 lg:grid-cols-12 lg:gap-12">
+    <div class="reveal lg:col-span-4">
+      <h2 class="display text-5xl sm:text-6xl">{t.shopHeading}</h2>
+      <p class="mt-5 max-w-sm leading-relaxed text-ink-soft">{t.shopText}</p>
+      <CtaButton href={club.shopUrl} external class="mt-8">{t.shopCta}</CtaButton>
+      <p class="mt-4 max-w-xs text-xs leading-relaxed text-ink-soft">{t.shopNote}</p>
+    </div>
+    <div class="lg:col-span-8">
+      <ShopGrid limit={4} />
     </div>
   </div>
 </section>
+
+<!-- 8. Instagram, nur wenn echte Beiträge da sind -->
+{socialIsLive && (
+  <section class="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
+    <div class="reveal flex items-end justify-between gap-6 border-t border-ink pt-6">
+      <h2 class="display text-3xl">Instagram</h2>
+      <a href={club.social.instagram} rel="noopener" target="_blank" class="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-club">@fc.treptow <Icon name="external" size={16} /></a>
+    </div>
+    <ul class="stagger mt-6 grid grid-cols-3 gap-1 sm:grid-cols-6">
+      {socialPosts.map((post) => (
+        <li>
+          <a href={post.permalink} rel="noopener" target="_blank" class="block overflow-hidden rounded-sm">
+            <Image src={post.imageUrl} alt={post.caption?.slice(0, 120) || 'Instagram'} width={400} height={400} class="aspect-square w-full object-cover" />
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+)}
+
+<!-- 9. Partner: ruhig, eine Zeile -->
+{sponsors.length > 0 && (
+  <section class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="reveal flex flex-col gap-8 border-t border-ink pt-8 lg:flex-row lg:items-center lg:justify-between">
+      <div class="flex items-baseline gap-6">
+        <h2 class="text-xs font-semibold uppercase tracking-[0.14em] text-ink-soft">{t.sponsorsHeading}</h2>
+        <a href={l(lang, '/sponsoren')} class="text-sm font-semibold text-club hover:text-club-deep">{t.becomePartner}</a>
+      </div>
+      <ul class="flex flex-wrap items-center gap-x-10 gap-y-6">
+        {sponsors.map((s) => (
+          <li>
+            <a href={s.data.url ?? l(lang, '/sponsoren')} rel="noopener" class="flex min-h-11 items-center opacity-70 grayscale transition-[opacity,filter] duration-300 hover:opacity-100 hover:grayscale-0">
+              {s.data.logo ? (
+                <img src={s.data.logo} alt={s.data.name} loading="lazy" class="h-10 w-auto max-w-32 object-contain mix-blend-multiply" />
+              ) : (
+                <span class="display text-2xl">{s.data.name}</span>
+              )}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+)}
+
+<script>
+  import '../scripts/fixturesLive';
+</script>

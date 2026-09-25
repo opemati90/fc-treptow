@@ -1,28 +1,31 @@
 ---
-import { render, type CollectionEntry } from 'astro:content';
-import { defaultLocale, type Locale } from '../../i18n/languages';
+import { render } from 'astro:content';
+import { defaultLocale, bcp47, l, type Locale } from '../../i18n/languages';
 import { pageT } from '../../i18n/pages';
+import type { LocalizedNews } from '../../i18n/content';
 
 interface Props {
-  post: CollectionEntry<'news'>;
+  post: LocalizedNews;
 }
 const { post } = Astro.props;
 const { Content } = await render(post);
-const localeToBcp47: Record<Locale, string> = { de: 'de-DE', en: 'en-GB', tr: 'tr-TR', ar: 'ar-EG', es: 'es-ES', fr: 'fr-FR' };
 const lang = (Astro.currentLocale ?? defaultLocale) as Locale;
 const t = pageT('newsDetail', lang);
-const fmt = (d: Date) => d.toLocaleDateString(localeToBcp47[lang], { day: '2-digit', month: 'long', year: 'numeric' });
-const prefix = lang === defaultLocale ? '' : `/${lang}`;
+const fmt = (d: Date) => d.toLocaleDateString(bcp47[lang], { day: 'numeric', month: 'long', year: 'numeric' });
 ---
-<article class="mx-auto max-w-3xl px-4 py-16 lg:px-6">
-  <a href={`${prefix}/news`} class="text-sm font-semibold text-club hover:text-club-deep">{t.back}</a>
-  <div class="mt-6 flex items-center gap-3 text-xs">
-    <span class="rounded-full bg-club/10 px-2.5 py-0.5 font-semibold text-club">{post.data.tag}</span>
-    <span class="text-ink-soft">{fmt(post.data.date)}</span>
+<article class="mx-auto max-w-7xl px-4 pb-8 pt-10 sm:px-6 sm:pt-14 lg:px-8 lg:pt-20">
+  <div class="mx-auto max-w-3xl">
+    <a href={l(lang, '/news')} class="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-ink-soft transition-colors hover:text-ink">{t.back}</a>
+    <p class="mt-6 text-xs font-semibold uppercase tracking-[0.14em] text-ink-soft"><span class="text-club">{post.data.tag}</span> · <time datetime={post.data.date.toISOString().slice(0, 10)}>{fmt(post.data.date)}</time></p>
+    <h1 class="mt-4 text-4xl font-bold leading-[1.1] tracking-tight text-balance sm:text-5xl">{post.data.title}</h1>
+    <p class="mt-5 text-xl leading-relaxed text-ink-soft">{post.data.teaser}</p>
   </div>
-  <h1 class="display mt-4 text-3xl leading-tight md:text-4xl">{post.data.title}</h1>
-  {post.data.image && <img src={post.data.image} alt="" class="mt-8 aspect-[16/9] w-full rounded-2xl object-cover" />}
-  <div class="mt-8 space-y-5 text-base leading-relaxed text-ink [&>p]:text-ink/90">
+  {post.data.image && (
+    <div class="mx-auto mt-10 max-w-5xl overflow-hidden rounded-sm bg-ink">
+      <img src={post.data.image} alt="" class="aspect-[16/9] w-full object-cover" fetchpriority="high" />
+    </div>
+  )}
+  <div lang={post.isFallback ? 'de' : undefined} class="prose-club mx-auto mt-10 max-w-3xl text-lg leading-relaxed">
     <Content />
   </div>
 </article>

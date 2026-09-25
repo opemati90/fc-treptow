@@ -1,15 +1,17 @@
 ---
 name: "FC Treptow III"
 shortName: "Herren III"
-league: "Kreisliga C, Staffel 4"
+league: "7er-Kreisliga C, Staffel 1"
 order: 3
 training:
-  - "Dienstag, 18:00 Uhr"
-  - "Donnerstag, 18:00 Uhr"
+  - { day: Dienstag, from: "18:00", to: "19:30" }
+  - { day: Donnerstag, from: "18:00", to: "19:30" }
 image: "/images/team-h3.jpg"
 imageFocus: 65
-gallery:
-  - { src: "/images/team-h3.jpg", alt: "Die Dritte nach dem Spiel" }
+fussballDeTeamId: "01OMGSGV0S000000VV0AG811VTVBGE70"
+staff:
+  - { name: "Opeyemi Ebenezer Ajimati", role: coach, phone: "0176 32303721" }
+  - { name: "Philipp von der Mark", role: manager }
 ---
 
 Unsere Dritte verbindet Wettkampf mit Spaß am Spiel. Neuzugänge sind jederzeit willkommen, einfach zum Probetraining vorbeikommen.

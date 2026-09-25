@@ -1,0 +1,17 @@
+---
+import Base from '../layouts/Base.astro';
+import CtaButton from '../components/CtaButton.astro';
+---
+<Base title="Seite nicht gefunden" description="Diese Seite gibt es nicht oder nicht mehr." noindex>
+  <section class="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-40">
+    <div class="hero-in">
+      <p class="display nums text-[clamp(6rem,22vw,15rem)] leading-[0.8] text-club" aria-hidden="true">404</p>
+      <h1 class="display mt-8 text-5xl sm:text-6xl">Abseits.</h1>
+      <p class="mt-5 max-w-md text-lg leading-relaxed text-ink-soft">Diese Seite gibt es nicht oder nicht mehr. Zurück auf den Platz:</p>
+      <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
+        <CtaButton href="/">Zur Startseite</CtaButton>
+        <a href="/mannschaften" class="inline-flex min-h-12 items-center font-semibold underline decoration-line decoration-2 underline-offset-[6px] hover:decoration-ink">Mannschaften</a>
+      </div>
+    </div>
+  </section>
+</Base>

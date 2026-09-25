@@ -1,12 +1,7 @@
 ---
-name: "Freizeit Kickers"
 shortName: "Loisir"
-league: "Freizeitliga Berlin"
-order: 4
-training:
-  - "Jeudi, 19h00"
-image: "/images/hero-match.jpg"
-imageFocus: 50
 ---
 
-Du football sans la pression du classement : les Freizeit Kickers se retrouvent chaque semaine sur le terrain du complexe sportif Willi-Sänger. Tout âge, tout niveau, il suffit d'aimer jouer.
+Nous sommes une équipe loisir qui se retrouve une fois par semaine pour jouer. Marre des exercices d’entraînement éprouvants et envie de passer le week-end sans matchs de championnat ? Alors tu es au bon endroit.
+
+On joue le mardi de 18h00 à 19h30 sur le terrain synthétique du complexe sportif Willi-Sänger.

@@ -1,45 +1,35 @@
 ---
+import PageHeader from '../PageHeader.astro';
 import { defaultLocale, type Locale } from '../../i18n/languages';
 import { pageT } from '../../i18n/pages';
+import { club } from '../../data/club';
 
 const lang = (Astro.currentLocale ?? defaultLocale) as Locale;
 const t = pageT('impressum', lang);
 ---
-<section class="mx-auto max-w-3xl px-4 py-16 lg:px-6">
-  <h1 class="display text-4xl">{t.h1}</h1>
+<PageHeader title={t.h1} />
 
-  <div class="mt-8 space-y-6 text-sm leading-relaxed text-ink-soft">
-    <div>
-      <p class="text-xs font-semibold uppercase tracking-widest text-ink-soft/80">{t.tmg}</p>
-      <p class="mt-2 font-semibold text-ink">{t.legalName}</p>
-      <p>Köpenicker Landstraße 186<br />12437 Berlin</p>
+<section class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+  <dl class="grid max-w-4xl border-t border-ink">
+    <div class="grid gap-2 border-b border-line py-6 sm:grid-cols-[16rem_1fr]">
+      <dt class="text-xs font-semibold uppercase tracking-[0.14em] text-ink-soft sm:pt-1">{t.tmg}</dt>
+      <dd class="text-lg leading-relaxed"><strong>{t.legalName}</strong><br />{club.ground.street}<br />{club.ground.city}</dd>
     </div>
-
-    <dl class="space-y-1">
-      <div class="flex gap-2">
-        <dt class="text-ink-soft/80">{t.phoneLabel}:</dt>
-        <dd><a href="tel:+49302415328" class="font-medium text-ink hover:text-club">030 2415328</a></dd>
-      </div>
-      <div class="flex gap-2">
-        <dt class="text-ink-soft/80">{t.emailLabel}:</dt>
-        <dd><a href="mailto:vorstand@fc-treptow.de" class="font-medium text-club">vorstand@fc-treptow.de</a></dd>
-      </div>
-      <div class="flex gap-2">
-        <dt class="text-ink-soft/80">{t.contactLabel}:</dt>
-        <dd><a href="mailto:kontakt@fc-treptow.de" class="font-medium text-club">kontakt@fc-treptow.de</a></dd>
-      </div>
-    </dl>
-
-    <div>
-      <p class="text-xs font-semibold uppercase tracking-widest text-ink-soft/80">{t.registerHeading}</p>
-      <p class="mt-2">{t.court}: {t.courtValue}</p>
-      <p>{t.regNo}: VR14908</p>
+    <div class="grid gap-2 border-b border-line py-6 sm:grid-cols-[16rem_1fr]">
+      <dt class="text-xs font-semibold uppercase tracking-[0.14em] text-ink-soft sm:pt-1">{t.repHeading}</dt>
+      <dd class="text-lg leading-relaxed">{t.rep1}<br />{t.rep2}</dd>
     </div>
-
-    <div>
-      <p class="text-xs font-semibold uppercase tracking-widest text-ink-soft/80">{t.repHeading}</p>
-      <p class="mt-2">{t.rep1}</p>
-      <p>{t.rep2}</p>
+    <div class="grid gap-2 border-b border-line py-6 sm:grid-cols-[16rem_1fr]">
+      <dt class="text-xs font-semibold uppercase tracking-[0.14em] text-ink-soft sm:pt-1">{t.contactLabel}</dt>
+      <dd class="text-lg leading-relaxed">
+        {t.phoneLabel}: <a href={club.phoneHref} class="nums" dir="ltr">{club.phone}</a><br />
+        {t.emailLabel}: <a href={`mailto:${club.boardEmail}`} class="text-club hover:text-club-deep">{club.boardEmail}</a><br />
+        <a href={`mailto:${club.email}`} class="text-club hover:text-club-deep">{club.email}</a>
+      </dd>
     </div>
-  </div>
+    <div class="grid gap-2 border-b border-line py-6 sm:grid-cols-[16rem_1fr]">
+      <dt class="text-xs font-semibold uppercase tracking-[0.14em] text-ink-soft sm:pt-1">{t.registerHeading}</dt>
+      <dd class="text-lg leading-relaxed">{t.court}: {t.courtValue}<br />{t.regNo}: VR14908</dd>
+    </div>
+  </dl>
 </section>

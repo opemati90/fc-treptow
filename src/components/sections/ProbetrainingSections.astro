@@ -1,110 +1,111 @@
 ---
-import { defaultLocale, type Locale } from '../../i18n/languages';
+import PageHeader from '../PageHeader.astro';
+import Icon from '../Icon.astro';
+import { defaultLocale, l, type Locale } from '../../i18n/languages';
 import { pageT } from '../../i18n/pages';
+import { club } from '../../data/club';
 
 const lang = (Astro.currentLocale ?? defaultLocale) as Locale;
 const t = pageT('probetraining', lang);
+const field = 'min-h-12 w-full rounded-sm border border-ink/25 bg-card px-4 py-3 text-base outline-none transition-colors placeholder:text-ink-soft/60 focus:border-ink focus:ring-2 focus:ring-club/25';
+const label = 'text-sm font-semibold';
 ---
-<section class="mx-auto max-w-6xl px-4 pb-8 pt-16 lg:px-6">
-  <h1 class="display text-4xl md:text-5xl">{t.h1}</h1>
-  <p class="mt-4 max-w-xl text-base leading-relaxed text-ink-soft">{t.intro}</p>
-</section>
+<PageHeader title={t.h1} intro={t.intro} />
 
-<section class="mx-auto max-w-6xl px-4 py-12 lg:px-6">
-  <div class="grid gap-10 lg:grid-cols-5">
-    <form id="trial-form" class="lg:col-span-3 rounded-2xl border border-line bg-card p-8" novalidate>
-      <div class="grid gap-6 sm:grid-cols-2">
+<section class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+  <div class="grid gap-14 lg:grid-cols-12 lg:gap-12">
+    <div class="lg:col-span-7">
+      <form id="trial-form" class="grid gap-6 sm:grid-cols-2" novalidate>
         <div class="flex flex-col gap-2">
-          <label for="name" class="text-sm font-semibold">{t.name}</label>
-          <input id="name" name="name" type="text" required class="rounded-xl border border-line bg-paper px-4 py-3 text-sm outline-none transition-colors focus:border-club" />
+          <label for="name" class={label}>{t.name}</label>
+          <input id="name" name="name" type="text" autocomplete="name" required class={field} />
         </div>
         <div class="flex flex-col gap-2">
-          <label for="age" class="text-sm font-semibold">{t.age}</label>
-          <input id="age" name="age" type="number" min="14" max="99" required class="rounded-xl border border-line bg-paper px-4 py-3 text-sm outline-none transition-colors focus:border-club" />
+          <label for="age" class={label}>{t.age}</label>
+          <input id="age" name="age" type="number" inputmode="numeric" min="14" max="99" required class={field} />
         </div>
         <div class="flex flex-col gap-2">
-          <label for="email" class="text-sm font-semibold">{t.email}</label>
-          <input id="email" name="email" type="email" required class="rounded-xl border border-line bg-paper px-4 py-3 text-sm outline-none transition-colors focus:border-club" />
+          <label for="email" class={label}>{t.email}</label>
+          <input id="email" name="email" type="email" autocomplete="email" required class={field} />
         </div>
         <div class="flex flex-col gap-2">
-          <label for="phone" class="text-sm font-semibold">{t.phone} <span class="font-normal text-ink-soft">{t.optional}</span></label>
-          <input id="phone" name="phone" type="tel" class="rounded-xl border border-line bg-paper px-4 py-3 text-sm outline-none transition-colors focus:border-club" />
+          <label for="phone" class={label}>{t.phone} <span class="font-normal text-ink-soft">{t.optional}</span></label>
+          <input id="phone" name="phone" type="tel" autocomplete="tel" class={field} />
         </div>
         <div class="flex flex-col gap-2 sm:col-span-2">
-          <label for="team" class="text-sm font-semibold">{t.team}</label>
-          <select id="team" name="team" class="rounded-xl border border-line bg-paper px-4 py-3 text-sm outline-none transition-colors focus:border-club">
+          <label for="team" class={label}>{t.team}</label>
+          <select id="team" name="team" class={field}>
             {t.teamOptions.map((o: string) => <option>{o}</option>)}
           </select>
         </div>
         <div class="flex flex-col gap-2 sm:col-span-2">
-          <label for="experience" class="text-sm font-semibold">{t.experience} <span class="font-normal text-ink-soft">{t.experienceHint}</span></label>
-          <textarea id="experience" name="experience" rows="4" class="rounded-xl border border-line bg-paper px-4 py-3 text-sm outline-none transition-colors focus:border-club"></textarea>
+          <label for="experience" class={label}>{t.experience} <span class="font-normal text-ink-soft">{t.experienceHint}</span></label>
+          <textarea id="experience" name="experience" rows="4" class={field}></textarea>
         </div>
+        <div class="sm:col-span-2">
+          <p id="trial-error" class="mb-4 hidden text-sm font-semibold text-club" role="alert" data-validation={t.errorMsg} data-failure={t.sendFailed}>{t.errorMsg}</p>
+          <button id="trial-submit" type="submit" data-sending={t.sending} class="group inline-flex min-h-12 items-center gap-3 rounded-full bg-club py-1.5 ps-6 pe-1.5 text-[15px] font-semibold text-white transition-[background-color,transform] duration-200 ease-(--ease-club) hover:bg-club-deep active:scale-[0.97] disabled:opacity-60">
+            <span data-label>{t.submit}</span>
+            <span class="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 transition-transform duration-300 ease-(--ease-club) group-hover:translate-x-0.5"><Icon name="arrow" size={18} /></span>
+          </button>
+        </div>
+      </form>
+
+      <div id="trial-done" class="hidden border-y border-ink py-10" role="status" tabindex="-1">
+        <span class="flex h-12 w-12 items-center justify-center rounded-full bg-club text-white"><Icon name="check" size={22} /></span>
+        <h2 class="display mt-6 text-4xl" data-sent={t.successTitle} data-mail={t.mailTitle}>{t.successTitle}</h2>
+        <p class="mt-3 max-w-md text-lg leading-relaxed text-ink-soft" data-sent={t.successText} data-mail={t.mailText}>{t.successText}</p>
+        <p data-mail-only class="mt-6 hidden text-sm text-ink-soft">{t.mailFallback} <a data-mail-link href={`mailto:${club.email}`} class="font-semibold text-club underline underline-offset-4">{t.mailAgain}</a></p>
       </div>
-      <p
-        id="trial-error"
-        class="mt-4 hidden text-sm font-medium text-club"
-        role="alert"
-        data-validation={t.errorMsg}
-        data-failure={t.sendFailed}
-      >{t.errorMsg}</p>
-      <button id="trial-submit" type="submit" data-sending={t.sending} class="group mt-6 inline-flex items-center gap-2 rounded-full bg-club px-6 py-3 text-sm font-semibold text-white transition-all duration-300 ease-(--ease-club) hover:bg-club-deep active:scale-[0.98] disabled:opacity-60">
-        {t.submit}
-        <span class="flex h-6 w-6 items-center justify-center rounded-full bg-white/15 transition-transform duration-300 ease-(--ease-club) group-hover:translate-x-0.5 rtl:rotate-180">→</span>
-      </button>
-    </form>
-    <div id="trial-success" class="hidden lg:col-span-3 rounded-2xl border border-line bg-card p-10 text-center">
-      <span class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-club/10 text-2xl text-club">✓</span>
-      <h2 class="display mt-5 text-2xl">{t.successTitle}</h2>
-      <p class="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-ink-soft">{t.successText}</p>
     </div>
 
-    <aside class="lg:col-span-2">
-      <div class="rounded-2xl bg-ink p-8 text-white">
-        <h2 class="display text-xl">{t.sideTitle}</h2>
-        <ul class="mt-5 space-y-4 text-sm leading-relaxed text-white/80">
-          <li>{t.sideItems[0]}</li>
-          <li>{t.sideItems[1]}</li>
-          <li>{t.sideItems[2]} <a href="/anmeldung" class="font-semibold underline decoration-club decoration-2 underline-offset-4">{t.regLinkLabel}</a>.</li>
-        </ul>
-      </div>
+    <aside class="self-start rounded-sm bg-ink p-8 text-paper lg:col-span-5 lg:p-10">
+      <h2 class="display text-3xl">{t.sideTitle}</h2>
+      <ol class="mt-6 space-y-5">
+        {t.sideItems.map((item: string, i: number) => (
+          <li class="flex gap-4">
+            <span class="display nums text-2xl text-paper/50">{i + 1}</span>
+            <span class="leading-relaxed text-paper/85">
+              {item}
+              {i === t.sideItems.length - 1 && <> <a href={l(lang, '/anmeldung')} class="font-semibold text-paper underline decoration-club decoration-2 underline-offset-4">{t.regLinkLabel}</a>.</>}
+            </span>
+          </li>
+        ))}
+      </ol>
     </aside>
   </div>
 </section>
 
 <script>
   import { submitForm } from '../../lib/submitForm';
+  import { showDone } from '../../lib/formDone';
 
   const form = document.getElementById('trial-form') as HTMLFormElement | null;
   const err = document.getElementById('trial-error');
-  const submitBtn = document.getElementById('trial-submit') as HTMLButtonElement | null;
-  const btnLabel = submitBtn?.textContent?.trim() ?? '';
+  const btn = document.getElementById('trial-submit') as HTMLButtonElement | null;
+  const btnLabel = btn?.querySelector('[data-label]');
+  const labelText = btnLabel?.textContent ?? '';
 
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
     if (!form.checkValidity()) {
       err!.textContent = err!.dataset.validation ?? '';
       err?.classList.remove('hidden');
+      (form.querySelector(':invalid') as HTMLElement | null)?.focus();
       return;
     }
     err?.classList.add('hidden');
-    if (submitBtn) {
-      submitBtn.disabled = true;
-      submitBtn.textContent = submitBtn.dataset.sending ?? btnLabel;
-    }
+    if (btn) btn.disabled = true;
+    if (btnLabel) btnLabel.textContent = btn?.dataset.sending ?? labelText;
     try {
-      await submitForm(form, 'Probetraining-Anfrage');
-      form.classList.add('hidden');
-      document.getElementById('trial-success')?.classList.remove('hidden');
+      const result = await submitForm(form, 'Probetraining-Anfrage');
+      showDone(form, document.getElementById('trial-done'), result);
     } catch {
-      // Kein stiller Fehlschlag: Wenn der Versand nicht klappt, sieht der Nutzer das.
       err!.textContent = err!.dataset.failure ?? '';
       err?.classList.remove('hidden');
     } finally {
-      if (submitBtn) {
-        submitBtn.disabled = false;
-        submitBtn.textContent = btnLabel;
-      }
+      if (btn) btn.disabled = false;
+      if (btnLabel) btnLabel.textContent = labelText;
     }
   });
 </script>

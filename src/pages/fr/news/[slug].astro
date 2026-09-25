@@ -1,16 +1,15 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import Sections from '../../../components/sections/NewsDetailSections.astro';
-import { getLocalized } from '../../../i18n/content';
-import { defaultLocale } from '../../../i18n/languages';
+import { getNews } from '../../../i18n/content';
 
 export async function getStaticPaths() {
-  const news = await getLocalized('news', "fr");
+  const news = await getNews('fr');
   return news.map((post) => ({ params: { slug: post.slug }, props: { post } }));
 }
 
 const { post } = Astro.props;
 ---
-<Base title={post.data.title} description={post.data.teaser}>
+<Base title={post.data.title} description={post.data.teaser} image={post.data.image}>
   <Sections post={post} />
 </Base>

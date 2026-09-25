@@ -1,0 +1,58 @@
+---
+import { getCollection } from 'astro:content';
+import PageHeader from '../PageHeader.astro';
+import Icon from '../Icon.astro';
+import { defaultLocale, type Locale } from '../../i18n/languages';
+import { pageT } from '../../i18n/pages';
+import { club } from '../../data/club';
+
+const lang = (Astro.currentLocale ?? defaultLocale) as Locale;
+const t = pageT('vorstand', lang);
+const all = (await getCollection('vorstand')).map((e) => e.data).sort((a, b) => a.order - b.order);
+const executive = all.filter((m) => ['chair', 'viceChair', 'treasurer'].includes(m.role));
+const others = all.filter((m) => !['chair', 'viceChair', 'treasurer'].includes(m.role));
+const roleLabel = (m: (typeof all)[number]) => (m.role === 'other' ? (m.roleLabel ?? '') : t.roles[m.role as keyof typeof t.roles]);
+// Weitere Ämter nach Rolle gruppieren, Reihenfolge wie im CMS
+const groups = [...new Set(others.map(roleLabel))].map((label) => ({ label, names: others.filter((m) => roleLabel(m) === label) }));
+const telHref = (p: string) => `tel:${p.replace(/[^\d+]/g, '').replace(/^0/, '+49')}`;
+---
+<PageHeader title={t.h1} intro={t.intro} />
+
+<section class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+  <ul class="stagger grid gap-px bg-line md:grid-cols-3">
+    {executive.map((m) => (
+      <li class="bg-paper py-8 md:px-8 md:first:ps-0">
+        <p class="text-xs font-semibold uppercase tracking-[0.14em] text-club">{roleLabel(m)}</p>
+        <p class="display mt-3 text-4xl">{m.name}</p>
+        {m.email && <a href={`mailto:${m.email}`} class="mt-4 inline-flex min-h-11 items-center gap-2 break-all text-sm text-ink-soft hover:text-ink"><Icon name="mail" size={16} />{m.email}</a>}
+        {m.phone && <a href={telHref(m.phone)} class="nums flex min-h-11 items-center gap-2 text-sm text-ink-soft hover:text-ink"><Icon name="phone" size={16} />{m.phone}</a>}
+      </li>
+    ))}
+  </ul>
+</section>
+
+{groups.length > 0 && (
+  <section class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
+    <div class="reveal grid gap-8 lg:grid-cols-12 lg:gap-12">
+      <h2 class="display text-4xl sm:text-5xl lg:col-span-4">{t.committeesHeading}</h2>
+      <dl class="border-t border-ink lg:col-span-8">
+        {groups.map((g) => (
+          <div class="grid gap-2 border-b border-line py-5 sm:grid-cols-[14rem_1fr]">
+            <dt class="text-xs font-semibold uppercase tracking-[0.14em] text-ink-soft sm:pt-1">{g.label}</dt>
+            <dd class="text-lg font-semibold">{g.names.map((m) => m.name).join(', ')}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+)}
+
+<section class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+  <div class="reveal grid gap-6 border-t border-ink pt-10 lg:grid-cols-12 lg:gap-12">
+    <p class="font-serif text-xl leading-relaxed lg:col-span-7">{t.thanks}</p>
+    <div class="lg:col-span-5">
+      <p class="text-xs font-semibold uppercase tracking-[0.14em] text-ink-soft">{t.general}</p>
+      <a href={`mailto:${club.boardEmail}`} class="mt-2 inline-flex min-h-11 items-center text-lg font-semibold text-club hover:text-club-deep">{club.boardEmail}</a>
+    </div>
+  </div>
+</section>

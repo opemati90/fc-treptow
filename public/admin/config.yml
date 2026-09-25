@@ -1,105 +1,178 @@
-# Decap CMS Konfiguration für den FC Treptow
-# Lokal testen:  npx decap-server  (in einem zweiten Terminal) + local_backend: true
-# Produktion (Netlify): backend auf git-gateway umstellen und Netlify Identity aktivieren.
+# Redaktion FC Treptow (Decap CMS)
+#
+# Anmeldung: per E-Mail und Passwort über DecapBridge (kein GitHub-Konto nötig).
+# Einrichtung einmalig, siehe README, Abschnitt "Redaktion einrichten".
+# Jede gespeicherte Änderung landet im GitHub-Repository, Vercel baut die Seite danach
+# automatisch neu. Nach etwa 1 bis 2 Minuten ist die Änderung online.
+#
+# Lokal testen: "npx decap-server" in einem zweiten Terminal, dann http://localhost:4321/admin
+
 backend:
   name: git-gateway
+  repo: opemati90/fc-treptow
   branch: main
+  # Diese beiden Werte kommen aus dem DecapBridge-Dashboard (Seite anlegen, dann kopieren):
+  identity_url: https://auth.decapbridge.com/sites/DECAPBRIDGE_SITE_ID
+  gateway_url: https://gateway.decapbridge.com
+  commit_messages:
+    create: 'Neu: {{collection}} "{{slug}}"'
+    update: 'Geändert: {{collection}} "{{slug}}"'
+    delete: 'Gelöscht: {{collection}} "{{slug}}"'
+    uploadMedia: 'Datei hochgeladen: {{path}}'
+    deleteMedia: 'Datei gelöscht: {{path}}'
 
 local_backend: true
 
+# Deutsche Oberfläche
 locale: de
-site_url: https://www.fc-treptow.de
+site_url: https://fc-treptow-site.vercel.app
+display_url: https://fc-treptow-site.vercel.app
 logo_url: /images/crest.jpg
 
+# Fotos landen hier
 media_folder: public/images/uploads
 public_folder: /images/uploads
 
-# Mehrsprachigkeit: Die Seite liest Inhalte aus src/content/<sammlung>/<sprache>/.
-# "multiple_folders" sorgt dafür, dass Decap genau diese Ordner anlegt. Ohne diesen
-# Block landen neue Beiträge ohne Sprachordner und tauchen auf der Seite nie auf.
-i18n:
-  structure: multiple_folders
-  locales: [de, en, tr, ar, es, fr]
-  default_locale: de
+# Nur Deutsch pflegen. Übersetzungen sind freiwillig und liegen in eigenen Ordnern
+# (src/content/news/en usw.). Fehlt eine Übersetzung, zeigt die Seite den deutschen Text.
 
 collections:
   - name: news
-    label: News
-    label_singular: News-Beitrag
-    folder: src/content/news
+    label: Neuigkeiten
+    label_singular: Neuigkeit
+    description: 'Beiträge für die Startseite und die News-Seite. Neueste zuerst.'
+    folder: src/content/news/de
     create: true
-    slug: "{{slug}}"
-    sort_by: [date]
-    i18n: true
+    slug: '{{slug}}'
+    sortable_fields: [date, title]
+    summary: '{{date | date("DD.MM.YYYY")}}  ·  {{title}}'
     fields:
-      - { name: title, label: Titel, widget: string, i18n: true }
-      # Datum und Rubrik sind in allen Sprachen gleich und werden gespiegelt.
-      - { name: date, label: Datum, widget: datetime, i18n: duplicate }
-      - { name: tag, label: Rubrik, widget: select, options: [Verein, Herren I, Herren II, Herren III, Freizeit, Goldenes Ticket], default: Verein, i18n: true }
-      - { name: teaser, label: Kurztext, widget: text, hint: "1 bis 2 Sätze, erscheint in der Übersicht.", i18n: true }
-      - { name: image, label: Bild, widget: image, required: false, i18n: duplicate }
-      - { name: body, label: Text, widget: markdown, i18n: true }
+      - { name: title, label: Überschrift, widget: string, hint: 'Kurz und klar, z. B. "River Plate steigt auf"' }
+      - { name: date, label: Datum, widget: datetime, format: 'YYYY-MM-DD', date_format: 'DD.MM.YYYY', time_format: false, picker_utc: true }
+      - { name: tag, label: Rubrik, widget: select, options: [Verein, Herren I, Herren II, Herren III, Freizeit, Goldenes Ticket], default: Verein }
+      - { name: teaser, label: Kurztext, widget: text, hint: '1 bis 2 Sätze. Erscheint in der Übersicht unter der Überschrift.' }
+      - { name: image, label: Foto, widget: image, required: false, hint: 'Querformat sieht am besten aus.' }
+      - { name: body, label: Text, widget: markdown, buttons: [bold, italic, link, heading-two, bulleted-list, numbered-list], editor_components: [image], modes: [rich_text] }
 
   - name: teams
     label: Mannschaften
     label_singular: Mannschaft
-    folder: src/content/teams
+    description: 'Trainingszeiten, Trainer, Fotos. Spielplan und Tabelle kommen automatisch von fussball.de.'
+    folder: src/content/teams/de
     create: true
-    slug: "{{slug}}"
-    i18n: true
+    slug: '{{slug}}'
+    summary: '{{name}}  ·  {{league}}'
     fields:
-      # Eigennamen (FC Treptow I, Freizeit Kickers) sind in allen Sprachen identisch
-      # und werden deshalb gespiegelt statt übersetzt.
-      - { name: name, label: Name, widget: string, i18n: duplicate }
-      - { name: shortName, label: Kurzname, widget: string, hint: "z. B. Herren I", i18n: true }
-      - { name: league, label: Liga, widget: string, hint: "Offizieller Liganame bleibt stehen, z. B. Kreisliga B. Nur der Zusatz (Staffel 1) wird übersetzt.", i18n: true }
-      - { name: order, label: Reihenfolge, widget: number, value_type: int, i18n: duplicate }
-      - { name: training, label: Trainingszeiten, widget: list, field: { name: zeit, label: Zeit, widget: string }, i18n: true }
-      - { name: ground, label: Platz, widget: string, default: "Willi-Sänger-Sportanlage, Köpenicker Landstraße 186, 12437 Berlin", i18n: duplicate }
-      - { name: contact, label: Kontakt-E-Mail, widget: string, default: kontakt@fc-treptow.de, i18n: duplicate }
-      - { name: image, label: Teamfoto, widget: image, i18n: duplicate }
-      - { name: imageFocus, label: Bildausschnitt Kopfbild, widget: number, value_type: int, default: 50, min: 0, max: 100, hint: "Nur nötig, wenn auf dem Kopfbild jemand angeschnitten wird. 50 = Bildmitte, kleinere Werte zeigen mehr vom oberen Bildrand, größere mehr vom unteren.", i18n: duplicate }
+      - { name: name, label: Name, widget: string, hint: 'z. B. FC Treptow II River Plate' }
+      - { name: shortName, label: Kurzname, widget: string, hint: 'z. B. Herren II' }
+      - { name: league, label: Liga, widget: string, hint: 'Genau so schreiben wie bei fussball.de, z. B. "Kreisliga B, Staffel 1". Für die Freizeitmannschaft: "Hobbymannschaft".' }
+      - { name: order, label: Reihenfolge, widget: number, value_type: int, hint: '1 steht oben.' }
+      - name: training
+        label: Trainingszeiten
+        label_singular: Trainingszeit
+        widget: list
+        summary: '{{fields.day}}, {{fields.from}} bis {{fields.to}}'
+        fields:
+          - { name: day, label: Tag, widget: select, options: [Montag, Dienstag, Mittwoch, Donnerstag, Freitag, Samstag, Sonntag] }
+          - { name: from, label: Von, widget: string, hint: 'z. B. 19:30', pattern: ['^\\d{1,2}:\\d{2}$', 'Bitte als Uhrzeit schreiben, z. B. 19:30'] }
+          - { name: to, label: Bis, widget: string, hint: 'z. B. 21:00', pattern: ['^\\d{1,2}:\\d{2}$', 'Bitte als Uhrzeit schreiben, z. B. 21:00'] }
+      - name: staff
+        label: Trainer und Ansprechpersonen
+        label_singular: Person
+        widget: list
+        required: false
+        summary: '{{fields.name}}'
+        fields:
+          - { name: name, label: Name, widget: string }
+          - { name: role, label: Aufgabe, widget: select, options: [{ label: Trainer, value: coach }, { label: Co-Trainer, value: assistant }, { label: Teammanager, value: manager }] }
+          - { name: phone, label: Telefon, widget: string, required: false, hint: 'Freiwillig. Wird auf der Seite anklickbar angezeigt.' }
+      - { name: contact, label: Kontakt-E-Mail, widget: string, default: kontakt@fc-treptow.de }
+      - { name: image, label: Mannschaftsfoto, widget: image, hint: 'Querformat, alle gut zu sehen.' }
+      - { name: imageFocus, label: Bildausschnitt, widget: number, value_type: int, default: 50, min: 0, max: 100, hint: 'Nur ändern, wenn auf dem Foto Köpfe abgeschnitten sind. Kleinere Zahl zeigt mehr vom oberen Rand.' }
       - name: gallery
-        label: Spieltagsfotos
+        label: Weitere Fotos
+        label_singular: Foto
         widget: list
         required: false
-        i18n: true
+        summary: '{{fields.alt}}'
         fields:
-          - { name: src, label: Bild, widget: image, i18n: duplicate }
-          - { name: alt, label: Bildunterschrift, widget: string, i18n: true }
-      # Tabelle und Spielplan kommen direkt von fussball.de und müssen so nie von Hand
-      # gepflegt werden. Den Code erzeugt der Verein einmalig im eigenen fussball.de-Konto.
-      - name: fussballDeWidget
-        label: fussball.de Widget (Tabelle und Spielplan)
-        widget: text
-        required: false
-        i18n: duplicate
-        hint: "Auf fussball.de einloggen, 'Inhalte verwalten' > 'Deine Widgets', Mannschaftswidget anlegen, dort auf 'Code anzeigen' klicken und den kompletten Code hier einfügen. Leer lassen, solange es noch kein Widget gibt."
-      - name: results
-        label: Letzte Spiele
-        widget: list
-        required: false
-        i18n: true
-        fields:
-          - { name: date, label: Datum, widget: string, hint: "z. B. So, 12.07." }
-          - { name: home, label: Heim, widget: string }
-          - { name: away, label: Gast, widget: string }
-          - { name: score, label: Ergebnis, widget: string, hint: "z. B. 3:1" }
-          - { name: note, label: Notiz, widget: string, required: false }
-      - { name: body, label: Teambeschreibung, widget: markdown, i18n: true }
+          - { name: src, label: Foto, widget: image }
+          - { name: alt, label: Bildunterschrift, widget: string }
+      - { name: fussballDeTeamId, label: fussball.de Team-ID, widget: string, required: false, pattern: ['^[0-9A-Z]{32}$', 'Die Team-ID hat genau 32 Zeichen (Ziffern und Großbuchstaben).'], hint: 'Nur einmal nötig und meist schon ausgefüllt. Leer lassen bei der Freizeitmannschaft.' }
+      - { name: body, label: Beschreibung, widget: markdown, buttons: [bold, italic, link], editor_components: [], modes: [rich_text] }
 
-  - name: sponsors
-    label: Sponsoren
-    label_singular: Sponsor
-    folder: src/content/sponsors
+  - name: vorstand
+    label: Vorstand
+    label_singular: Person
+    description: 'Vorstand, Beisitzer, Kontrollrat und weitere Ämter.'
+    folder: src/content/vorstand
     create: true
-    slug: "{{slug}}"
-    # Sponsoren sind sprachneutral (Firmenname + Logo) und liegen bewusst ohne Sprachordner.
-    i18n: false
+    slug: '{{name}}'
+    summary: '{{name}}'
+    sortable_fields: [order, name]
     fields:
       - { name: name, label: Name, widget: string }
-      - { name: logo, label: Logo, widget: image, required: false, hint: "Ohne Logo wird automatisch ein Monogramm angezeigt." }
-      - { name: url, label: Webseite, widget: string, required: false }
-      - { name: tier, label: Kategorie, widget: select, options: [Hauptsponsor, Partner], default: Partner }
+      - { name: role, label: Amt, widget: select, options: [{ label: Vorsitzende/r, value: chair }, { label: 2. Vorsitzende/r, value: viceChair }, { label: Schatzmeister/in, value: treasurer }, { label: Schiedsrichterobmann/-frau, value: refereeLead }, { label: Beisitzer/in, value: assessor }, { label: Kontrollrat, value: controlBoard }, { label: Sonstiges, value: other }] }
+      - { name: roleLabel, label: 'Bezeichnung (nur bei "Sonstiges")', widget: string, required: false, hint: 'z. B. Sportwart' }
+      - { name: email, label: E-Mail, widget: string, required: false }
+      - { name: phone, label: Telefon, widget: string, required: false }
+      - { name: order, label: Reihenfolge, widget: number, value_type: int, default: 99, hint: '1 steht oben.' }
+
+  - name: sponsors
+    label: Partner und Sponsoren
+    label_singular: Partner
+    folder: src/content/sponsors
+    create: true
+    slug: '{{name}}'
+    summary: '{{name}}'
+    fields:
+      - { name: name, label: Name, widget: string }
+      - { name: logo, label: Logo, widget: image, required: false, hint: 'Ohne Logo wird der Name angezeigt.' }
+      - { name: url, label: Webseite, widget: string, required: false, pattern: ['^https?://.+', 'Mit https:// davor'] }
+      - { name: tier, label: Art, widget: select, options: [Hauptsponsor, Partner], default: Partner }
       - { name: order, label: Reihenfolge, widget: number, value_type: int, default: 99 }
-      - { name: body, label: Notizen (intern), widget: markdown, required: false }
+
+  - name: shop
+    label: Fanshop-Artikel
+    label_singular: Artikel
+    description: 'Auswahl für die Fanshop-Seite. Bestellt wird im Spreadshirt-Shop.'
+    folder: src/content/shop
+    create: true
+    slug: '{{name}}'
+    summary: '{{name}}  ·  {{price}} €'
+    fields:
+      - { name: name, label: Name, widget: string }
+      - { name: price, label: Preis in Euro, widget: number, value_type: float, step: 0.01 }
+      - { name: url, label: Link zum Artikel im Shop, widget: string, pattern: ['^https://.+', 'Der Link muss mit https:// beginnen.'], hint: 'Artikel im Fanshop öffnen und die Adresse aus dem Browser kopieren.' }
+      - { name: image, label: Produktfoto, widget: image, media_folder: /public/images/shop, public_folder: /images/shop }
+      - { name: order, label: Reihenfolge, widget: number, value_type: int, default: 99 }
+
+  - name: downloads
+    label: Downloads (PDF)
+    label_singular: Dokument
+    description: 'Formulare und Ordnungen zum Herunterladen.'
+    folder: src/content/downloads
+    create: true
+    slug: '{{title}}'
+    summary: '{{group}}  ·  {{title}}'
+    fields:
+      - { name: title, label: Titel, widget: string }
+      - { name: description, label: Kurze Beschreibung, widget: string, required: false }
+      - { name: file, label: PDF-Datei, widget: file, media_folder: /public/downloads, public_folder: /downloads, choose_url: false }
+      - { name: group, label: Bereich, widget: select, options: [Neue Mitglieder, Spielberechtigung, Vereinsordnungen] }
+      - { name: order, label: Reihenfolge, widget: number, value_type: int, default: 99 }
+
+  - name: gedenken
+    label: In Gedenken
+    label_singular: Nachruf
+    folder: src/content/gedenken
+    create: true
+    slug: '{{name}}'
+    summary: '{{name}}'
+    fields:
+      - { name: name, label: Name, widget: string }
+      - { name: born, label: Geboren am, widget: datetime, required: false, format: 'YYYY-MM-DD', date_format: 'DD.MM.YYYY', time_format: false, picker_utc: true }
+      - { name: died, label: Gestorben am, widget: datetime, format: 'YYYY-MM-DD', date_format: 'DD.MM.YYYY', time_format: false, picker_utc: true }
+      - { name: image, label: Foto, widget: image, required: false }
+      - { name: body, label: Nachruf, widget: markdown, buttons: [bold, italic], editor_components: [], modes: [rich_text] }
+      - { name: signature, label: Unterschrift, widget: string, default: 'Der Vorstand des FC Treptow e. V.' }

@@ -1,0 +1,51 @@
+---
+import PageHeader from '../PageHeader.astro';
+import CtaButton from '../CtaButton.astro';
+import ShopGrid from '../ShopGrid.astro';
+import { defaultLocale, type Locale } from '../../i18n/languages';
+import { pageT } from '../../i18n/pages';
+import { useTranslations } from '../../i18n/ui';
+import { club } from '../../data/club';
+
+const lang = (Astro.currentLocale ?? defaultLocale) as Locale;
+const t = pageT('shop', lang);
+const ui = useTranslations(lang);
+---
+<PageHeader title={t.h1} intro={t.intro}>
+  <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
+    <CtaButton href={club.shopUrl} external>{ui.shopCta}</CtaButton>
+    <p class="max-w-xs text-xs leading-relaxed text-ink-soft">{ui.shopNote}</p>
+  </div>
+</PageHeader>
+
+<section class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+  <h2 class="sr-only">{t.allHeading}</h2>
+  <ShopGrid />
+</section>
+
+<section class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
+  <div class="grid gap-14 lg:grid-cols-2 lg:gap-12">
+    <div class="reveal">
+      <h2 class="display text-4xl sm:text-5xl">{t.designsHeading}</h2>
+      <dl class="mt-8 border-t border-ink">
+        {t.designs.map((d: any) => (
+          <div class="border-b border-line py-5">
+            <dt class="text-lg font-semibold">{d.title}</dt>
+            <dd class="mt-1 text-ink-soft">{d.text}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+    <div class="reveal">
+      <h2 class="display text-4xl sm:text-5xl">{t.how}</h2>
+      <ol class="mt-8 border-t border-ink">
+        {t.howItems.map((item: string, i: number) => (
+          <li class="flex gap-5 border-b border-line py-5">
+            <span class="display nums text-3xl text-club">{i + 1}</span>
+            <span class="pt-1 leading-relaxed">{item}</span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>

@@ -1,7 +1,10 @@
 ---
 import Base from '../../layouts/Base.astro';
 import HomeSections from '../../components/HomeSections.astro';
+import { useTranslations } from '../../i18n/ui';
+
+const t = useTranslations('ar');
 ---
-<Base title="ناديك لكرة القدم في برلين-تريبتاو" description="نادي إف سي تريبتاو، ناديك لكرة القدم في قلب برلين تريبتاو-كوبينيك / باومشولنفيغ.">
+<Base title="FC Treptow e.V." description={t.heroText}>
   <HomeSections />
 </Base>

@@ -1,13 +1,44 @@
 ---
-import { defaultLocale, type Locale } from '../../i18n/languages';
+import { getCollection, render } from 'astro:content';
+import { defaultLocale, bcp47, type Locale } from '../../i18n/languages';
 import { pageT } from '../../i18n/pages';
 
 const lang = (Astro.currentLocale ?? defaultLocale) as Locale;
 const t = pageT('inGedenken', lang);
+const entries = (await getCollection('gedenken')).sort((a, b) => b.data.died.valueOf() - a.data.died.valueOf());
+const people = await Promise.all(entries.map(async (e) => ({ ...e.data, Content: (await render(e)).Content })));
+const fmt = (d: Date) => d.toLocaleDateString(bcp47[lang], { day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'UTC' });
 ---
-<section class="mx-auto max-w-3xl px-4 py-24 text-center lg:px-6">
-  <img src="/images/crest.jpg" alt="" class="mx-auto h-16 w-16 rounded-full object-cover ring-1 ring-line" />
-  <h1 class="display mt-8 text-4xl">{t.h1}</h1>
-  <p class="mx-auto mt-6 max-w-xl text-base leading-relaxed text-ink-soft">{t.p1}</p>
-  <p class="mx-auto mt-4 max-w-xl text-sm text-ink-soft">{t.p2}</p>
+<section class="mx-auto max-w-3xl px-4 pb-10 pt-14 text-center sm:px-6 lg:pt-24">
+  <div class="hero-in">
+    <img src="/images/crest.jpg" alt="" width="64" height="64" class="mx-auto h-16 w-16 rounded-full object-cover grayscale" />
+    <h1 class="display mt-8 text-[clamp(3rem,9vw,5.5rem)]">{t.h1}</h1>
+    <p class="mx-auto mt-6 max-w-xl font-serif text-2xl leading-snug italic">„{t.quote}“</p>
+    <p class="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-ink-soft">{t.intro}</p>
+    {t.original && <p class="mx-auto mt-4 max-w-xl text-sm text-ink-soft">{t.original}</p>}
+  </div>
+</section>
+
+<section class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+  {people.map((p) => (
+    <article class="reveal grid gap-8 border-t border-ink py-14 md:grid-cols-[16rem_1fr] md:gap-12">
+      {p.image && (
+        <div class="overflow-hidden rounded-sm bg-ink md:sticky md:top-28 md:self-start">
+          <img src={p.image} alt={p.name} loading="lazy" class="aspect-[3/4] w-full object-cover grayscale" />
+        </div>
+      )}
+      <div>
+        <h2 class="display text-5xl">{p.name}</h2>
+        <p class="nums mt-3 font-semibold text-ink-soft">
+          {p.born && <span>* {fmt(p.born)}</span>}
+          {p.born && <span class="mx-2" aria-hidden="true">·</span>}
+          <span>† {fmt(p.died)}</span>
+        </p>
+        <div lang="de" class="prose-club mt-8 font-serif text-lg leading-relaxed">
+          <p.Content />
+        </div>
+        <p lang="de" class="mt-8 text-sm font-semibold">{p.signature}</p>
+      </div>
+    </article>
+  ))}
 </section>

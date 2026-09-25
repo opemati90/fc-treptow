@@ -12,14 +12,16 @@
 
 const CONTACT_EMAIL = 'kontakt@fc-treptow.de';
 
-export type SubmitResult = 'sent' | 'mail-client';
+export type SubmitResult = { kind: 'sent' } | { kind: 'mail-client'; href: string };
 
 function collect(form: HTMLFormElement): Array<[string, string]> {
   const data = new FormData(form);
   const rows: Array<[string, string]> = [];
   for (const [key, value] of data.entries()) {
     if (typeof value === 'string' && value.trim() !== '') {
-      const label = form.querySelector(`label[for="${CSS.escape(key)}"]`)?.textContent?.trim();
+      const el = form.elements.namedItem(key);
+      const id = el instanceof Element ? el.id : '';
+      const label = id ? form.querySelector(`label[for="${CSS.escape(id)}"]`)?.textContent?.trim() : undefined;
       rows.push([label || key, value.trim()]);
     }
   }
@@ -39,12 +41,12 @@ export async function submitForm(form: HTMLFormElement, subject: string): Promis
       body: JSON.stringify(payload),
     });
     if (!res.ok) throw new Error(`Formularversand fehlgeschlagen: ${res.status}`);
-    return 'sent';
+    return { kind: 'sent' };
   }
 
   // Kein Endpunkt konfiguriert: vorausgefüllte E-Mail an das Vereinspostfach öffnen.
   const body = rows.map(([label, value]) => `${label}: ${value}`).join('\n');
   const href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   window.location.href = href;
-  return 'mail-client';
+  return { kind: 'mail-client', href };
 }

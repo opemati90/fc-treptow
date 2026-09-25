@@ -13,7 +13,11 @@
 //    Hosting-Projekt (z. B. Vercel) hinterlegen. Das Token läuft nach ca. 60 Tagen ab und muss
 //    regelmäßig erneuert werden (z. B. per Cron-Job, der den Facebook-Token-Refresh-Endpunkt aufruft).
 //
-// Ohne diese Einrichtung zeigt die Seite automatisch die Platzhalterbilder unten.
+// Ohne diese Einrichtung blendet die Startseite den Bereich aus und zeigt nur den Link zum
+// Profil. Bewusst keine Platzhalterbilder: fremde Fotos als "Vereinsleben" wären Täuschung.
+//
+// Datenschutz: Die Bilder werden zur Build-Zeit über astro:assets heruntergeladen und von
+// unserer eigenen Domain ausgeliefert. Besucher laden nichts direkt von Instagram/Meta.
 
 export interface SocialPost {
   id: string;
@@ -22,25 +26,12 @@ export interface SocialPost {
   caption?: string;
 }
 
-const FALLBACK_SEEDS = [
-  'fct-insta-jubel', 'fct-insta-fans', 'fct-insta-training',
-  'fct-insta-kabine', 'fct-insta-flutlicht', 'fct-insta-kiez',
-];
-
-function fallbackPosts(): SocialPost[] {
-  return FALLBACK_SEEDS.map((seed) => ({
-    id: seed,
-    imageUrl: `https://picsum.photos/seed/${seed}/500/500`,
-    permalink: 'https://www.instagram.com',
-  }));
-}
-
 export async function getInstagramPosts(limit = 6): Promise<{ posts: SocialPost[]; isLive: boolean }> {
   const token = import.meta.env.INSTAGRAM_ACCESS_TOKEN;
   const accountId = import.meta.env.INSTAGRAM_BUSINESS_ACCOUNT_ID;
 
   if (!token || !accountId) {
-    return { posts: fallbackPosts(), isLive: false };
+    return { posts: [], isLive: false };
   }
 
   try {
@@ -57,9 +48,9 @@ export async function getInstagramPosts(limit = 6): Promise<{ posts: SocialPost[
         permalink: item.permalink,
         caption: item.caption,
       }));
-    return posts.length > 0 ? { posts, isLive: true } : { posts: fallbackPosts(), isLive: false };
+    return { posts, isLive: posts.length > 0 };
   } catch {
     // Netzwerkfehler oder abgelaufenes Token: Build nicht brechen, sauber zurückfallen.
-    return { posts: fallbackPosts(), isLive: false };
+    return { posts: [], isLive: false };
   }
 }

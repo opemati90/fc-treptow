@@ -2,7 +2,7 @@
 title: "التذكرة الذهبية: شارك الآن"
 date: 2026-07-01
 teaser: "تدخل يانصيب النادي جولة جديدة. شارك واربح وادعم النادي في الوقت نفسه."
-image: "/images/willi-saenger.png"
+image: "/images/team-freizeit.jpg"
 tag: "التذكرة الذهبية"
 ---
 

@@ -1,24 +1,63 @@
 ---
+import { getCollection } from 'astro:content';
+import PageHeader from '../PageHeader.astro';
+import Icon from '../Icon.astro';
+import { downloadGroups } from '../../content.config';
 import { defaultLocale, type Locale } from '../../i18n/languages';
 import { pageT } from '../../i18n/pages';
 
 const lang = (Astro.currentLocale ?? defaultLocale) as Locale;
 const t = pageT('downloads', lang);
+const files = (await getCollection('downloads')).map((e) => e.data).sort((a, b) => a.order - b.order);
+const groupLabel: Record<(typeof downloadGroups)[number], string> = {
+  'Neue Mitglieder': t.groups.join,
+  Spielberechtigung: t.groups.bfv,
+  Vereinsordnungen: t.groups.club,
+};
+// Übersetzte Titel für die mitgelieferten Dokumente. Neue Dokumente aus dem CMS erscheinen mit
+// ihrem deutschen Titel.
+const known: Record<string, [string, string]> = {
+  '/downloads/fct-eintrittserklaerung.pdf': [t.files.eintritt, t.files.eintrittDesc],
+  '/downloads/fct-datenschutz-einwilligung.pdf': [t.files.einwilligung, t.files.einwilligungDesc],
+  '/downloads/fct-einverstaendnis-spielerfoto.pdf': [t.files.foto, t.files.fotoDesc],
+  '/downloads/bfv-antrag-spielberechtigung.pdf': [t.files.spielberechtigung, t.files.spielberechtigungDesc],
+  '/downloads/bfv-antrag-zweitspielrecht.pdf': [t.files.zweitspielrecht, t.files.zweitspielrechtDesc],
+  '/downloads/fct-satzung.pdf': [t.files.satzung, t.files.satzungDesc],
+  '/downloads/fct-beitragsordnung-2024.pdf': [t.files.beitrag, t.files.beitragDesc],
+  '/downloads/fct-ehrenordnung.pdf': [t.files.ehren, t.files.ehrenDesc],
+};
 ---
-<section class="mx-auto max-w-6xl px-4 pb-8 pt-16 lg:px-6">
-  <h1 class="display text-4xl md:text-5xl">{t.h1}</h1>
-  <p class="mt-4 max-w-xl text-base leading-relaxed text-ink-soft">{t.intro}</p>
-</section>
-<section class="mx-auto max-w-3xl px-4 py-12 lg:px-6">
-  <div class="space-y-4">
-    {t.files.map((f: any) => (
-      <a href="#" class="reveal group flex items-center justify-between gap-4 rounded-2xl border border-line bg-card p-6 transition-colors duration-300 hover:border-club/40">
-        <div>
-          <p class="font-bold">{f.name}</p>
-          <p class="mt-1 text-sm text-ink-soft">{f.desc}</p>
-        </div>
-        <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-paper text-sm font-semibold transition-all duration-300 group-hover:bg-club group-hover:text-white">PDF</span>
-      </a>
-    ))}
-  </div>
+<PageHeader title={t.h1} intro={t.intro}>
+  {t.germanOnly && <p class="mt-4 text-sm font-medium text-ink-soft">{t.germanOnly}</p>}
+</PageHeader>
+
+<section class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+  {downloadGroups.map((group) => {
+    const items = files.filter((f) => f.group === group);
+    if (items.length === 0) return null;
+    return (
+      <div class="reveal grid gap-6 pb-14 lg:grid-cols-12 lg:gap-12">
+        <h2 class="text-xs font-semibold uppercase tracking-[0.14em] text-ink-soft lg:col-span-4 lg:pt-6">{groupLabel[group]}</h2>
+        <ul class="border-t border-ink lg:col-span-8">
+          {items.map((f) => {
+            const [title, desc] = lang === defaultLocale ? [f.title, f.description] : (known[f.file] ?? [f.title, f.description]);
+            return (
+              <li class="border-b border-line">
+                <a href={f.file} download class="group flex items-center justify-between gap-6 py-5">
+                  <span>
+                    <span class="block text-lg font-semibold group-hover:underline group-hover:decoration-2 group-hover:underline-offset-4">{title}</span>
+                    {desc && <span class="mt-1 block text-sm text-ink-soft">{desc}</span>}
+                  </span>
+                  <span class="flex shrink-0 items-center gap-3 text-xs font-semibold uppercase tracking-wider text-ink-soft">
+                    PDF
+                    <span class="flex h-11 w-11 items-center justify-center rounded-full ring-1 ring-line transition-colors group-hover:bg-ink group-hover:text-paper"><Icon name="download" size={18} /></span>
+                  </span>
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    );
+  })}
 </section>

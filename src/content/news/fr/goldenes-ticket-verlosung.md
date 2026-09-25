@@ -2,7 +2,7 @@
 title: "Billet Doré : participez dès maintenant"
 date: 2026-07-01
 teaser: "Notre loterie du club entre dans un nouveau tour. Participez, gagnez, et soutenez le club en même temps."
-image: "/images/willi-saenger.png"
+image: "/images/team-freizeit.jpg"
 tag: "Billet Doré"
 ---
 

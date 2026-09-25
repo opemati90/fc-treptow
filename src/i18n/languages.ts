@@ -33,3 +33,11 @@ export function localizedPath(pathname: string, target: Locale) {
   if (target === defaultLocale) return clean;
   return `/${target}${clean === '/' ? '' : clean}`;
 }
+
+// Interner Link in der aktuellen Sprache: l('de', '/news') -> '/news', l('en', '/news') -> '/en/news'
+export function l(locale: Locale, path: string) {
+  if (locale === defaultLocale) return path;
+  return path === '/' ? `/${locale}` : `/${locale}${path}`;
+}
+
+export const bcp47: Record<Locale, string> = { de: 'de-DE', en: 'en-GB', tr: 'tr-TR', ar: 'ar-EG', es: 'es-ES', fr: 'fr-FR' };

@@ -1,92 +1,117 @@
 # FC Treptow e.V. – Webseite
 
-Neubau von fc-treptow.de als statische Astro-Seite mit kostenlosem CMS (Decap).
-Sechs Sprachen: Deutsch (Standard), Englisch, Türkisch, Arabisch (RTL), Spanisch, Französisch.
+Neubau von fc-treptow.de als statische Astro-Seite. Sechs Sprachen (Deutsch als Standard, Englisch,
+Türkisch, Arabisch, Spanisch, Französisch), gepflegt wird nur Deutsch. Spielplan und Tabellen kommen
+automatisch von fussball.de. Kein Tracking, keine Cookies, keine Fremdskripte auf den öffentlichen Seiten.
+
+Live: https://fc-treptow-site.vercel.app
+
+## Für die Redaktion (ohne Technik)
+
+Die Inhalte werden unter **https://fc-treptow-site.vercel.app/admin** gepflegt. Anmeldung mit E-Mail
+und Passwort. Was gespeichert wird, ist nach etwa zwei Minuten online.
+
+Dort gibt es diese Bereiche:
+
+| Bereich | Was man dort macht |
+|---|---|
+| Neuigkeiten | Beiträge schreiben, mit Foto. Erscheinen auf der Startseite und unter News. |
+| Mannschaften | Trainingszeiten, Trainer, Mannschaftsfotos ändern. |
+| Vorstand | Namen, Ämter und Kontaktdaten. |
+| Partner und Sponsoren | Logo, Name, Link. |
+| Fanshop-Artikel | Auswahl für die Fanshop-Seite (Name, Preis, Foto, Link in den Shop). |
+| Downloads (PDF) | Formulare und Ordnungen hochladen oder austauschen. |
+| In Gedenken | Nachrufe. |
+
+Faustregeln:
+
+- Immer auf **Veröffentlichen** klicken, sonst bleibt es ein Entwurf.
+- Fotos im Querformat, nicht größer als etwa 2 MB.
+- Nur auf Deutsch schreiben. Die anderen Sprachen zeigen automatisch den deutschen Text, bis jemand
+  eine Übersetzung nachträgt (dafür ist Technik nötig, siehe unten).
+- Spielplan und Tabelle muss niemand pflegen. Sie kommen von fussball.de.
+
+## Redaktion einrichten (einmalig, technisch)
+
+Die Redaktion ist Decap CMS. Damit sich die Redaktion **ohne GitHub-Konto** anmelden kann, läuft die
+Anmeldung über [DecapBridge](https://decapbridge.com) (kostenlos bis 10 Personen):
+
+1. Auf decapbridge.com mit GitHub anmelden, "New site" anlegen, Repository `opemati90/fc-treptow`
+   und Branch `main` wählen.
+2. Die angezeigte `identity_url` in `public/admin/config.yml` eintragen (Platzhalter
+   `DECAPBRIDGE_SITE_ID` ersetzen). `gateway_url` bleibt wie sie ist.
+3. In DecapBridge die Redaktion per E-Mail einladen. Sie bekommt einen Link und setzt ein Passwort.
+4. In Vercel das Projekt mit dem GitHub-Repository verbinden (Project Settings → Git). Das ging per
+   CLI nicht, weil das Vercel-Konto keinen Schreibzugriff auf das Repository hat; im Dashboard mit
+   dem Konto verbinden, dem das Repository gehört. Ohne diesen Schritt baut Vercel nach CMS-Änderungen
+   nicht automatisch neu.
+
+Lokal testen: `npx decap-server` in einem zweiten Terminal, dann http://localhost:4321/admin/index.html
+öffnen (nutzt `local_backend: true`, keine Anmeldung nötig).
 
 ## Lokal starten
 
 ```bash
 npm install
 npm run dev        # http://localhost:4321
+npm run build      # holt dabei Spielplan und Tabellen von fussball.de
 ```
 
-## Redaktion (CMS)
+`SKIP_FIXTURES=1 npm run build` baut ohne fussball.de (offline).
 
-Das CMS liegt unter `/admin` (Decap CMS). Gepflegt werden:
+## Wie die Seite aufgebaut ist
 
-- **News**: Beiträge mit Bild, Rubrik, Teaser und Text
-- **Mannschaften**: Trainingszeiten, Liga, Teamfoto, Spieltagsfotos, letzte Ergebnisse, fussball.de-Widget
-- **Sponsoren**: jederzeit hinzufügen und entfernen, mit Logo, Link und Kategorie (Hauptsponsor/Partner)
+- `src/content/` – alle redaktionellen Inhalte als Markdown (das, was das CMS schreibt).
+  - `news/de`, `teams/de` sind die Quelle. `news/en` usw. sind freiwillige Übersetzungen
+    mit demselben Dateinamen. Fehlt eine, wird Deutsch gezeigt.
+- `src/i18n/` – alle festen Oberflächentexte in sechs Sprachen. `ui.ts` (Navigation, Startseite),
+  `pages.ts` (Unterseiten), `fixtures.ts` (Spielplan/Tabelle). Deutsch ist die Typvorlage: fehlt in
+  einer Sprache ein Schlüssel, bricht der Build.
+- `src/data/club.ts` – Stammdaten (Adresse, E-Mails, Telefon, Beiträge, IBAN, Social Links).
+- `src/legal/datenschutz.md` – Datenschutzerklärung (Deutsch, rechtlich bindend).
+- `src/lib/fussballde.mjs` – liest nächste Spiele und Tabelle von fussball.de (kein Widget, kein
+  Fremdskript im Browser). Läuft beim Build und in `api/fixtures.mjs` (Vercel-Funktion, eine
+  Stunde gecacht), damit die Seite auch ohne neuen Build aktuell bleibt.
+- `src/styles/global.css` – Gestaltungsregeln stehen oben in der Datei.
 
-Lokal testen: in einem zweiten Terminal `npx decap-server` starten, dann
-`http://localhost:4321/admin` öffnen (nutzt `local_backend: true`).
+### Gestaltung
 
-### Mehrsprachigkeit im CMS
-
-News und Mannschaften sind mehrsprachig (`i18n: multiple_folders`). Die Inhalte liegen
-unter `src/content/<sammlung>/<sprache>/`. Im CMS erscheint pro Beitrag ein Reiter je
-Sprache. Felder wie Datum, Bild oder Eigennamen sind auf `duplicate` gestellt und werden
-automatisch gespiegelt, übersetzt werden muss nur der Text.
-
-**Wichtig:** Diese Ordnerstruktur und die `i18n`-Angaben in `public/admin/config.yml`
-gehören zusammen. Fehlt der `i18n`-Block, legt Decap Beiträge ohne Sprachordner an und
-sie erscheinen dann nirgends auf der Seite.
-
-### Tabelle und Spielplan (fussball.de)
-
-Tabelle und kommende Spiele werden **nicht von Hand gepflegt**, sondern kommen von
-fussball.de:
-
-1. Auf [fussball.de](https://www.fussball.de) einloggen.
-2. „Inhalte verwalten“ → „Deine Widgets“ → Mannschaftswidget anlegen (Spiele, optional
-   mit Tabelle).
-3. Dort auf „Code anzeigen“ klicken und den **kompletten Code** kopieren.
-4. Im CMS bei der Mannschaft in das Feld „fussball.de Widget“ einfügen.
-
-Solange kein Widget hinterlegt ist, zeigt die Teamseite einen Hinweis mit Link auf
-fussball.de statt erfundener Daten.
+Ein Akzent (Vereinsrot), nur für Handlungen. Haarlinien statt Karten. Big Shoulders für Überschriften
+und Zahlen, Archivo für Text, Source Serif nur für die Chronik, IBM Plex Sans Arabic für Arabisch.
+Auf dem Handy eine untere Leiste mit fünf Zielen, "Mehr" öffnet ein Bottom Sheet mit allem anderen und
+der Sprachwahl.
 
 ## Formulare
 
-- `/probetraining`: Anfrage für ein kostenloses Probetraining
-- `/anmeldung`: Anmeldung, freigeschaltet mit Code vom Trainer
-  (Standard `TREPTOW1925`, änderbar in `src/components/sections/AnmeldungSections.astro`)
+Probetraining und Anmeldung öffnen das E-Mail-Programm mit fertiger Nachricht an
+kontakt@fc-treptow.de. Es fließen keine Daten über einen Server. Wer lieber einen Formulardienst
+will, setzt `PUBLIC_FORM_ENDPOINT` (dann ist ein AV-Vertrag mit dem Anbieter nötig).
 
-Standardmäßig öffnen die Formulare eine vorausgefüllte E-Mail an `kontakt@fc-treptow.de`.
-Das ist bewusst so: Die Anmeldung erhebt personenbezogene Daten (Geburtsdatum, Anschrift),
-und ohne Fremddienst braucht es keinen Auftragsverarbeitungsvertrag.
+Freischalt-Code für die Anmeldung: `TREPTOW1925`, änderbar in
+`src/components/sections/AnmeldungSections.astro`.
 
-Wer lieber einen Formulardienst nutzt (Formspree, Web3Forms), setzt die Umgebungsvariable
-`PUBLIC_FORM_ENDPOINT` auf die Endpunkt-URL. Dann wird per `fetch` dorthin gesendet.
-In dem Fall ist ein AV-Vertrag mit dem Anbieter nötig.
+## Instagram (optional)
 
-## Instagram-Kacheln („Der Club im Netz“)
+Ohne Zugangsdaten zeigt die Startseite keinen Instagram-Bereich, nur den Link im Footer. Einrichtung
+in `src/lib/instagram.ts`. Bilder werden beim Build heruntergeladen und selbst ausgeliefert.
 
-Ohne Zugangsdaten zeigt der Bereich Platzhalterbilder, sichtbar als „Beispielbilder“
-gekennzeichnet. Für echte Beiträge siehe die Anleitung in `src/lib/instagram.ts` und
-setze `INSTAGRAM_ACCESS_TOKEN` und `INSTAGRAM_BUSINESS_ACCOUNT_ID`.
+## Offene Punkte vor dem Livegang
 
-## Vor dem Livegang (offene Punkte)
-
-1. **Impressum vervollständigen (rechtlich erforderlich, §5 TMG).** Es fehlen
-   Vertretungsberechtigter (Vorstand), Registergericht und Vereinsregisternummer.
-2. **Datenschutzerklärung vervollständigen.** Aktuell nur eine Kurzfassung.
-3. Echte **Sponsoren** im CMS eintragen (aktuell bewusst leer statt erfunden).
-4. **fussball.de-Widgets** je Mannschaft hinterlegen (siehe oben).
-5. **Instagram-Zugang** einrichten, Social-Links prüfen (aktuell geraten:
-   `/fctreptow` bei Instagram, Facebook, TikTok).
-6. Echtes **Mannschaftsfoto der Freizeit Kickers** ergänzen (nutzt derzeit das
-   Foto des Vereinsheims).
-7. **PDF-Downloads** (Eintrittserklärung, Spielberechtigung, Satzung) von der alten
-   Seite übernehmen.
-8. Inhalte für **„In Gedenken“** und **Vorstand** von der alten Seite übernehmen.
-9. **DNS** von fc-treptow.de auf Vercel umstellen.
+1. DecapBridge einrichten und Redaktion einladen (siehe oben).
+2. Vercel mit dem GitHub-Repository verbinden (siehe oben).
+3. Datenschutzerklärung vom Vorstand prüfen lassen. Offene Annahmen sind unten in der Datei
+   `src/legal/datenschutz.md` nicht markiert, deshalb hier: kein Datenschutzbeauftragter benannt;
+   AV-Vertrag mit Vercel muss im Vercel-Konto akzeptiert sein; E-Mail-Anbieter ist als
+   Auftragsverarbeiter beschrieben; Löschfristen (Probetraining 6 Monate) müssen gelebt werden.
+4. Instagram: Die Seite verlinkt @fc.treptow (das Konto, das die alte Seite verlinkt). Es gibt auch
+   @fctreptow mit mehr Followern; klären, welches offiziell ist.
+5. Fanshop-Preise alle paar Monate mit dem Shop abgleichen (Stand September 2026).
+6. `SITE_URL` in Vercel setzen, sobald die eigene Domain umzieht.
 
 ## Bekannte Einschränkungen
 
-- Der Freischalt-Code der Anmeldung liegt im Browser-JavaScript. Er hält Neugierige ab,
-  ist aber keine echte Zugangssperre. Für den Zweck (Anmeldung erst nach Probetraining)
-  reicht das.
-- Der Build meldet „collection sponsors does not exist or is empty“, solange keine
-  Sponsoren eingetragen sind. Das ist nur eine Warnung, die Seite baut normal.
-- Kein Dark Mode. Die Seite ist bewusst durchgehend hell gehalten.
+- Der Freischalt-Code der Anmeldung steht im Browser-Code. Er hält Neugierige ab, ist aber keine
+  echte Zugangssperre.
+- Ergebnisse vergangener Spiele werden nicht gezeigt: fussball.de verschleiert Tore mit einer
+  Spezialschrift. Der Link "Alles auf fussball.de" führt hin.
+- Kein Dark Mode, bewusst.

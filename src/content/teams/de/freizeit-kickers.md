@@ -1,12 +1,15 @@
 ---
 name: "Freizeit Kickers"
 shortName: "Freizeit"
-league: "Freizeitliga Berlin"
+league: "Hobbymannschaft"
 order: 4
 training:
-  - "Donnerstag, 19:00 Uhr"
-image: "/images/hero-match.jpg"
-imageFocus: 50
+  - { day: Dienstag, from: "18:00", to: "19:30" }
+image: "/images/team-freizeit.jpg"
+imageFocus: 40
+contact: "freizeit.fctreptow@gmail.com"
 ---
 
-Fußball ohne Punktspieldruck: Die Freizeit Kickers treffen sich wöchentlich zum Kicken auf der Willi-Sänger-Sportanlage. Jedes Alter, jedes Niveau, Hauptsache Bock auf Fußball.
+Wir sind eine Hobbymannschaft, die sich einmal in der Woche zum Kicken trifft. Keine Lust mehr auf anstrengende Trainingsübungen und das Wochenende lieber ohne Ligaspiele verbringen? Dann bist du bei uns genau richtig.
+
+Gespielt wird dienstags von 18:00 bis 19:30 Uhr auf dem Kunstrasen der Willi-Sänger-Sportanlage.

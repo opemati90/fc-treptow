@@ -2,7 +2,7 @@
 title: "Golden Ticket: join in now"
 date: 2026-07-01
 teaser: "Our club raffle enters its next round. Play along, win, and support the club at the same time."
-image: "/images/willi-saenger.png"
+image: "/images/team-freizeit.jpg"
 tag: "Golden Ticket"
 ---
 

@@ -2,7 +2,7 @@
 title: "Altın Bilet: hemen katılın"
 date: 2026-07-01
 teaser: "Kulüp çekilişimiz yeni bir tura giriyor. Katılın, kazanın, aynı zamanda kulübü destekleyin."
-image: "/images/willi-saenger.png"
+image: "/images/team-freizeit.jpg"
 tag: "Altın Bilet"
 ---
 

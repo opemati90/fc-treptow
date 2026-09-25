@@ -1,255 +1,391 @@
 ---
 import '../styles/global.css';
-import { locales, defaultLocale, languageNames, isRtl, type Locale } from '../i18n/languages';
+import Icon from '../components/Icon.astro';
+import { locales, defaultLocale, languageNames, isRtl, localizedPath, l, type Locale } from '../i18n/languages';
 import { useTranslations } from '../i18n/ui';
+import { club } from '../data/club';
 
 interface Props {
   title: string;
   description?: string;
+  image?: string;
+  noindex?: boolean;
 }
-
-const { title, description = 'FC Treptow e.V., dein Fußballclub mitten in Berlin Treptow-Köpenick / Baumschulenweg.' } = Astro.props;
 
 const lang = (Astro.currentLocale ?? defaultLocale) as Locale;
 const t = useTranslations(lang);
+const { title, description = t.footerTagline, image = '/images/team-h1.jpg', noindex = false } = Astro.props;
 const dir = isRtl(lang) ? 'rtl' : 'ltr';
-const homeHref = lang === defaultLocale ? '/' : `/${lang}`;
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const bare = path.replace(new RegExp(`^/(${locales.filter((x) => x !== defaultLocale).join('|')})(?=/|$)`), '') || '/';
+const site = Astro.site ?? new URL(Astro.url.origin);
+const abs = (p: string) => new URL(p, site).href;
 
-const nav = [
+const isActive = (href: string) => (href === '/' ? bare === '/' : bare === href || bare.startsWith(`${href}/`));
+
+const desktopNav = [
   { href: '/mannschaften', label: t.nav.teams },
   { href: '/news', label: t.nav.news },
   { href: '/vereinschronik', label: t.nav.verein },
-  { href: '/mitgliedschaft', label: t.nav.mitgliedschaft },
+  { href: '/shop', label: t.nav.shop },
   { href: '/kontakt', label: t.nav.kontakt },
 ];
-const path = Astro.url.pathname;
 
-// Der Sprachumschalter führt aktuell zur jeweils übersetzten Startseite: nur sie existiert bislang je Sprache.
-// Alle übrigen Seiten (Mannschaften, News, Verein ...) bleiben deutschsprachig, bis sie ebenfalls übersetzt sind.
-function langHref(locale: Locale) {
-  return locale === defaultLocale ? '/' : `/${locale}`;
-}
+// Untere Leiste auf dem Handy: vier Ziele plus "Mehr". Daumenreichweite statt Burger-Menü.
+const tabs = [
+  { href: '/', label: t.nav.home, icon: 'home' as const },
+  { href: '/mannschaften', label: t.nav.teamsShort, icon: 'shirt' as const },
+  { href: '/mitgliedschaft', label: t.joinCta, icon: 'ball' as const },
+  { href: '/news', label: t.nav.news, icon: 'news' as const },
+];
+
+const moreLinks = [
+  { href: '/vereinschronik', label: t.footerChronik },
+  { href: '/shop', label: t.nav.shop },
+  { href: '/kontakt', label: t.nav.kontakt },
+  { href: '/probetraining', label: t.footerProbetraining },
+  { href: '/vorstand', label: t.nav.vorstand },
+  { href: '/sponsoren', label: t.footerSponsoren },
+  { href: '/downloads', label: t.footerDownloads },
+  { href: '/in-gedenken', label: t.footerGedenken },
+];
+
+const socials = [
+  { href: club.social.instagram, label: 'Instagram', icon: 'instagram' as const },
+  { href: club.social.youtube, label: 'YouTube', icon: 'play' as const },
+].filter((s) => s.href);
 ---
-<html lang={lang} dir={dir}>
+<html lang={lang} dir={dir} class="no-js">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#f4f1ea" />
     <link rel="icon" href="/images/crest.jpg" />
+    <title>{title === 'FC Treptow e.V.' ? title : `${title} | FC Treptow e.V.`}</title>
     <meta name="description" content={description} />
-    <title>{title} | FC Treptow e.V.</title>
-    {locales.map((locale) => (
-      <link rel="alternate" hreflang={locale} href={langHref(locale)} />
-    ))}
+    {noindex ? (
+      <meta name="robots" content="noindex" />
+    ) : (
+      <>
+        <link rel="canonical" href={abs(path)} />
+        {locales.map((locale) => <link rel="alternate" hreflang={locale} href={abs(localizedPath(path, locale))} />)}
+        <link rel="alternate" hreflang="x-default" href={abs(localizedPath(path, defaultLocale))} />
+      </>
+    )}
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="FC Treptow e.V." />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={abs(image)} />
+    <meta property="og:locale" content={lang} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script is:inline>document.documentElement.classList.replace('no-js', 'js');</script>
   </head>
-  <body class="min-h-[100dvh] flex flex-col">
-    <header id="site-header" class="sticky top-0 z-40 border-b border-transparent bg-paper/70 backdrop-blur-md transition-[background-color,border-color,box-shadow] duration-500 ease-(--ease-club)">
-      <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 lg:px-6">
-        <a href={homeHref} class="flex items-center gap-3">
-          <img src="/images/crest.jpg" alt="Wappen FC Treptow" class="h-9 w-9 rounded-full object-cover ring-1 ring-line" />
-          <span class="display text-sm leading-none">FC Treptow <span class="text-club">e.V.</span></span>
+  <body class="grain flex min-h-[100dvh] flex-col">
+    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:start-4 focus:top-4 focus:z-[70] focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-sm focus:text-paper">{t.skip}</a>
+
+    <header id="site-header" class="sticky top-0 z-40 border-b border-transparent bg-paper/90 backdrop-blur-md transition-[border-color] duration-300">
+      <div class="mx-auto flex h-16 max-w-7xl items-center justify-between gap-6 px-4 sm:px-6 lg:h-[4.5rem] lg:px-8">
+        <a href={l(lang, '/')} class="flex items-center gap-3" aria-label="FC Treptow e.V.">
+          <img src="/images/crest.jpg" alt="" width="40" height="40" class="h-9 w-9 rounded-full object-cover lg:h-10 lg:w-10" />
+          <span class="display text-[1.35rem] leading-none">FC Treptow <span class="text-ink-soft">1925</span></span>
         </a>
-        <nav class="hidden items-center gap-4 lg:flex xl:gap-6">
-          {nav.map((item) => (
-            <a
-              href={item.href}
-              class:list={[
-                'text-sm font-medium transition-colors duration-300',
-                path.startsWith(item.href) ? 'text-club' : 'text-ink-soft hover:text-ink',
-              ]}
-            >{item.label}</a>
-          ))}
-          <div class="relative" data-lang-menu>
-            <button type="button" data-lang-toggle aria-haspopup="true" aria-expanded="false" class="flex items-center gap-1.5 rounded-full border border-line px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-ink-soft transition-colors duration-300 hover:border-club hover:text-club">
+
+        <nav aria-label={t.nav.main} class="hidden lg:block">
+          <ul class="flex items-center gap-1">
+            {desktopNav.map((item) => (
+              <li>
+                <a
+                  href={l(lang, item.href)}
+                  aria-current={isActive(item.href) ? 'page' : undefined}
+                  class:list={[
+                    'relative rounded-full px-3.5 py-2 text-[15px] font-medium transition-colors duration-200',
+                    isActive(item.href) ? 'text-ink after:absolute after:inset-x-3.5 after:-bottom-px after:h-0.5 after:bg-club' : 'text-ink-soft hover:text-ink',
+                  ]}
+                >{item.label}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div class="flex items-center gap-2">
+          <div class="relative hidden lg:block" data-lang-menu>
+            <button type="button" data-lang-toggle aria-haspopup="true" aria-expanded="false" aria-label={t.langSwitcher} class="flex h-10 items-center gap-1.5 rounded-full px-3 text-sm font-semibold uppercase text-ink-soft transition-colors duration-200 hover:bg-paper-deep hover:text-ink">
+              <Icon name="globe" size={18} />
               {lang}
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
-            <div data-lang-dropdown class="invisible absolute end-0 top-full z-50 mt-2 w-40 origin-top-right scale-95 rounded-2xl border border-line bg-card p-1.5 opacity-0 shadow-[0_16px_40px_-16px_rgba(20,23,31,0.35)] transition-all duration-200 ease-(--ease-club)">
+            <div data-lang-dropdown class="invisible absolute end-0 top-full mt-2 w-44 origin-top scale-95 rounded-sm bg-card p-1.5 opacity-0 shadow-[0_24px_48px_-24px_rgba(22,24,29,0.35)] ring-1 ring-line transition-[opacity,transform,visibility] duration-200 ease-(--ease-club)">
               {locales.map((locale) => (
                 <a
-                  href={langHref(locale)}
+                  href={localizedPath(path, locale)}
+                  lang={locale}
+                  hreflang={locale}
                   class:list={[
-                    'block rounded-xl px-3 py-2 text-sm transition-colors duration-200',
-                    locale === lang ? 'bg-club/10 font-semibold text-club' : 'text-ink hover:bg-paper',
+                    'flex items-center justify-between rounded-sm px-3 py-2 text-sm transition-colors duration-150',
+                    locale === lang ? 'font-semibold text-ink' : 'text-ink-soft hover:bg-paper hover:text-ink',
                   ]}
-                >{languageNames[locale]}</a>
+                >
+                  {languageNames[locale]}
+                  {locale === lang && <Icon name="check" size={16} class="text-club" />}
+                </a>
               ))}
             </div>
           </div>
-          <a href="/mitgliedschaft" data-magnetic class="magnetic group inline-flex items-center gap-2 rounded-full bg-club px-4 py-2 text-sm font-semibold text-white transition-colors duration-300 ease-(--ease-club) hover:bg-club-deep">
+          <a href={l(lang, '/mitgliedschaft')} class="hidden h-10 items-center rounded-full bg-club px-5 text-sm font-semibold text-white transition-[background-color,transform] duration-200 ease-(--ease-club) hover:bg-club-deep active:scale-[0.97] lg:inline-flex">
             {t.joinCta}
-            <span class="flex h-5 w-5 items-center justify-center rounded-full bg-white/15 transition-transform duration-300 ease-(--ease-club) group-hover:translate-x-0.5 rtl:rotate-180">→</span>
           </a>
-        </nav>
-        <button id="menu-btn" class="flex h-10 w-10 flex-col items-center justify-center gap-1.5 lg:hidden" aria-label="Menü öffnen" aria-expanded="false">
-          <span class="menu-line block h-0.5 w-6 bg-ink transition-transform duration-300 ease-(--ease-club)"></span>
-          <span class="menu-line block h-0.5 w-6 bg-ink transition-transform duration-300 ease-(--ease-club)"></span>
-        </button>
-      </div>
-      <div id="mobile-menu" class="hidden border-t border-line bg-paper px-4 py-4 lg:hidden">
-        <nav class="flex flex-col gap-3">
-          {nav.map((item) => (
-            <a href={item.href} class="py-1 text-base font-medium text-ink">{item.label}</a>
-          ))}
-          <a href="/mitgliedschaft" class="mt-2 inline-flex w-max items-center rounded-full bg-club px-5 py-2.5 text-sm font-semibold text-white">{t.joinCta}</a>
-          <div class="mt-3 border-t border-line pt-3">
-            <p class="text-xs font-semibold uppercase tracking-widest text-ink-soft">{t.langSwitcher}</p>
-            <div class="mt-2 flex flex-wrap gap-2">
-              {locales.map((locale) => (
-                <a
-                  href={langHref(locale)}
-                  class:list={[
-                    'rounded-full border px-3 py-1.5 text-xs font-semibold uppercase',
-                    locale === lang ? 'border-club bg-club/10 text-club' : 'border-line text-ink-soft',
-                  ]}
-                >{locale}</a>
-              ))}
-            </div>
-          </div>
-        </nav>
+          <button type="button" data-more-open aria-haspopup="dialog" class="flex h-11 items-center gap-1.5 rounded-full px-3 text-sm font-semibold uppercase text-ink-soft transition-colors hover:text-ink lg:hidden" aria-label={`${t.nav.more}: ${t.langSwitcher}`}>
+            <Icon name="globe" size={18} />
+            {lang}
+          </button>
+        </div>
       </div>
     </header>
 
-    <main class="flex-1">
+    <main id="main" class="flex-1">
       <slot />
     </main>
 
-    <footer class="mt-24 bg-ink text-white">
-      <div class="mx-auto grid max-w-6xl gap-10 px-4 py-16 md:grid-cols-4 lg:px-6">
-        <div class="md:col-span-2">
-          <div class="flex items-center gap-3">
-            <img src="/images/crest.jpg" alt="" class="h-10 w-10 rounded-full object-cover" />
-            <p class="display text-lg">FC Treptow e.V.</p>
+    <footer class="mt-24 bg-ink text-paper sm:mt-32">
+      <div class="mx-auto max-w-7xl px-4 pb-[calc(6.5rem+env(safe-area-inset-bottom))] pt-16 sm:px-6 lg:px-8 lg:pb-10 lg:pt-20">
+        <div class="grid gap-12 lg:grid-cols-12">
+          <div class="lg:col-span-5">
+            <p class="display text-5xl sm:text-6xl">FC Treptow</p>
+            <p class="mt-4 max-w-xs text-sm leading-relaxed text-paper/65">{t.footerTagline}</p>
+            <address class="mt-6 text-sm not-italic leading-relaxed text-paper/65">
+              {club.ground.name}<br />{club.ground.street}<br />{club.ground.city}
+            </address>
           </div>
-          <p class="mt-4 max-w-sm text-sm leading-relaxed text-white/70">
-            {t.footerTagline}
-            <br />Willi-Sänger-Sportanlage, Köpenicker Landstraße 186, 12437 Berlin.
-          </p>
+          <div class="grid grid-cols-2 gap-10 sm:grid-cols-3 lg:col-span-7">
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-[0.14em] text-paper/45">{t.footerVereinHeading}</p>
+              <ul class="mt-4 space-y-3 text-sm">
+                <li><a href={l(lang, '/vereinschronik')} class="text-paper/80 transition-colors hover:text-paper">{t.footerChronik}</a></li>
+                <li><a href={l(lang, '/vorstand')} class="text-paper/80 transition-colors hover:text-paper">{t.nav.vorstand}</a></li>
+                <li><a href={l(lang, '/sponsoren')} class="text-paper/80 transition-colors hover:text-paper">{t.footerSponsoren}</a></li>
+                <li><a href={l(lang, '/in-gedenken')} class="text-paper/80 transition-colors hover:text-paper">{t.footerGedenken}</a></li>
+                <li><a href={l(lang, '/shop')} class="text-paper/80 transition-colors hover:text-paper">{t.nav.shop}</a></li>
+              </ul>
+            </div>
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-[0.14em] text-paper/45">{t.footerMitmachenHeading}</p>
+              <ul class="mt-4 space-y-3 text-sm">
+                <li><a href={l(lang, '/mitgliedschaft')} class="text-paper/80 transition-colors hover:text-paper">{t.nav.mitgliedschaft}</a></li>
+                <li><a href={l(lang, '/probetraining')} class="text-paper/80 transition-colors hover:text-paper">{t.footerProbetraining}</a></li>
+                <li><a href={l(lang, '/anmeldung')} class="text-paper/80 transition-colors hover:text-paper">{t.footerAnmeldung}</a></li>
+                <li><a href={l(lang, '/downloads')} class="text-paper/80 transition-colors hover:text-paper">{t.footerDownloads}</a></li>
+              </ul>
+            </div>
+            <div class="col-span-2 sm:col-span-1">
+              <p class="text-xs font-semibold uppercase tracking-[0.14em] text-paper/45">{t.footerKontaktHeading}</p>
+              <ul class="mt-4 space-y-3 text-sm">
+                <li><a href={`mailto:${club.email}`} class="text-paper/80 transition-colors hover:text-paper">{club.email}</a></li>
+                <li><a href={club.phoneHref} class="nums text-paper/80 transition-colors hover:text-paper">{club.phone}</a></li>
+                <li><a href={l(lang, '/kontakt')} class="text-paper/80 transition-colors hover:text-paper">{t.footerAnfahrt}</a></li>
+              </ul>
+              <ul class="mt-6 flex gap-2">
+                {socials.map((s) => (
+                  <li>
+                    <a href={s.href} rel="noopener" target="_blank" aria-label={`${s.label} (${t.external})`} class="flex h-11 w-11 items-center justify-center rounded-full text-paper/80 ring-1 ring-paper/20 transition-colors hover:bg-paper hover:text-ink">
+                      <Icon name={s.icon} size={20} />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </div>
-        <div>
-          <p class="text-xs font-semibold uppercase tracking-widest text-white/50">{t.footerVereinHeading}</p>
-          <ul class="mt-4 space-y-2 text-sm">
-            <li><a href="/vereinschronik" class="text-white/80 hover:text-white">{t.footerChronik}</a></li>
-            <li><a href="/sponsoren" class="text-white/80 hover:text-white">{t.footerSponsoren}</a></li>
-            <li><a href="/downloads" class="text-white/80 hover:text-white">{t.footerDownloads}</a></li>
-            <li><a href="/in-gedenken" class="text-white/80 hover:text-white">{t.footerGedenken}</a></li>
-          </ul>
-        </div>
-        <div>
-          <p class="text-xs font-semibold uppercase tracking-widest text-white/50">{t.footerKontaktHeading}</p>
-          <ul class="mt-4 space-y-2 text-sm text-white/80">
-            <li><a href="mailto:kontakt@fc-treptow.de" class="hover:text-white">kontakt@fc-treptow.de</a></li>
-            <li><a href="/kontakt" class="hover:text-white">{t.footerAnfahrt}</a></li>
-            <li><a href="https://www.instagram.com/fctreptow" rel="noopener" class="hover:text-white">Instagram</a></li>
-            <li><a href="https://www.facebook.com/fctreptow" rel="noopener" class="hover:text-white">Facebook</a></li>
-            <li><a href="https://www.tiktok.com/@fctreptow" rel="noopener" class="hover:text-white">TikTok</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="border-t border-white/10">
-        <div class="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-6 text-xs text-white/50 sm:flex-row sm:items-center sm:justify-between lg:px-6">
-          <p>© {new Date().getFullYear()} FC Treptow e.V.</p>
-          <div class="flex gap-4">
-            <a href="/impressum" class="hover:text-white">{t.footerImpressum}</a>
-            <a href="/datenschutz" class="hover:text-white">{t.footerDatenschutz}</a>
+        <div class="mt-16 flex flex-col gap-4 border-t border-paper/15 pt-6 text-xs text-paper/50 sm:flex-row sm:items-center sm:justify-between">
+          <p>© {new Date().getFullYear()} {club.legalName}</p>
+          <div class="flex flex-wrap gap-x-5 gap-y-2">
+            <a href={l(lang, '/impressum')} class="hover:text-paper">{t.footerImpressum}</a>
+            <a href={l(lang, '/datenschutz')} class="hover:text-paper">{t.footerDatenschutz}</a>
+            {locales.filter((x) => x !== lang).map((locale) => (
+              <a href={localizedPath(path, locale)} lang={locale} hreflang={locale} class="hover:text-paper">{languageNames[locale]}</a>
+            ))}
           </div>
         </div>
       </div>
     </footer>
 
-    <script>
-      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    <!-- Untere Navigation (nur Handy/Tablet) -->
+    <nav aria-label={t.nav.main} class="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-paper/92 pb-[env(safe-area-inset-bottom)] backdrop-blur-md lg:hidden">
+      <ul class="mx-auto grid h-[4.25rem] max-w-lg grid-cols-5">
+        {tabs.map((tab) => (
+          <li>
+            <a
+              href={l(lang, tab.href)}
+              aria-current={isActive(tab.href) ? 'page' : undefined}
+              class:list={[
+                'flex h-full flex-col items-center justify-center gap-1 px-1 text-[11px] font-medium leading-none transition-colors duration-150 active:bg-paper-deep',
+                isActive(tab.href) ? 'text-club' : 'text-ink-soft',
+              ]}
+            >
+              <Icon name={tab.icon} size={24} />
+              <span class="max-w-full truncate">{tab.label}</span>
+            </a>
+          </li>
+        ))}
+        <li>
+          <button type="button" data-more-open aria-haspopup="dialog" class="flex h-full w-full flex-col items-center justify-center gap-1 px-1 text-[11px] font-medium leading-none text-ink-soft transition-colors duration-150 active:bg-paper-deep">
+            <Icon name="more" size={24} />
+            <span>{t.nav.more}</span>
+          </button>
+        </li>
+      </ul>
+    </nav>
 
-      // Mobile-Menü mit Hamburger-Morph
-      const btn = document.getElementById('menu-btn');
-      const menu = document.getElementById('mobile-menu');
-      btn?.addEventListener('click', () => {
-        const open = menu?.classList.toggle('hidden') === false;
-        btn.setAttribute('aria-expanded', String(open));
-        const lines = btn.querySelectorAll('.menu-line');
-        lines[0]?.classList.toggle('rotate-45', open);
-        lines[0]?.classList.toggle('translate-y-1', open);
-        lines[1]?.classList.toggle('-rotate-45', open);
-        lines[1]?.classList.toggle('-translate-y-1', open);
+    <!-- "Mehr": Bottom Sheet mit allen übrigen Seiten und der Sprachwahl -->
+    <dialog id="more-sheet" aria-labelledby="more-title" class="more-sheet m-0 mt-auto max-h-[88dvh] w-full max-w-none overflow-y-auto rounded-t-[1.25rem] bg-card p-0 text-ink backdrop:bg-ink/40 lg:hidden">
+      <div class="sticky top-0 flex items-center justify-between bg-card px-5 pb-2 pt-3">
+        <span class="absolute left-1/2 top-2 h-1 w-10 -translate-x-1/2 rounded-full bg-ink/15" aria-hidden="true"></span>
+        <p id="more-title" class="display mt-4 text-2xl">{t.moreTitle}</p>
+        <button type="button" data-more-close class="mt-3 flex h-11 w-11 items-center justify-center rounded-full bg-paper-deep text-ink" aria-label={t.nav.close}>
+          <Icon name="close" size={20} />
+        </button>
+      </div>
+      <ul class="px-5">
+        {moreLinks.map((item) => (
+          <li class="border-b border-line">
+            <a href={l(lang, item.href)} class="flex min-h-14 items-center justify-between text-base font-medium">
+              {item.label}
+              <Icon name="arrow" size={18} class="text-ink-soft" />
+            </a>
+          </li>
+        ))}
+      </ul>
+      <div class="px-5 pb-[calc(1.5rem+env(safe-area-inset-bottom))] pt-6">
+        <p class="text-xs font-semibold uppercase tracking-[0.14em] text-ink-soft">{t.langSwitcher}</p>
+        <ul class="mt-3 grid grid-cols-2 gap-2">
+          {locales.map((locale) => (
+            <li>
+              <a
+                href={localizedPath(path, locale)}
+                lang={locale}
+                hreflang={locale}
+                aria-current={locale === lang ? 'true' : undefined}
+                class:list={[
+                  'flex h-12 items-center justify-between rounded-sm px-4 text-sm',
+                  locale === lang ? 'bg-ink font-semibold text-paper' : 'bg-paper text-ink',
+                ]}
+              >
+                {languageNames[locale]}
+                {locale === lang && <Icon name="check" size={16} />}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </dialog>
+
+    <style>
+      .more-sheet[open] {
+        animation: sheet-in 0.32s var(--ease-club);
+      }
+      .more-sheet[open]::backdrop {
+        animation: fade-in 0.32s var(--ease-club);
+      }
+      @keyframes sheet-in {
+        from { transform: translateY(100%); }
+      }
+      @keyframes fade-in {
+        from { opacity: 0; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .more-sheet[open],
+        .more-sheet[open]::backdrop {
+          animation: fade-in 0.15s linear;
+        }
+      }
+    </style>
+
+    <script>
+      // "Mehr"-Sheet: natives <dialog> bringt Fokusfalle, Escape und inerten Hintergrund mit
+      const sheet = document.getElementById('more-sheet') as HTMLDialogElement | null;
+      document.querySelectorAll('[data-more-open]').forEach((btn) =>
+        btn.addEventListener('click', () => {
+          sheet?.showModal();
+          document.body.style.overflow = 'hidden';
+        }),
+      );
+      const closeSheet = () => sheet?.close();
+      sheet?.querySelector('[data-more-close]')?.addEventListener('click', closeSheet);
+      sheet?.addEventListener('close', () => (document.body.style.overflow = ''));
+      // Tippen auf den abgedunkelten Hintergrund schließt
+      sheet?.addEventListener('click', (e) => {
+        if (e.target === sheet) closeSheet();
+      });
+      // Nach unten wischen schließt (einfache Geste, folgt dem Finger)
+      let startY = 0;
+      let dy = 0;
+      sheet?.addEventListener('touchstart', (e) => {
+        if (sheet.scrollTop > 0) return;
+        startY = e.touches[0].clientY;
+        dy = 0;
+        sheet.style.transition = 'none';
+      }, { passive: true });
+      sheet?.addEventListener('touchmove', (e) => {
+        if (!startY) return;
+        dy = Math.max(0, e.touches[0].clientY - startY);
+        sheet.style.transform = `translateY(${dy}px)`;
+      }, { passive: true });
+      sheet?.addEventListener('touchend', () => {
+        if (!startY) return;
+        sheet.style.transition = 'transform 0.25s cubic-bezier(0.23, 1, 0.32, 1)';
+        if (dy > 90) {
+          sheet.style.transform = 'translateY(100%)';
+          setTimeout(() => {
+            closeSheet();
+            sheet.style.transform = '';
+            sheet.style.transition = '';
+          }, 220);
+        } else {
+          sheet.style.transform = '';
+        }
+        startY = 0;
       });
 
       // Sprachmenü (Desktop)
       const langMenu = document.querySelector('[data-lang-menu]');
       const langToggle = langMenu?.querySelector('[data-lang-toggle]');
       const langDropdown = langMenu?.querySelector('[data-lang-dropdown]');
-      const closeLangMenu = () => {
-        langDropdown?.classList.add('invisible', 'opacity-0', 'scale-95');
-        langToggle?.setAttribute('aria-expanded', 'false');
+      const setLang = (open: boolean) => {
+        langDropdown?.classList.toggle('invisible', !open);
+        langDropdown?.classList.toggle('opacity-0', !open);
+        langDropdown?.classList.toggle('scale-95', !open);
+        langToggle?.setAttribute('aria-expanded', String(open));
       };
       langToggle?.addEventListener('click', (e) => {
         e.stopPropagation();
-        const isOpen = !langDropdown?.classList.contains('invisible');
-        if (isOpen) {
-          closeLangMenu();
-        } else {
-          langDropdown?.classList.remove('invisible', 'opacity-0', 'scale-95');
-          langToggle.setAttribute('aria-expanded', 'true');
-        }
+        setLang(langToggle.getAttribute('aria-expanded') !== 'true');
       });
       document.addEventListener('click', (e) => {
-        if (langMenu && !langMenu.contains(e.target as Node)) closeLangMenu();
+        if (langMenu && !langMenu.contains(e.target as Node)) setLang(false);
       });
       document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeLangMenu();
+        if (e.key === 'Escape') setLang(false);
       });
 
-      // Header setzt sich erst ab, wenn Inhalt darunter liegt
+      // Header bekommt eine Linie, sobald Inhalt darunter liegt
       const header = document.getElementById('site-header');
       const sentinel = document.createElement('div');
       sentinel.setAttribute('aria-hidden', 'true');
       document.body.prepend(sentinel);
-      new IntersectionObserver(
-        ([e]) => {
-          const stuck = !e.isIntersecting;
-          header?.classList.toggle('border-line/80', stuck);
-          header?.classList.toggle('bg-paper/85', stuck);
-          header?.classList.toggle('shadow-[0_10px_30px_-24px_rgba(20,23,31,0.6)]', stuck);
-        },
-        { rootMargin: '0px' }
-      ).observe(sentinel);
+      new IntersectionObserver(([e]) => header?.classList.toggle('border-line', !e.isIntersecting)).observe(sentinel);
 
-      // Scroll-Reveal, einmalig pro Element
-      const observer = new IntersectionObserver(
+      // Einblenden beim Scrollen, einmal pro Element
+      const io = new IntersectionObserver(
         (entries) => {
           for (const e of entries) {
             if (e.isIntersecting) {
               e.target.classList.add('is-visible');
-              observer.unobserve(e.target);
+              io.unobserve(e.target);
             }
           }
         },
-        { threshold: 0.15, rootMargin: '0px 0px -8% 0px' }
+        { threshold: 0.12, rootMargin: '0px 0px -6% 0px' },
       );
-      document.querySelectorAll('.reveal, .stagger').forEach((el) => observer.observe(el));
-
-      // Magnetische Buttons: Transform direkt, ohne Layout-Properties
-      if (!reduced && window.matchMedia('(pointer: fine)').matches) {
-        document.querySelectorAll('[data-magnetic]').forEach((el) => {
-          const strength = 0.28;
-          el.addEventListener('pointermove', (ev) => {
-            const r = el.getBoundingClientRect();
-            const x = (ev.clientX - (r.left + r.width / 2)) * strength;
-            const y = (ev.clientY - (r.top + r.height / 2)) * strength;
-            el.classList.add('is-pulling');
-            el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-          });
-          el.addEventListener('pointerleave', () => {
-            el.classList.remove('is-pulling');
-            el.style.transform = 'translate3d(0, 0, 0)';
-          });
-          el.addEventListener('pointerdown', () => {
-            el.style.transform += ' scale(0.97)';
-          });
-          el.addEventListener('pointerup', () => {
-            el.classList.remove('is-pulling');
-            el.style.transform = 'translate3d(0, 0, 0)';
-          });
-        });
-      }
+      document.querySelectorAll('.reveal, .stagger').forEach((el) => io.observe(el));
     </script>
   </body>
 </html>

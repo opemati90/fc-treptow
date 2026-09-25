@@ -2,7 +2,7 @@
 title: "Boleto Dorado: participa ya"
 date: 2026-07-01
 teaser: "Nuestra rifa del club entra en una nueva ronda. Participa, gana y apoya al club al mismo tiempo."
-image: "/images/willi-saenger.png"
+image: "/images/team-freizeit.jpg"
 tag: "Boleto Dorado"
 ---
 
